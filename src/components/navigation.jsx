@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 class Navigation extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
+    componentWillMount(){
+    }
+
     render() {
         return(
         <div>
@@ -32,16 +40,16 @@ class Navigation extends Component {
                             </ul>
                             <div className="profile-top">
                                 <ul className="list-inline">
-                                    <li className="list-inline-item"><a href="#"><img src="images/avatar.jpg" /></a></li>
+                                    <li className="list-inline-item"><Link to="#"><img src="images/avatar.jpg" /></Link></li>
                                     <li className="list-inline-item fullname">
-                                        <a href="#">Trần Tiến</a>
+                                        <Link to="#">Trần Tiến</Link>
                                         <div className="box-logout">
                                             <ul className="list-group">
-                                                <li className="list-group-item"><a href="#">Đăng Xuất</a></li>
+                                                <li className="list-group-item"><a>Đăng Xuất</a></li>
                                             </ul>
                                         </div>
                                     </li>
-                                    <li className="list-inline-item"><a href="#">Đăng bài</a></li>
+                                    <li className="list-inline-item"><Link to="#">Đăng bài</Link></li>
                                 </ul>
                             </div>
                         </div>

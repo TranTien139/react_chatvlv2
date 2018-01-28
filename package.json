@@ -1,5 +1,5 @@
 {
-  "name": "editor-camp",
+  "name": "chatvl-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "jsx": "^0.9.89",
     "path": "^0.12.7",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
