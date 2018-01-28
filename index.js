@@ -25,10 +25,4 @@ app.get("/chi-tiet", function (req, res) {
     })
 });
 
-app.get("*", function (req, res) {
-    res.render("index.ejs",{
-        title:"khong co tieu de"
-    })
-});
-
 app.listen(port,()=>{console.log('listen port:'+port)});

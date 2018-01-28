@@ -26300,6 +26300,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(13);
 
+var _list_article = __webpack_require__(156);
+
+var _list_article2 = _interopRequireDefault(_list_article);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26307,6 +26311,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var axios = __webpack_require__(126);
+var domain = __webpack_require__(155);
 
 var Home = function (_Component) {
     _inherits(Home, _Component);
@@ -26316,13 +26323,34 @@ var Home = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            article: []
+        };
         return _this;
     }
 
     _createClass(Home, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            var promise = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/articles/getArticleNew', { user_id: "1", size: 20, page: 1 }).then(function (res) {
+                    res = res.data;
+                    res = res.data.results;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject([]);
+                });
+            });
+            promise.then(function (data) {
+                _this2.setState({ article: data });
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var list_article = this.state.article;
             return _react2.default.createElement(
                 'div',
                 null,
@@ -26335,644 +26363,7 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-sm-8' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'main-item' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-8 left-content-item' },
-                                        _react2.default.createElement(
-                                            _reactRouterDom.Link,
-                                            { to: '/chi-tiet' },
-                                            _react2.default.createElement('img', { src: 'images/0.jpg', className: 'img-responsive' }),
-                                            _react2.default.createElement('div', { className: 'icon-play' })
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-4' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'right-content-item' },
-                                            _react2.default.createElement(
-                                                'h2',
-                                                null,
-                                                _react2.default.createElement(
-                                                    _reactRouterDom.Link,
-                                                    { to: '/chi-tiet', className: 'jump_focus' },
-                                                    'Ti\u1EC7c t\xF9ng ph\u1EA3i th\u1EBF n\xE0y hello tieu de nay rat dai'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'uinfo' },
-                                                'b\u1EDFi ',
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { href: '#' },
-                                                    'B\xE1ch Nhi\xEAn T\u1EED'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    '1 gi\u1EDD tr\u01B0\u1EDBc'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'count-like-share' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'view' },
-                                                            _react2.default.createElement('img', { src: 'icon/view_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'comment' },
-                                                            _react2.default.createElement('img', { src: 'icon/comment_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'like' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_camxuc2.png' })
-                                                        ),
-                                                        '100'
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'list-emotion' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
-                                                        )
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'your_selected' },
-                                                'B\u1EA1n: ',
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'main-item' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-8 left-content-item' },
-                                        _react2.default.createElement(
-                                            'a',
-                                            { href: '#' },
-                                            _react2.default.createElement('img', { src: 'images/0.jpg', className: 'img-responsive' }),
-                                            _react2.default.createElement('div', { className: 'icon-play' })
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-4' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'right-content-item' },
-                                            _react2.default.createElement(
-                                                'h2',
-                                                null,
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { target: '_blank', href: true, className: 'jump_focus' },
-                                                    'Ti\u1EC7c t\xF9ng ph\u1EA3i th\u1EBF n\xE0y hello tieu de nay rat dai'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'uinfo' },
-                                                'b\u1EDFi ',
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { href: '#' },
-                                                    'B\xE1ch Nhi\xEAn T\u1EED'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    '1 gi\u1EDD tr\u01B0\u1EDBc'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'count-like-share' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'view' },
-                                                            _react2.default.createElement('img', { src: 'icon/view_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'comment' },
-                                                            _react2.default.createElement('img', { src: 'icon/comment_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'like' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_camxuc2.png' })
-                                                        ),
-                                                        '100'
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'your_selected' },
-                                                'B\u1EA1n: ',
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'list-emotion' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'main-item' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-8 left-content-item' },
-                                        _react2.default.createElement(
-                                            'a',
-                                            { href: '#' },
-                                            _react2.default.createElement('img', { src: 'images/0.jpg', className: 'img-responsive' })
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-4' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'right-content-item' },
-                                            _react2.default.createElement(
-                                                'h2',
-                                                null,
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { target: '_blank', href: true, className: 'jump_focus' },
-                                                    'Ti\u1EC7c t\xF9ng ph\u1EA3i th\u1EBF n\xE0y hello tieu de nay rat dai'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'uinfo' },
-                                                'b\u1EDFi ',
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { href: '#' },
-                                                    'B\xE1ch Nhi\xEAn T\u1EED'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    '1 gi\u1EDD tr\u01B0\u1EDBc'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'count-like-share' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'view' },
-                                                            _react2.default.createElement('img', { src: 'icon/view_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'comment' },
-                                                            _react2.default.createElement('img', { src: 'icon/comment_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'like' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_camxuc2.png' })
-                                                        ),
-                                                        '100'
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'your_selected' },
-                                                'B\u1EA1n: ',
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'list-emotion' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'main-item' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'row' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-8 left-content-item' },
-                                        _react2.default.createElement(
-                                            'a',
-                                            { href: '#' },
-                                            _react2.default.createElement('img', { src: 'images/0.jpg', className: 'img-responsive' })
-                                        )
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'col-sm-4' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'right-content-item' },
-                                            _react2.default.createElement(
-                                                'h2',
-                                                null,
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { target: '_blank', href: true, className: 'jump_focus' },
-                                                    'Ti\u1EC7c t\xF9ng ph\u1EA3i th\u1EBF n\xE0y hello tieu de nay rat dai'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'uinfo' },
-                                                'b\u1EDFi ',
-                                                _react2.default.createElement(
-                                                    'a',
-                                                    { href: '#' },
-                                                    'B\xE1ch Nhi\xEAn T\u1EED'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    '1 gi\u1EDD tr\u01B0\u1EDBc'
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'count-like-share' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'view' },
-                                                            _react2.default.createElement('img', { src: 'icon/view_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'comment' },
-                                                            _react2.default.createElement('img', { src: 'icon/comment_icon.png' })
-                                                        ),
-                                                        '100'
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'span',
-                                                            { className: 'like' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_camxuc2.png' })
-                                                        ),
-                                                        '100'
-                                                    )
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'your_selected' },
-                                                'B\u1EA1n: ',
-                                                _react2.default.createElement(
-                                                    'span',
-                                                    null,
-                                                    _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                )
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'list-emotion' },
-                                                _react2.default.createElement(
-                                                    'ul',
-                                                    { className: 'list-inline' },
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
-                                                        )
-                                                    ),
-                                                    _react2.default.createElement(
-                                                        'li',
-                                                        { className: 'list-inline-item' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
+                            _react2.default.createElement(_list_article2.default, { data: list_article })
                         ),
                         _react2.default.createElement(
                             'div',
@@ -30188,6 +29579,228 @@ function setpage() {
     }
     return state;
 }
+
+/***/ }),
+/* 154 */,
+/* 155 */
+/***/ (function(module, exports) {
+
+module.exports = {
+    domain: "https://api-chatvlv2.herokuapp.com/api"
+}
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(13);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ListArticle = function (_React$Component) {
+    _inherits(ListArticle, _React$Component);
+
+    function ListArticle() {
+        _classCallCheck(this, ListArticle);
+
+        return _possibleConstructorReturn(this, (ListArticle.__proto__ || Object.getPrototypeOf(ListArticle)).apply(this, arguments));
+    }
+
+    _createClass(ListArticle, [{
+        key: 'render',
+        value: function render() {
+            var data = this.props.data;
+            var list_article = data.map(function (object, index) {
+                console.log(object);
+                return _react2.default.createElement(
+                    'div',
+                    { key: index, className: 'main-item' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-8 left-content-item text-center' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/chi-tiet' },
+                                _react2.default.createElement('img', { src: object.image, className: 'img-fluid' }),
+                                object.type === 'video' ? _react2.default.createElement('div', { className: 'icon-play' }) : ''
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-4' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'right-content-item' },
+                                _react2.default.createElement(
+                                    'h2',
+                                    null,
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '/chi-tiet', className: 'jump_focus' },
+                                        object.title
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'uinfo' },
+                                    'b\u1EDFi ',
+                                    _react2.default.createElement(
+                                        _reactRouterDom.Link,
+                                        { to: '#' },
+                                        object.getUser.name
+                                    ),
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        '1 gi\u1EDD tr\u01B0\u1EDBc'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'count-like-share' },
+                                    _react2.default.createElement(
+                                        'ul',
+                                        { className: 'list-inline' },
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'span',
+                                                { className: 'view' },
+                                                _react2.default.createElement('img', { src: 'icon/view_icon.png' })
+                                            ),
+                                            '100'
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'span',
+                                                { className: 'comment' },
+                                                _react2.default.createElement('img', { src: 'icon/comment_icon.png' })
+                                            ),
+                                            object.total_comment
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'span',
+                                                { className: 'like' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_camxuc2.png' })
+                                            ),
+                                            object.total_like
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'list-emotion' },
+                                    _react2.default.createElement(
+                                        'ul',
+                                        { className: 'list-inline' },
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
+                                            )
+                                        ),
+                                        _react2.default.createElement(
+                                            'li',
+                                            { className: 'list-inline-item' },
+                                            _react2.default.createElement(
+                                                'a',
+                                                { href: '#' },
+                                                _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
+                                            )
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'your_selected' },
+                                    'B\u1EA1n: ',
+                                    _react2.default.createElement(
+                                        'span',
+                                        null,
+                                        _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
+                                    )
+                                )
+                            )
+                        )
+                    )
+                );
+            });
+
+            return list_article;
+        }
+    }]);
+
+    return ListArticle;
+}(_react2.default.Component);
+
+exports.default = ListArticle;
 
 /***/ })
 /******/ ]);

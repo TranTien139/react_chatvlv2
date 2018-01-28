@@ -1,182 +1,42 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router-dom';
+const axios = require('axios');
+const domain = require('../../config_domain.js');
+import ListArticle from '../components/list_article.jsx';
 
 class Home extends Component{
     constructor(props){
         super(props)
         this.state ={
+            article: []
         }
     }
+
+    componentWillMount(){
+     let promise = new Promise((resolve, reject)=>{
+         axios.post(domain.domain+'/articles/getArticleNew',{user_id: "1", size:20, page:1}).then(res=>{
+             res = res.data;
+             res = res.data.results;
+             resolve(res);
+         }).catch(err=>{
+             reject([]);
+         });
+     });
+     promise.then(data=>{
+         this.setState({article:data});
+     });
+    }
+
     render(){
+        let list_article = this.state.article;
         return(
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8">
-                            <div className="main-item">
-                                <div className="row">
-                                    <div className="col-sm-8 left-content-item">
-                                        <Link to="/chi-tiet" ><img src="images/0.jpg" className="img-responsive" />
-                                            <div className="icon-play" />
-                                        </Link>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="right-content-item">
-                                            <h2><Link to="/chi-tiet"  className="jump_focus">Tiệc
-                                                tùng phải thế này hello tieu de nay rat dai</Link></h2>
-                                            <div className="uinfo">
-                                                bởi <a href="#">Bách Nhiên Tử</a>
-                                                <span>1 giờ trước</span>
-                                            </div>
-                                            <div className="count-like-share">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="comment"><img src="icon/comment_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="like"><img src="icon/icon_camxuc2.png" /></span>100
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="list-emotion">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_like.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_love.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_haha.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_wow.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_sad.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_angry.gif" /></a></li>
-                                                </ul>
-                                            </div>
-                                            <div className="your_selected">
-                                                Bạn: <span><img src="icon/icon_like.gif" /></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="main-item">
-                                <div className="row">
-                                    <div className="col-sm-8 left-content-item">
-                                        <a href="#"><img src="images/0.jpg" className="img-responsive" />
-                                            <div className="icon-play" />
-                                        </a>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="right-content-item">
-                                            <h2><a target="_blank" href className="jump_focus">Tiệc
-                                                tùng phải thế này hello tieu de nay rat dai</a></h2>
-                                            <div className="uinfo">
-                                                bởi <a href="#">Bách Nhiên Tử</a>
-                                                <span>1 giờ trước</span>
-                                            </div>
-                                            <div className="count-like-share">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="comment"><img src="icon/comment_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="like"><img src="icon/icon_camxuc2.png" /></span>100
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="your_selected">
-                                                Bạn: <span><img src="icon/icon_like.gif" /></span>
-                                            </div>
-                                            <div className="list-emotion">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_like.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_love.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_haha.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_wow.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_sad.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_angry.gif" /></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="main-item">
-                                <div className="row">
-                                    <div className="col-sm-8 left-content-item">
-                                        <a href="#"><img src="images/0.jpg" className="img-responsive" /></a>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="right-content-item">
-                                            <h2><a target="_blank" href className="jump_focus">Tiệc
-                                                tùng phải thế này hello tieu de nay rat dai</a></h2>
-                                            <div className="uinfo">
-                                                bởi <a href="#">Bách Nhiên Tử</a>
-                                                <span>1 giờ trước</span>
-                                            </div>
-                                            <div className="count-like-share">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="comment"><img src="icon/comment_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="like"><img src="icon/icon_camxuc2.png" /></span>100
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="your_selected">
-                                                Bạn: <span><img src="icon/icon_like.gif" /></span>
-                                            </div>
-                                            <div className="list-emotion">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_like.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_love.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_haha.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_wow.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_sad.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_angry.gif" /></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="main-item">
-                                <div className="row">
-                                    <div className="col-sm-8 left-content-item">
-                                        <a href="#"><img src="images/0.jpg" className="img-responsive" /></a>
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <div className="right-content-item">
-                                            <h2><a target="_blank" href className="jump_focus">Tiệc
-                                                tùng phải thế này hello tieu de nay rat dai</a></h2>
-                                            <div className="uinfo">
-                                                bởi <a href="#">Bách Nhiên Tử</a>
-                                                <span>1 giờ trước</span>
-                                            </div>
-                                            <div className="count-like-share">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="comment"><img src="icon/comment_icon.png" /></span>100
-                                                    </li>
-                                                    <li className="list-inline-item"><span className="like"><img src="icon/icon_camxuc2.png" /></span>100
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="your_selected">
-                                                Bạn: <span><img src="icon/icon_like.gif" /></span>
-                                            </div>
-                                            <div className="list-emotion">
-                                                <ul className="list-inline">
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_like.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_love.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_haha.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_wow.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_sad.gif" /></a></li>
-                                                    <li className="list-inline-item"><a href="#"><img src="icon/icon_angry.gif" /></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                            <ListArticle data={list_article} />
+
                         </div>
                         <div className="col-sm-4">
                             <div className="row top-user-home">
