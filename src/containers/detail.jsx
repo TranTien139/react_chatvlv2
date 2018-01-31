@@ -1,4 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+const axios = require('axios');
+const domain = require('../../config_domain.js');
+import {Link} from 'react-router-dom'
 
 class Detail extends Component {
     constructor(props){
@@ -6,15 +9,33 @@ class Detail extends Component {
         this.state ={
         }
     }
+
+    componentWillMount(){
+
+        let id_article = this.props.match.params.id;
+
+        let promise = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/articles/getArticleDetail',{user_id: "1",id_article: id_article }).then(res=>{
+                res = res.data;
+                res = res.data;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+        promise.then(data=>{
+            this.setState({detail:data});
+        }).catch(err=>{});
+    }
+
     render() {
-        return (
+        let detail = this.state.detail;
+        return detail ?  (
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8 detail-article">
-                            <h1 className="main-title">Cập nhật tin tức U23 Việt Nam trước trận Chung kết U23 Châu Á với
-                                U23 Uzbekistan
-                                ngày 27.01.2018</h1>
+                            <h1 className="main-title">{detail.title}</h1>
                             <div className="row">
                                 <div className="col-sm-3">
                                     <div className="list-emotion-detail">
@@ -40,17 +61,18 @@ class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <iframe width="100%" height={500} src="https://www.youtube.com/embed/f_zUFsaLOGY"
-                                    frameBorder={0} allow="encrypted-media" allowFullScreen>
-                            </iframe>
+                            { detail.linkVideo !=='' ?  <iframe width="100%" height={500} src={"https://www.youtube.com/embed/"+detail.linkVideo}
+                                                        frameBorder={0} allow="encrypted-media" allowFullScreen>
+                            </iframe>: <img class="fluid text-center"  src={detail.image} />  }
+
                             <div className="row">
                                 <div className="col-sm-6 top-user-list user-info">
                                     <div className="float-left">
-                                        <a href="#"><img src="images/avatar_user.jpg"
-                                                         className="img-responsive img-user"/></a>
+                                        <Link to={'/user/' + detail.getUser.userSlug}><img src={detail.getUser.image}
+                                                         className="img-fluid img-user"/></Link>
                                     </div>
                                     <div className="float-left">
-                                        <p className="name"><a href="#">Trần Văn Tiến</a></p>
+                                        <p className="name"><Link to={'/user/' + detail.getUser.userSlug}>{detail.getUser.name}</Link></p>
                                         <p><img src="icon/view_icon.png"/><span>&nbsp;100</span></p>
                                     </div>
                                 </div>
@@ -258,7 +280,7 @@ class Detail extends Component {
                     </div>
                 </div>
             </div>
-        )
+        ) : ''
     }
 }
 

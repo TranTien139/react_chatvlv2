@@ -19,7 +19,7 @@ app.get("/", function (req, res) {
     })
 });
 
-app.get("/chi-tiet", function (req, res) {
+app.get("/chi-tiet/:id", function (req, res) {
     res.render("index.ejs",{
         title:"Chi tiết"
     })

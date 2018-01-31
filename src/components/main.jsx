@@ -13,7 +13,7 @@ export default ()=>(
     <Switch>
         <Layout>
             <Route exact path="/" component={Home} />
-            <Route path="/chi-tiet" component={Detail} />
+            <Route path="/chi-tiet/:id" component={Detail} />
             <Route path="/bai-noi-bat" component={Hot} />
         </Layout>
     </Switch>

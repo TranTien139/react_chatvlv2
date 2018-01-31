@@ -5,18 +5,17 @@ class ListArticle extends React.Component {
     render() {
         let data =  this.props.data;
         let list_article = data.map((object,index)=>{
-            console.log(object);
         return (
             <div key={index} className="main-item">
                 <div className="row">
                     <div className="col-sm-8 left-content-item text-center">
-                        <Link to="/chi-tiet" ><img src={object.image} className="img-fluid" />
+                        <Link to={"/chi-tiet/"+ object.id} ><img src={object.image} className="img-fluid" />
                             { object.type === 'video'?  <div className="icon-play" />:''  }
                         </Link>
                     </div>
                     <div className="col-sm-4">
                         <div className="right-content-item">
-                            <h2><Link to="/chi-tiet"  className="jump_focus">{object.title}</Link></h2>
+                            <h2><Link to={"/chi-tiet/"+ object.id}  className="jump_focus">{object.title}</Link></h2>
                             <div className="uinfo">
                                 bởi <Link to="#">{object.getUser.name}</Link>
                                 <span>1 giờ trước</span>
