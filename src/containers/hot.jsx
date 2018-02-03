@@ -14,9 +14,7 @@ class Hot extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
                     cac bai hot
-                </div>
             </div>
         )
     }

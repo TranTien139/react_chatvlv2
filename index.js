@@ -25,4 +25,34 @@ app.get("/chi-tiet/:id", function (req, res) {
     })
 });
 
+app.get("/bai-noi-bat", function (req, res) {
+    res.render("index.ejs",{
+        title:"Bài nổi bật"
+    })
+});
+
+app.get("/hinh-anh", function (req, res) {
+    res.render("index.ejs",{
+        title:"Hình ảnh"
+    })
+});
+
+app.get("/video", function (req, res) {
+    res.render("index.ejs",{
+        title:"Video clip"
+    })
+});
+
+app.get("/tim-kiem", function (req, res) {
+    res.render("index.ejs",{
+        title:"Tìm kiếm"
+    })
+});
+
+app.get("/thao-luan", function (req, res) {
+    res.render("index.ejs",{
+        title:"Thảo luận"
+    })
+});
+
 app.listen(port,()=>{console.log('listen port:'+port)});

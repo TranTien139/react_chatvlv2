@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {NiceTime} from '../../functions/common.js';
 
 class ListArticle extends React.Component {
     render() {
@@ -18,11 +19,11 @@ class ListArticle extends React.Component {
                             <h2><Link to={"/chi-tiet/"+ object.id}  className="jump_focus">{object.title}</Link></h2>
                             <div className="uinfo">
                                 bởi <Link to="#">{object.getUser.name}</Link>
-                                <span>1 giờ trước</span>
+                                <span>&nbsp;{ NiceTime(object.published_at) }</span>
                             </div>
                             <div className="count-like-share">
                                 <ul className="list-inline">
-                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>100
+                                    <li className="list-inline-item"><span className="view"><img src="icon/view_icon.png" /></span>{ object.total_view || 0 }
                                     </li>
                                     <li className="list-inline-item"><span className="comment"><img src="icon/comment_icon.png" /></span>{object.total_comment}
                                     </li>

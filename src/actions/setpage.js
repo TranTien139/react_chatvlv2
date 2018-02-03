@@ -4,7 +4,6 @@
 
 function setpage(page){
     return function(dispatch){
-        console.log(page);
         dispatch({type:'SET_PAGE',payload:page});
     }
 }

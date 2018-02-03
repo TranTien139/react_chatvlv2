@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 const axios = require('axios');
 const domain = require('../../config_domain.js');
 import {Link} from 'react-router-dom'
+import {NiceTime} from '../../functions/common.js';
+import Loading from '../components/loading.jsx';
+import HotDaily from '../components/hot_daily.jsx';
 
 class Detail extends Component {
     constructor(props){
@@ -15,7 +18,7 @@ class Detail extends Component {
         let id_article = this.props.match.params.id;
 
         let promise = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/articles/getArticleDetail',{user_id: "1",id_article: id_article }).then(res=>{
+            axios.post(domain.domain+'/articles/getArticleDetail',{user_id: "0",id_article: id_article }).then(res=>{
                 res = res.data;
                 res = res.data;
                 resolve(res);
@@ -63,7 +66,7 @@ class Detail extends Component {
                             </div>
                             { detail.linkVideo !=='' ?  <iframe width="100%" height={500} src={"https://www.youtube.com/embed/"+detail.linkVideo}
                                                         frameBorder={0} allow="encrypted-media" allowFullScreen>
-                            </iframe>: <img class="fluid text-center"  src={detail.image} />  }
+                            </iframe>: <div className="text-center"><img class="fluid text-center"  src={detail.image} /> </div> }
 
                             <div className="row">
                                 <div className="col-sm-6 top-user-list user-info">
@@ -73,20 +76,20 @@ class Detail extends Component {
                                     </div>
                                     <div className="float-left">
                                         <p className="name"><Link to={'/user/' + detail.getUser.userSlug}>{detail.getUser.name}</Link></p>
-                                        <p><img src="icon/view_icon.png"/><span>&nbsp;100</span></p>
+                                        <p><img src="icon/view_icon.png"/><span>&nbsp;{ NiceTime(detail.published_at) }</span></p>
                                     </div>
                                 </div>
                                 <div className="col-sm-6 ">
                                     <div className="count-like-share like-share-detail float-right">
                                         <ul className="list-inline">
                                             <li className="list-inline-item"><span className="view"><img
-                                                src="icon/view_icon.png"/></span>100
+                                                src="icon/view_icon.png"/></span>&nbsp;{ detail.total_view || 0 }
                                             </li>
                                             <li className="list-inline-item"><span className="comment"><img
-                                                src="icon/comment_icon.png"/></span>100
+                                                src="icon/comment_icon.png"/></span>&nbsp;{ detail.total_comment || 0 }
                                             </li>
                                             <li className="list-inline-item"><span className="like"><img
-                                                src="icon/icon_camxuc2.png"/></span>100
+                                                src="icon/icon_camxuc2.png"/></span>&nbsp;{ detail.total_like || 0 }
                                             </li>
                                         </ul>
                                     </div>
@@ -243,44 +246,12 @@ class Detail extends Component {
                         </div>
                         <div className="col-sm-4">
                             <h4 className="hot-daily">Tin hot trong ngày</h4>
-                            <div className="row item-daily-post">
-                                <div className="col-5"><a href="#"><img src="images/0.jpg" className="img-fluid"/></a>
-                                </div>
-                                <div className="col-7">
-                                    <h3 className="title"><a href="#">Cập nhật tin tức U23 Việt Nam trước trận Chung kết
-                                        U23 Châu Á với U23 Uzbekistan
-                                        ngày 27.01.2018</a></h3>
-                                    <p>Đăng bởi <span><a href="#">Trần Tiến</a></span></p>
-                                    <p>12 giờ trước</p>
-                                </div>
-                            </div>
-                            <div className="row item-daily-post">
-                                <div className="col-5"><a href="#"><img src="images/0.jpg" className="img-fluid"/></a>
-                                </div>
-                                <div className="col-7">
-                                    <h3 className="title"><a href="#">Cập nhật tin tức U23 Việt Nam trước trận Chung kết
-                                        U23 Châu Á với U23 Uzbekistan
-                                        ngày 27.01.2018</a></h3>
-                                    <p>Đăng bởi <span><a href="#">Trần Tiến</a></span></p>
-                                    <p>12 giờ trước</p>
-                                </div>
-                            </div>
-                            <div className="row item-daily-post">
-                                <div className="col-5"><a href="#"><img src="images/0.jpg" className="img-fluid"/></a>
-                                </div>
-                                <div className="col-7">
-                                    <h3 className="title"><a href="#">Cập nhật tin tức U23 Việt Nam trước trận Chung kết
-                                        U23 Châu Á với U23 Uzbekistan
-                                        ngày 27.01.2018</a></h3>
-                                    <p>Đăng bởi <span><a href="#">Trần Tiến</a></span></p>
-                                    <p>12 giờ trước</p>
-                                </div>
-                            </div>
+                            <HotDaily />
                         </div>
                     </div>
                 </div>
             </div>
-        ) : ''
+        ) : <Loading />
     }
 }
 

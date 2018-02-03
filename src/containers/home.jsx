@@ -1,34 +1,37 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router-dom';
-const axios = require('axios');
-const domain = require('../../config_domain.js');
 import ListArticle from '../components/list_article.jsx';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getArticleNew} from '../actions/getArticle.js';
+import Loading from '../components/loading.jsx';
+
+import TopUser from '../components/top_user.jsx';
 
 class Home extends Component{
     constructor(props){
         super(props)
         this.state ={
-            article: []
+            article: [],
+            page:1
         }
     }
 
     componentWillMount(){
-     let promise = new Promise((resolve, reject)=>{
-         axios.post(domain.domain+'/articles/getArticleNew',{user_id: "1", size:20, page:1}).then(res=>{
-             res = res.data;
-             res = res.data.results;
-             resolve(res);
-         }).catch(err=>{
-             reject([]);
-         });
-     });
-     promise.then(data=>{
-         this.setState({article:data});
-     });
+    }
+
+    componentDidMount(){
+        this.props.getArticleNew(1);
+    }
+
+    NextPage = (page)=>{
+        this.props.article.isloading = true;
+        this.setState({page: page});
+        this.props.getArticleNew(page);
     }
 
     render(){
-        let list_article = this.state.article;
+        let list_article = this.props.article.article;
         return(
             <div>
                 <div className="container">
@@ -36,66 +39,12 @@ class Home extends Component{
                         <div className="col-sm-8">
 
                             <ListArticle data={list_article} />
+                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
-                        <div className="col-sm-4">
-                            <div className="row top-user-home">
-                                <ul className="list-inline">
-                                    <li className="list-inline-item"><h3>Top danh hài</h3></li>
-                                    <li className="list-inline-item"><a className="active"> Tuần </a></li>
-                                    <li className="list-inline-item"><a> Tháng </a></li>
-                                    <li className="list-inline-item"><a className="all"> Tất cả </a></li>
-                                </ul>
-                            </div>
-                            <div className="row top-user-list">
-                                <div className="col-sm-6 pading-left0">
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-6 pading-left0">
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-4"><a href="#"><img src="images/avatar_user.jpg" className="img-responsive img-user" /></a></div>
-                                        <div className="col-8">
-                                            <p className="name"><a href="#">Trần Văn Tiến</a></p>
-                                            <p><img src="icon/view_icon.png" /><span>&nbsp;100</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <TopUser />
+
                     </div>
                 </div>
             </div>
@@ -103,4 +52,16 @@ class Home extends Component{
     }
 }
 
-export default Home;
+function mapStateToProps(state) {
+    return {
+        article: state.article
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        getArticleNew: getArticleNew
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
