@@ -22,7 +22,6 @@ class HotDaily extends React.Component {
             );
         });
 
-
         return hot_daily;
     }
 }

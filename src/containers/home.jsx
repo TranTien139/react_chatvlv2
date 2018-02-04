@@ -21,7 +21,9 @@ class Home extends Component{
     }
 
     componentDidMount(){
-        this.props.getArticleNew(1);
+        if(this.state.page === 1) {
+            this.props.getArticleNew(1);
+        }
     }
 
     NextPage = (page)=>{
