@@ -10,7 +10,8 @@ function NiceTime(timestamp) {
     {
         return  Math.ceil(diff / (3600 * 1000)) + ' giờ trước';
     } else {
-        return foo.toLocaleDateString();
+        var stamp = new Date(foo);
+        return stamp.getDate() + "/" + stamp.getMonth() + "/" + stamp.getFullYear();
     }
 }
 

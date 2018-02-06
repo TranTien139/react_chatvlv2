@@ -13,7 +13,7 @@ class Home extends Component{
         super(props)
         this.state ={
             article: [],
-            page:1
+            page: 1
         }
     }
 
@@ -21,15 +21,17 @@ class Home extends Component{
     }
 
     componentDidMount(){
-        if(this.state.page === 1) {
+        if(!this.props.page.homepage) {
             this.props.getArticleNew(1);
         }
+       this.props.page.homepage = 2;
     }
 
     NextPage = (page)=>{
         this.props.article.isloading = true;
-        this.setState({page: page});
-        this.props.getArticleNew(page);
+        this.props.page.homepage = page + 1;
+        this.setState({page:1});
+        this.props.getArticleNew(page-1);
     }
 
     render(){
@@ -41,7 +43,7 @@ class Home extends Component{
                         <div className="col-sm-8">
 
                             <ListArticle data={list_article} />
-                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.homepage)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 
@@ -56,7 +58,8 @@ class Home extends Component{
 
 function mapStateToProps(state) {
     return {
-        article: state.article
+        article: state.article,
+        page: state.page
     }
 }
 
