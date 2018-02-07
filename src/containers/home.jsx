@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getArticleNew} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
+const axios =  require('axios');
+const domain = require('../../config_domain.js');
 
 import TopUser from '../components/top_user.jsx';
 
@@ -13,7 +15,8 @@ class Home extends Component{
         super(props)
         this.state ={
             article: [],
-            page: 1
+            page: 1,
+            TopUser: []
         }
     }
 
@@ -25,13 +28,30 @@ class Home extends Component{
             this.props.getArticleNew(1);
         }
        this.props.page.homepage = 2;
+
+        let promise = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/users/getTopUser',{user_id: "0",type: 1 }).then(res=>{
+                res = res.data;
+                res = res.data.results;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+        promise.then(data=>{
+            this.setState({TopUser:data});
+        }).catch(err=>{
+        })
+    }
+
+    componentWillReceiveProps(nextProps) {
     }
 
     NextPage = (page)=>{
         this.props.article.isloading = true;
         this.props.page.homepage = page + 1;
         this.setState({page:1});
-        this.props.getArticleNew(page-1);
+        this.props.getArticleNew(page);
     }
 
     render(){
@@ -47,7 +67,7 @@ class Home extends Component{
 
                         </div>
 
-                        <TopUser />
+                        <TopUser top_user = {this.state.TopUser} />
 
                     </div>
                 </div>

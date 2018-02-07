@@ -26345,6 +26345,10 @@ var _detail = __webpack_require__(158);
 
 var _detail2 = _interopRequireDefault(_detail);
 
+var _notfound = __webpack_require__(164);
+
+var _notfound2 = _interopRequireDefault(_notfound);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isLoggedIn() {
@@ -26453,6 +26457,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var axios = __webpack_require__(28);
+var domain = __webpack_require__(64);
+
 var Home = function (_Component) {
     _inherits(Home, _Component);
 
@@ -26465,12 +26472,13 @@ var Home = function (_Component) {
             _this.props.article.isloading = true;
             _this.props.page.homepage = page + 1;
             _this.setState({ page: 1 });
-            _this.props.getArticleNew(page - 1);
+            _this.props.getArticleNew(page);
         };
 
         _this.state = {
             article: [],
-            page: 1
+            page: 1,
+            TopUser: []
         };
         return _this;
     }
@@ -26481,11 +26489,29 @@ var Home = function (_Component) {
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
+
             if (!this.props.page.homepage) {
                 this.props.getArticleNew(1);
             }
             this.props.page.homepage = 2;
+
+            var promise = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/users/getTopUser', { user_id: "0", type: 1 }).then(function (res) {
+                    res = res.data;
+                    res = res.data.results;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+            promise.then(function (data) {
+                _this2.setState({ TopUser: data });
+            }).catch(function (err) {});
         }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {}
     }, {
         key: 'render',
         value: function render() {
@@ -26513,7 +26539,7 @@ var Home = function (_Component) {
                                 )
                             )
                         ),
-                        _react2.default.createElement(_top_user2.default, null)
+                        _react2.default.createElement(_top_user2.default, { top_user: this.state.TopUser })
                     )
                 )
             );
@@ -27705,7 +27731,8 @@ var TopUser = function (_React$Component) {
     _createClass(TopUser, [{
         key: 'render',
         value: function render() {
-            var data = [1, 2, 3, 4, 5, 6, 7, 8];
+
+            var data = this.props.top_user;
             var data_left = data.filter(function (obj, index) {
                 return index % 2 === 0;
             });
@@ -27722,9 +27749,9 @@ var TopUser = function (_React$Component) {
                         'div',
                         { className: 'col-4' },
                         _react2.default.createElement(
-                            'a',
-                            { href: '#' },
-                            _react2.default.createElement('img', { src: '/images/avatar_user.jpg', className: 'img-responsive img-user' })
+                            _reactRouterDom.Link,
+                            { to: '#' },
+                            _react2.default.createElement('img', { src: object.image, className: 'img-responsive img-user' })
                         )
                     ),
                     _react2.default.createElement(
@@ -27734,9 +27761,9 @@ var TopUser = function (_React$Component) {
                             'p',
                             { className: 'name' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#' },
-                                'Tr\u1EA7n V\u0103n Ti\u1EBFn'
+                                _reactRouterDom.Link,
+                                { to: '#' },
+                                object.name
                             )
                         ),
                         _react2.default.createElement(
@@ -27746,7 +27773,8 @@ var TopUser = function (_React$Component) {
                             _react2.default.createElement(
                                 'span',
                                 null,
-                                '\xA0100'
+                                '\xA0',
+                                object.total_score
                             )
                         )
                     )
@@ -27761,9 +27789,9 @@ var TopUser = function (_React$Component) {
                         'div',
                         { className: 'col-4' },
                         _react2.default.createElement(
-                            'a',
-                            { href: '#' },
-                            _react2.default.createElement('img', { src: '/images/avatar_user.jpg', className: 'img-responsive img-user' })
+                            _reactRouterDom.Link,
+                            { to: '#' },
+                            _react2.default.createElement('img', { src: object.image, className: 'img-responsive img-user' })
                         )
                     ),
                     _react2.default.createElement(
@@ -27773,9 +27801,9 @@ var TopUser = function (_React$Component) {
                             'p',
                             { className: 'name' },
                             _react2.default.createElement(
-                                'a',
-                                { href: '#' },
-                                'Tr\u1EA7n V\u0103n Ti\u1EBFn'
+                                _reactRouterDom.Link,
+                                { to: '#' },
+                                object.name
                             )
                         ),
                         _react2.default.createElement(
@@ -27785,7 +27813,8 @@ var TopUser = function (_React$Component) {
                             _react2.default.createElement(
                                 'span',
                                 null,
-                                '\xA0100'
+                                '\xA0',
+                                object.total_score
                             )
                         )
                     )
@@ -29094,7 +29123,9 @@ var Detail = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Detail.__proto__ || Object.getPrototypeOf(Detail)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            isloading: true
+        };
         return _this;
     }
 
@@ -29114,15 +29145,59 @@ var Detail = function (_Component) {
                     reject('');
                 });
             });
-            promise.then(function (data) {
-                _this2.setState({ detail: data });
-            }).catch(function (err) {});
+
+            var promise1 = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/articles/getRandomArticle', { user_id: "0" }).then(function (res) {
+                    res = res.data;
+                    res = res.data;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+
+            Promise.all([promise, promise1]).then(function (data) {
+                _this2.setState({ detail: data[0], hot_daily: data[1] });
+            });
+        }
+    }, {
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            var _this3 = this;
+
+            var id_article = nextProps.match.params.id;
+
+            var promise = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/articles/getArticleDetail', { user_id: "0", id_article: id_article }).then(function (res) {
+                    res = res.data;
+                    res = res.data;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+
+            var promise1 = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/articles/getRandomArticle', { user_id: "0" }).then(function (res) {
+                    res = res.data;
+                    res = res.data;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+
+            Promise.all([promise, promise1]).then(function (data) {
+                _this3.setState({ detail: data[0], hot_daily: data[1] });
+            });
         }
     }, {
         key: 'render',
         value: function render() {
             var detail = this.state.detail;
-            return detail ? _react2.default.createElement(
+            var hot_daily = this.state.hot_daily;
+
+            return detail && hot_daily ? _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
@@ -29678,7 +29753,7 @@ var Detail = function (_Component) {
                                 { className: 'hot-daily' },
                                 'Tin hot trong ng\xE0y'
                             ),
-                            _react2.default.createElement(_hot_daily2.default, null)
+                            _react2.default.createElement(_hot_daily2.default, { hot_daily: hot_daily })
                         )
                     )
                 )
@@ -29710,6 +29785,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(7);
 
+var _common = __webpack_require__(58);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29730,8 +29807,7 @@ var HotDaily = function (_React$Component) {
     _createClass(HotDaily, [{
         key: 'render',
         value: function render() {
-
-            var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            var data = this.props.hot_daily.results;
 
             var hot_daily = data.map(function (object, index) {
                 return _react2.default.createElement(
@@ -29742,8 +29818,8 @@ var HotDaily = function (_React$Component) {
                         { className: 'col-5' },
                         _react2.default.createElement(
                             _reactRouterDom.Link,
-                            { to: '#' },
-                            _react2.default.createElement('img', { src: 'images/0.jpg', className: 'img-fluid' })
+                            { to: "/chi-tiet/" + object.id },
+                            _react2.default.createElement('img', { src: object.image, className: 'img-fluid' })
                         )
                     ),
                     _react2.default.createElement(
@@ -29754,8 +29830,8 @@ var HotDaily = function (_React$Component) {
                             { className: 'title' },
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
-                                { to: '#' },
-                                'C\u1EADp nh\u1EADt tin t\u1EE9c U23 Vi\u1EC7t Nam tr\u01B0\u1EDBc tr\u1EADn Chung k\u1EBFt U23 Ch\xE2u \xC1 v\u1EDBi U23 Uzbekistan ng\xE0y 27.01.2018'
+                                { to: "/chi-tiet/" + object.id },
+                                object.title
                             )
                         ),
                         _react2.default.createElement(
@@ -29767,15 +29843,15 @@ var HotDaily = function (_React$Component) {
                                 null,
                                 _react2.default.createElement(
                                     _reactRouterDom.Link,
-                                    { to: '#' },
-                                    'Tr\u1EA7n Ti\u1EBFn'
+                                    { to: "/chi-tiet/" + object.id },
+                                    object.getUser.name
                                 )
                             )
                         ),
                         _react2.default.createElement(
                             'p',
                             null,
-                            '12 gi\u1EDD tr\u01B0\u1EDBc'
+                            (0, _common.NiceTime)(object.published_at)
                         )
                     )
                 );
@@ -29875,6 +29951,65 @@ function getArticle() {
     }
     return state;
 }
+
+/***/ }),
+/* 163 */,
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Login = function (_Component) {
+    _inherits(Login, _Component);
+
+    function Login() {
+        _classCallCheck(this, Login);
+
+        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+    }
+
+    _createClass(Login, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    { className: "container" },
+                    _react2.default.createElement(
+                        "h1",
+                        null,
+                        "Kh\xF4ng t\u1ED3n t\u1EA1i trang n\xE0y"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Login;
+}(_react.Component);
+
+exports.default = Login;
 
 /***/ })
 /******/ ]);

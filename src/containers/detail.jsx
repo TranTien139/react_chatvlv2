@@ -10,6 +10,7 @@ class Detail extends Component {
     constructor(props){
         super(props)
         this.state ={
+            isloading: true
         }
     }
 
@@ -26,14 +27,56 @@ class Detail extends Component {
                 reject('');
             });
         });
-        promise.then(data=>{
-            this.setState({detail:data});
-        }).catch(err=>{});
+
+        let promise1 = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/articles/getRandomArticle',{user_id: "0"}).then(res=>{
+                res = res.data;
+                res = res.data;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+
+        Promise.all([promise,promise1]).then((data)=>{
+            this.setState({detail: data[0], hot_daily:data[1]});
+        });
     }
+
+    componentWillReceiveProps(nextProps){
+        let id_article = nextProps.match.params.id;
+
+        let promise = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/articles/getArticleDetail',{user_id: "0",id_article: id_article }).then(res=>{
+                res = res.data;
+                res = res.data;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+
+        let promise1 = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/articles/getRandomArticle',{user_id: "0"}).then(res=>{
+                res = res.data;
+                res = res.data;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+
+        Promise.all([promise,promise1]).then((data)=>{
+            this.setState({detail: data[0], hot_daily:data[1]});
+        });
+    }
+
 
     render() {
         let detail = this.state.detail;
-        return detail ?  (
+        let hot_daily = this.state.hot_daily;
+
+        return detail && hot_daily ?  (
             <div>
                 <div className="container">
                     <div className="row">
@@ -246,7 +289,7 @@ class Detail extends Component {
                         </div>
                         <div className="col-sm-4">
                             <h4 className="hot-daily">Tin hot trong ngày</h4>
-                            <HotDaily />
+                            <HotDaily hot_daily={hot_daily} />
                         </div>
                     </div>
                 </div>

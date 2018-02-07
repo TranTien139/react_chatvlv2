@@ -1,22 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {NiceTime} from '../../functions/common.js';
 
 class HotDaily extends React.Component {
     render() {
-
-        let data =  [1,2,3,4,5,6,7,8,9,10];
+        let data = this.props.hot_daily.results;
 
         let hot_daily = data.map((object,index)=>{
             return (
                 <div key={Math.random()} className="row item-daily-post">
-                    <div className="col-5"><Link to="#"><img src="images/0.jpg" className="img-fluid"/></Link>
+                    <div className="col-5"><Link to={"/chi-tiet/"+ object.id} ><img src={object.image} className="img-fluid"/></Link>
                     </div>
                     <div className="col-7">
-                        <h3 className="title"><Link to="#">Cập nhật tin tức U23 Việt Nam trước trận Chung kết
-                            U23 Châu Á với U23 Uzbekistan
-                            ngày 27.01.2018</Link></h3>
-                        <p>Đăng bởi <span><Link to="#">Trần Tiến</Link></span></p>
-                        <p>12 giờ trước</p>
+                        <h3 className="title"><Link to={"/chi-tiet/"+ object.id}>{object.title}</Link></h3>
+                        <p>Đăng bởi <span><Link to={"/chi-tiet/"+object.id }>{object.getUser.name}</Link></span></p>
+                        <p>{ NiceTime(object.published_at) }</p>
                     </div>
                 </div>
             );

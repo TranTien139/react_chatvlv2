@@ -5,7 +5,8 @@ import Home from '../containers/home.jsx';
 import Login from '../containers/login.jsx';
 import Layout from './layout.jsx';
 import Hot from  '../containers/hot.jsx';
-import Detail from  '../containers/detail.jsx'
+import Detail from  '../containers/detail.jsx';
+import NotFound from '../containers/notfound.jsx';
 
 function isLoggedIn() { return false; }
 
