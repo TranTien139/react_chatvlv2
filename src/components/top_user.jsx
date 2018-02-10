@@ -38,7 +38,7 @@ class TopUser extends React.Component {
         });
 
         return(
-            <div className="col-sm-4">
+            <div key={Math.random()} className="col-sm-4">
                 <div className="row top-user-home">
                     <ul className="list-inline">
                         <li className="list-inline-item"><h3>Top danh hài</h3></li>

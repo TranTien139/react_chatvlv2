@@ -24,6 +24,7 @@ class Home extends Component{
     }
 
     componentDidMount(){
+
         if(!this.props.page.homepage) {
             this.props.getArticleNew(1);
         }
@@ -35,7 +36,7 @@ class Home extends Component{
                 res = res.data.results;
                 resolve(res);
             }).catch(err=>{
-                reject('');
+                reject([]);
             });
         });
         promise.then(data=>{

@@ -804,7 +804,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_6__Redirect__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(53);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__Router__ = __webpack_require__(27);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_8__Router__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(119);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_9__StaticRouter__["a"]; });
@@ -1540,12 +1540,35 @@ var locationsAreEqual = function locationsAreEqual(a, b) {
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports) {
+
+function NiceTime(timestamp) {
+    var foo = timestamp * 1000;
+    var curr = new Date();
+    let diff =  curr.getTime()-foo;
+    if (diff <= 59 * 1000) {
+        return Math.ceil(diff / 1000) + ' giây trước';
+    } else if ((diff >= 60 * 1000) &&(diff < 3600 * 1000)) {
+        return  Math.ceil(diff / (60 * 1000)) + ' phút trước';
+    }else if ((diff >= 3600 * 1000) &&(diff < 3600 * 24 * 1000))
+    {
+        return  Math.ceil(diff / (3600 * 1000)) + ' giờ trước';
+    } else {
+        var stamp = new Date(foo);
+        return stamp.getDate() + "/" + stamp.getMonth() + "/" + stamp.getFullYear();
+    }
+}
+
+module.exports.NiceTime = NiceTime;
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(129);
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1561,7 +1584,7 @@ module.exports = __webpack_require__(129);
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(8);
   var warning = __webpack_require__(10);
-  var ReactPropTypesSecret = __webpack_require__(20);
+  var ReactPropTypesSecret = __webpack_require__(21);
   var loggedTypeFailures = {};
 }
 
@@ -1612,7 +1635,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1631,7 +1654,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1650,7 +1673,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1678,7 +1701,7 @@ function warning(message) {
 }
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1750,7 +1773,7 @@ function isPlainObject(value) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1834,7 +1857,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
 };
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1925,7 +1948,7 @@ var createTransitionManager = function createTransitionManager() {
 exports.default = createTransitionManager;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1936,7 +1959,7 @@ exports.default = createTransitionManager;
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__["a" /* default */]);
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2085,7 +2108,7 @@ Route.childContextTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (Route);
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2168,29 +2191,6 @@ var createTransitionManager = function createTransitionManager() {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (createTransitionManager);
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports) {
-
-function NiceTime(timestamp) {
-    var foo = timestamp * 1000;
-    var curr = new Date();
-    let diff =  curr.getTime()-foo;
-    if (diff <= 59 * 1000) {
-        return Math.ceil(diff / 1000) + ' giây trước';
-    } else if ((diff >= 60 * 1000) &&(diff < 3600 * 1000)) {
-        return  Math.ceil(diff / (60 * 1000)) + ' phút trước';
-    }else if ((diff >= 3600 * 1000) &&(diff < 3600 * 24 * 1000))
-    {
-        return  Math.ceil(diff / (3600 * 1000)) + ' giờ trước';
-    } else {
-        var stamp = new Date(foo);
-        return stamp.getDate() + "/" + stamp.getMonth() + "/" + stamp.getFullYear();
-    }
-}
-
-module.exports.NiceTime = NiceTime;
 
 /***/ }),
 /* 30 */
@@ -3014,7 +3014,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionTypes; });
 /* harmony export (immutable) */ __webpack_exports__["b"] = createStore;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_symbol_observable__ = __webpack_require__(94);
 
 
@@ -3457,8 +3457,8 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = verifyPlainObject;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__warning__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash_es_isPlainObject__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__warning__ = __webpack_require__(23);
 
 
 
@@ -3833,7 +3833,7 @@ MemoryRouter.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Route__ = __webpack_require__(28);
 // Written in this round about way for babel-transform-imports
 
 
@@ -4392,7 +4392,7 @@ Switch.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_hoist_non_react_statics__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(28);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -4823,7 +4823,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(70);
 
-var _reactRedux = __webpack_require__(21);
+var _reactRedux = __webpack_require__(22);
 
 var _redux = __webpack_require__(14);
 
@@ -4837,7 +4837,7 @@ var _main = __webpack_require__(124);
 
 var _main2 = _interopRequireDefault(_main);
 
-var _index = __webpack_require__(161);
+var _index = __webpack_require__(162);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -4915,7 +4915,7 @@ var emptyObject = __webpack_require__(13);
 var invariant = __webpack_require__(8);
 var warning = __webpack_require__(10);
 var emptyFunction = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(20);
 
 // TODO: this is special because it gets imported during build.
 
@@ -6625,7 +6625,7 @@ var shallowEqual = __webpack_require__(35);
 var containsNode = __webpack_require__(36);
 var focusNode = __webpack_require__(37);
 var emptyObject = __webpack_require__(13);
-var checkPropTypes = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(20);
 var hyphenateStyleName = __webpack_require__(75);
 var camelizeStyleName = __webpack_require__(77);
 
@@ -22160,7 +22160,7 @@ module.exports = camelize;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_PropTypes__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_warning__ = __webpack_require__(23);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -22254,8 +22254,8 @@ var invariant = __webpack_require__(8);
 var warning = __webpack_require__(10);
 var assign = __webpack_require__(9);
 
-var ReactPropTypesSecret = __webpack_require__(20);
-var checkPropTypes = __webpack_require__(19);
+var ReactPropTypesSecret = __webpack_require__(21);
+var checkPropTypes = __webpack_require__(20);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -22801,7 +22801,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 var emptyFunction = __webpack_require__(6);
 var invariant = __webpack_require__(8);
-var ReactPropTypesSecret = __webpack_require__(20);
+var ReactPropTypesSecret = __webpack_require__(21);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -23445,7 +23445,7 @@ function symbolObservablePonyfill(root) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony export (immutable) */ __webpack_exports__["a"] = combineReducers;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__createStore__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash_es_isPlainObject__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_warning__ = __webpack_require__(44);
 
 
@@ -23887,7 +23887,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = verifySubselectors;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_warning__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_warning__ = __webpack_require__(23);
 
 
 function verify(selector, methodName, displayName) {
@@ -23919,7 +23919,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createBrowserHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(27);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -23994,11 +23994,11 @@ var _invariant = __webpack_require__(4);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(24);
+var _LocationUtils = __webpack_require__(25);
 
 var _PathUtils = __webpack_require__(11);
 
-var _createTransitionManager = __webpack_require__(25);
+var _createTransitionManager = __webpack_require__(26);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -24299,7 +24299,7 @@ exports.default = createBrowserHistory;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_history_createHashHistory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_history_createHashHistory__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(27);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -24371,11 +24371,11 @@ var _invariant = __webpack_require__(4);
 
 var _invariant2 = _interopRequireDefault(_invariant);
 
-var _LocationUtils = __webpack_require__(24);
+var _LocationUtils = __webpack_require__(25);
 
 var _PathUtils = __webpack_require__(11);
 
-var _createTransitionManager = __webpack_require__(25);
+var _createTransitionManager = __webpack_require__(26);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -24712,9 +24712,9 @@ var _warning2 = _interopRequireDefault(_warning);
 
 var _PathUtils = __webpack_require__(11);
 
-var _LocationUtils = __webpack_require__(24);
+var _LocationUtils = __webpack_require__(25);
 
-var _createTransitionManager = __webpack_require__(25);
+var _createTransitionManager = __webpack_require__(26);
 
 var _createTransitionManager2 = _interopRequireDefault(_createTransitionManager);
 
@@ -25451,7 +25451,7 @@ module.exports = Array.isArray || function (arr) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(56);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -25755,7 +25755,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(56);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -26074,7 +26074,7 @@ var createHashHistory = function createHashHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(29);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -26345,9 +26345,13 @@ var _detail = __webpack_require__(158);
 
 var _detail2 = _interopRequireDefault(_detail);
 
-var _notfound = __webpack_require__(160);
+var _notfound = __webpack_require__(161);
 
 var _notfound2 = _interopRequireDefault(_notfound);
+
+var _member = __webpack_require__(166);
+
+var _member2 = _interopRequireDefault(_member);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26364,7 +26368,8 @@ exports.default = function () {
             null,
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/chi-tiet/:id', component: _detail2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/bai-noi-bat', component: _hot2.default })
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/bai-noi-bat', component: _hot2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/thanh-vien/:slug', component: _member2.default })
         )
     );
 };
@@ -26381,7 +26386,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(55);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(28);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(15);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
@@ -26435,7 +26440,7 @@ var _list_article = __webpack_require__(127);
 
 var _list_article2 = _interopRequireDefault(_list_article);
 
-var _reactRedux = __webpack_require__(21);
+var _reactRedux = __webpack_require__(22);
 
 var _redux = __webpack_require__(14);
 
@@ -26457,7 +26462,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var axios = __webpack_require__(18);
+var axios = __webpack_require__(19);
 var domain = __webpack_require__(31);
 
 var Home = function (_Component) {
@@ -26502,7 +26507,7 @@ var Home = function (_Component) {
                     res = res.data.results;
                     resolve(res);
                 }).catch(function (err) {
-                    reject('');
+                    reject([]);
                 });
             });
             promise.then(function (data) {
@@ -26583,7 +26588,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(7);
 
-var _common = __webpack_require__(29);
+var _common = __webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26644,7 +26649,7 @@ var ListArticle = function (_React$Component) {
                                     'b\u1EDFi ',
                                     _react2.default.createElement(
                                         _reactRouterDom.Link,
-                                        { to: '#' },
+                                        { to: '/thanh-vien/' + object.getUser.userSlug },
                                         object.getUser.name
                                     ),
                                     _react2.default.createElement(
@@ -26786,7 +26791,7 @@ exports.default = ListArticle;
 "use strict";
 
 
-var _axios = __webpack_require__(18);
+var _axios = __webpack_require__(19);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -26806,7 +26811,20 @@ function getArticleNew(page) {
     };
 }
 
+function getArticleHot(page) {
+    return function (dispatch) {
+        _axios2.default.post(domain.domain + '/articles/getHotArticle', { user_id: "0", type: 1, size: 10, page: page }).then(function (response) {
+            response = response.data;
+            response = response.data.results;
+            dispatch({ type: 'GET_HOT', payload: response });
+        }).catch(function (err) {
+            dispatch({ type: 'GET_HOT_REJECT', payload: err });
+        });
+    };
+}
+
 module.exports.getArticleNew = getArticleNew;
+module.exports.getArticleHot = getArticleHot;
 
 /***/ }),
 /* 129 */
@@ -27823,7 +27841,7 @@ var TopUser = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4' },
+                { key: Math.random(), className: 'col-sm-4' },
                 _react2.default.createElement(
                     'div',
                     { className: 'row top-user-home' },
@@ -28045,7 +28063,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(7);
 
-var _reactRedux = __webpack_require__(21);
+var _reactRedux = __webpack_require__(22);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28238,17 +28256,23 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _axios = __webpack_require__(18);
+var _list_article = __webpack_require__(127);
 
-var _axios2 = _interopRequireDefault(_axios);
+var _list_article2 = _interopRequireDefault(_list_article);
 
-var _Modal = __webpack_require__(66);
+var _reactRedux = __webpack_require__(22);
 
-var _Modal2 = _interopRequireDefault(_Modal);
+var _redux = __webpack_require__(14);
 
-var _reactPaginate = __webpack_require__(152);
+var _getArticle = __webpack_require__(128);
 
-var _reactPaginate2 = _interopRequireDefault(_reactPaginate);
+var _loading = __webpack_require__(65);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+var _top_user = __webpack_require__(147);
+
+var _top_user2 = _interopRequireDefault(_top_user);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28257,6 +28281,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var axios = __webpack_require__(19);
+var domain = __webpack_require__(31);
 
 var Hot = function (_Component) {
     _inherits(Hot, _Component);
@@ -28266,17 +28293,73 @@ var Hot = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Hot.__proto__ || Object.getPrototypeOf(Hot)).call(this, props));
 
-        _this.state = {};
+        _this.NextPage = function (page) {
+            _this.props.hot.isloading = true;
+            _this.props.page.hot = page + 1;
+            _this.setState({ page: 1 });
+            _this.props.getArticleHot(page);
+        };
+
+        _this.state = {
+            hot: [],
+            page: 1,
+            TopUser: []
+        };
         return _this;
     }
 
     _createClass(Hot, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+
+            if (!this.props.page.hot) {
+                this.props.getArticleHot(1);
+            }
+            this.props.page.hot = 2;
+
+            // let promise = new Promise((resolve, reject)=>{
+            //     axios.post(domain.domain+'/users/getTopUser',{user_id: "0",type: 1 }).then(res=>{
+            //         res = res.data;
+            //         res = res.data.results;
+            //         resolve(res);
+            //     }).catch(err=>{
+            //         reject([]);
+            //     });
+            // });
+            // promise.then(data=>{
+            //     this.setState({TopUser:data});
+            // }).catch(err=>{
+            // })
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var list_article = this.props.hot.hot;
             return _react2.default.createElement(
                 'div',
-                { className: 'container' },
-                'cac bai hot'
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-8' },
+                            _react2.default.createElement(_list_article2.default, { data: list_article }),
+                            this.props.hot.isloading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                                'div',
+                                { id: 'more-comment-wrap' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { onClick: this.NextPage.bind(this, this.props.page.hot), className: 'more-comment' },
+                                    'XEM TH\xCAM...'
+                                )
+                            )
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -28284,798 +28367,28 @@ var Hot = function (_Component) {
     return Hot;
 }(_react.Component);
 
-exports.default = Hot;
-
-/***/ }),
-/* 152 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _PaginationBoxView = __webpack_require__(153);
-
-var _PaginationBoxView2 = _interopRequireDefault(_PaginationBoxView);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-module.exports = _PaginationBoxView2.default;
-//# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 153 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _classnames = __webpack_require__(154);
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _reactAddonsCreateFragment = __webpack_require__(155);
-
-var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
-
-var _PageView = __webpack_require__(156);
-
-var _PageView2 = _interopRequireDefault(_PageView);
-
-var _BreakView = __webpack_require__(157);
-
-var _BreakView2 = _interopRequireDefault(_BreakView);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var PaginationBoxView = function (_Component) {
-  _inherits(PaginationBoxView, _Component);
-
-  function PaginationBoxView(props) {
-    _classCallCheck(this, PaginationBoxView);
-
-    var _this = _possibleConstructorReturn(this, (PaginationBoxView.__proto__ || Object.getPrototypeOf(PaginationBoxView)).call(this, props));
-
-    _this.handlePreviousPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (_this.state.selected > 0) {
-        _this.handlePageSelected(_this.state.selected - 1, evt);
-      }
+function mapStateToProps(state) {
+    return {
+        hot: state.hot,
+        page: state.page
     };
+}
 
-    _this.handleNextPage = function (evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-      if (_this.state.selected < _this.props.pageCount - 1) {
-        _this.handlePageSelected(_this.state.selected + 1, evt);
-      }
-    };
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        getArticleHot: _getArticle.getArticleHot
+    }, dispatch);
+}
 
-    _this.handlePageSelected = function (selected, evt) {
-      evt.preventDefault ? evt.preventDefault() : evt.returnValue = false;
-
-      if (_this.state.selected === selected) return;
-
-      _this.setState({ selected: selected });
-
-      // Call the callback with the new selected item:
-      _this.callCallback(selected);
-    };
-
-    _this.callCallback = function (selectedItem) {
-      if (typeof _this.props.onPageChange !== "undefined" && typeof _this.props.onPageChange === "function") {
-        _this.props.onPageChange({ selected: selectedItem });
-      }
-    };
-
-    _this.pagination = function () {
-      var items = {};
-
-      if (_this.props.pageCount <= _this.props.pageRangeDisplayed) {
-
-        for (var index = 0; index < _this.props.pageCount; index++) {
-          items['key' + index] = _this.getPageElement(index);
-        }
-      } else {
-
-        var leftSide = _this.props.pageRangeDisplayed / 2;
-        var rightSide = _this.props.pageRangeDisplayed - leftSide;
-
-        if (_this.state.selected > _this.props.pageCount - _this.props.pageRangeDisplayed / 2) {
-          rightSide = _this.props.pageCount - _this.state.selected;
-          leftSide = _this.props.pageRangeDisplayed - rightSide;
-        } else if (_this.state.selected < _this.props.pageRangeDisplayed / 2) {
-          leftSide = _this.state.selected;
-          rightSide = _this.props.pageRangeDisplayed - leftSide;
-        }
-
-        var _index = void 0;
-        var page = void 0;
-        var breakView = void 0;
-        var createPageView = function createPageView(index) {
-          return _this.getPageElement(index);
-        };
-
-        for (_index = 0; _index < _this.props.pageCount; _index++) {
-
-          page = _index + 1;
-
-          if (page <= _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
-            continue;
-          }
-
-          if (page > _this.props.pageCount - _this.props.marginPagesDisplayed) {
-            items['key' + _index] = createPageView(_index);
-            continue;
-          }
-
-          if (_index >= _this.state.selected - leftSide && _index <= _this.state.selected + rightSide) {
-            items['key' + _index] = createPageView(_index);
-            continue;
-          }
-
-          var keys = Object.keys(items);
-          var breakLabelKey = keys[keys.length - 1];
-          var breakLabelValue = items[breakLabelKey];
-
-          if (_this.props.breakLabel && breakLabelValue !== breakView) {
-            breakView = _react2.default.createElement(_BreakView2.default, {
-              breakLabel: _this.props.breakLabel,
-              breakClassName: _this.props.breakClassName
-            });
-
-            items['key' + _index] = breakView;
-          }
-        }
-      }
-
-      return items;
-    };
-
-    _this.state = {
-      selected: props.initialPage ? props.initialPage : props.forcePage ? props.forcePage : 0
-    };
-    return _this;
-  }
-
-  _createClass(PaginationBoxView, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      // Call the callback with the initialPage item:
-      if (typeof this.props.initialPage !== 'undefined' && !this.props.disableInitialCallback) {
-        this.callCallback(this.props.initialPage);
-      }
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (typeof nextProps.forcePage !== 'undefined' && this.props.forcePage !== nextProps.forcePage) {
-        this.setState({ selected: nextProps.forcePage });
-      }
-    }
-  }, {
-    key: 'hrefBuilder',
-    value: function hrefBuilder(pageIndex) {
-      if (this.props.hrefBuilder && pageIndex !== this.state.selected && pageIndex >= 0 && pageIndex < this.props.pageCount) {
-        return this.props.hrefBuilder(pageIndex + 1);
-      }
-    }
-  }, {
-    key: 'getPageElement',
-    value: function getPageElement(index) {
-      return _react2.default.createElement(_PageView2.default, {
-        onClick: this.handlePageSelected.bind(null, index),
-        selected: this.state.selected === index,
-        pageClassName: this.props.pageClassName,
-        pageLinkClassName: this.props.pageLinkClassName,
-        activeClassName: this.props.activeClassName,
-        extraAriaContext: this.props.extraAriaContext,
-        href: this.hrefBuilder(index),
-        page: index + 1 });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var disabled = this.props.disabledClassName;
-
-      var previousClasses = (0, _classnames2.default)(this.props.previousClassName, _defineProperty({}, disabled, this.state.selected === 0));
-
-      var nextClasses = (0, _classnames2.default)(this.props.nextClassName, _defineProperty({}, disabled, this.state.selected === this.props.pageCount - 1));
-
-      return _react2.default.createElement(
-        'ul',
-        { className: this.props.containerClassName },
-        _react2.default.createElement(
-          'li',
-          { className: previousClasses },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.handlePreviousPage,
-              className: this.props.previousLinkClassName,
-              href: this.hrefBuilder(this.state.selected - 1),
-              tabIndex: '0',
-              onKeyPress: this.handlePreviousPage },
-            this.props.previousLabel
-          )
-        ),
-        (0, _reactAddonsCreateFragment2.default)(this.pagination()),
-        _react2.default.createElement(
-          'li',
-          { className: nextClasses },
-          _react2.default.createElement(
-            'a',
-            { onClick: this.handleNextPage,
-              className: this.props.nextLinkClassName,
-              href: this.hrefBuilder(this.state.selected + 1),
-              tabIndex: '0',
-              onKeyPress: this.handleNextPage },
-            this.props.nextLabel
-          )
-        )
-      );
-    }
-  }]);
-
-  return PaginationBoxView;
-}(_react.Component);
-
-PaginationBoxView.propTypes = {
-  pageCount: _propTypes2.default.number.isRequired,
-  pageRangeDisplayed: _propTypes2.default.number.isRequired,
-  marginPagesDisplayed: _propTypes2.default.number.isRequired,
-  previousLabel: _propTypes2.default.node,
-  nextLabel: _propTypes2.default.node,
-  breakLabel: _propTypes2.default.node,
-  hrefBuilder: _propTypes2.default.func,
-  onPageChange: _propTypes2.default.func,
-  initialPage: _propTypes2.default.number,
-  forcePage: _propTypes2.default.number,
-  disableInitialCallback: _propTypes2.default.bool,
-  containerClassName: _propTypes2.default.string,
-  pageClassName: _propTypes2.default.string,
-  pageLinkClassName: _propTypes2.default.string,
-  activeClassName: _propTypes2.default.string,
-  previousClassName: _propTypes2.default.string,
-  nextClassName: _propTypes2.default.string,
-  previousLinkClassName: _propTypes2.default.string,
-  nextLinkClassName: _propTypes2.default.string,
-  disabledClassName: _propTypes2.default.string,
-  breakClassName: _propTypes2.default.string
-};
-PaginationBoxView.defaultProps = {
-  pageCount: 10,
-  pageRangeDisplayed: 2,
-  marginPagesDisplayed: 3,
-  activeClassName: "selected",
-  previousClassName: "previous",
-  nextClassName: "next",
-  previousLabel: "Previous",
-  nextLabel: "Next",
-  breakLabel: "...",
-  disabledClassName: "disabled",
-  disableInitialCallback: false
-};
-exports.default = PaginationBoxView;
-;
-//# sourceMappingURL=PaginationBoxView.js.map
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Hot);
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-  Copyright (c) 2016 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				classes.push(classNames.apply(null, arg));
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (typeof module !== 'undefined' && module.exports) {
-		module.exports = classNames;
-	} else if (true) {
-		// register as 'classnames', consistent with npm package name
-		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-			return classNames;
-		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {
-		window.classNames = classNames;
-	}
-}());
-
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var React = __webpack_require__(0);
-
-var REACT_ELEMENT_TYPE =
-  (typeof Symbol === 'function' && Symbol.for && Symbol.for('react.element')) ||
-  0xeac7;
-
-var emptyFunction = __webpack_require__(6);
-var invariant = __webpack_require__(8);
-var warning = __webpack_require__(10);
-
-var SEPARATOR = '.';
-var SUBSEPARATOR = ':';
-
-var didWarnAboutMaps = false;
-
-var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-function getIteratorFn(maybeIterable) {
-  var iteratorFn =
-    maybeIterable &&
-    ((ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL]) ||
-      maybeIterable[FAUX_ITERATOR_SYMBOL]);
-  if (typeof iteratorFn === 'function') {
-    return iteratorFn;
-  }
-}
-
-function escape(key) {
-  var escapeRegex = /[=:]/g;
-  var escaperLookup = {
-    '=': '=0',
-    ':': '=2'
-  };
-  var escapedString = ('' + key).replace(escapeRegex, function(match) {
-    return escaperLookup[match];
-  });
-
-  return '$' + escapedString;
-}
-
-function getComponentKey(component, index) {
-  // Do some typechecking here since we call this blindly. We want to ensure
-  // that we don't block potential future ES APIs.
-  if (component && typeof component === 'object' && component.key != null) {
-    // Explicit key
-    return escape(component.key);
-  }
-  // Implicit key determined by the index in the set
-  return index.toString(36);
-}
-
-function traverseAllChildrenImpl(
-  children,
-  nameSoFar,
-  callback,
-  traverseContext
-) {
-  var type = typeof children;
-
-  if (type === 'undefined' || type === 'boolean') {
-    // All of the above are perceived as null.
-    children = null;
-  }
-
-  if (
-    children === null ||
-    type === 'string' ||
-    type === 'number' ||
-    // The following is inlined from ReactElement. This means we can optimize
-    // some checks. React Fiber also inlines this logic for similar purposes.
-    (type === 'object' && children.$$typeof === REACT_ELEMENT_TYPE)
-  ) {
-    callback(
-      traverseContext,
-      children,
-      // If it's the only child, treat the name as if it was wrapped in an array
-      // so that it's consistent if the number of children grows.
-      nameSoFar === '' ? SEPARATOR + getComponentKey(children, 0) : nameSoFar
-    );
-    return 1;
-  }
-
-  var child;
-  var nextName;
-  var subtreeCount = 0; // Count of children found in the current subtree.
-  var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
-
-  if (Array.isArray(children)) {
-    for (var i = 0; i < children.length; i++) {
-      child = children[i];
-      nextName = nextNamePrefix + getComponentKey(child, i);
-      subtreeCount += traverseAllChildrenImpl(
-        child,
-        nextName,
-        callback,
-        traverseContext
-      );
-    }
-  } else {
-    var iteratorFn = getIteratorFn(children);
-    if (iteratorFn) {
-      if (process.env.NODE_ENV !== 'production') {
-        // Warn about using Maps as children
-        if (iteratorFn === children.entries) {
-          warning(
-            didWarnAboutMaps,
-            'Using Maps as children is unsupported and will likely yield ' +
-              'unexpected results. Convert it to a sequence/iterable of keyed ' +
-              'ReactElements instead.'
-          );
-          didWarnAboutMaps = true;
-        }
-      }
-
-      var iterator = iteratorFn.call(children);
-      var step;
-      var ii = 0;
-      while (!(step = iterator.next()).done) {
-        child = step.value;
-        nextName = nextNamePrefix + getComponentKey(child, ii++);
-        subtreeCount += traverseAllChildrenImpl(
-          child,
-          nextName,
-          callback,
-          traverseContext
-        );
-      }
-    } else if (type === 'object') {
-      var addendum = '';
-      if (process.env.NODE_ENV !== 'production') {
-        addendum =
-          ' If you meant to render a collection of children, use an array ' +
-          'instead or wrap the object using createFragment(object) from the ' +
-          'React add-ons.';
-      }
-      var childrenString = '' + children;
-      invariant(
-        false,
-        'Objects are not valid as a React child (found: %s).%s',
-        childrenString === '[object Object]'
-          ? 'object with keys {' + Object.keys(children).join(', ') + '}'
-          : childrenString,
-        addendum
-      );
-    }
-  }
-
-  return subtreeCount;
-}
-
-function traverseAllChildren(children, callback, traverseContext) {
-  if (children == null) {
-    return 0;
-  }
-
-  return traverseAllChildrenImpl(children, '', callback, traverseContext);
-}
-
-var userProvidedKeyEscapeRegex = /\/+/g;
-function escapeUserProvidedKey(text) {
-  return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
-}
-
-function cloneAndReplaceKey(oldElement, newKey) {
-  return React.cloneElement(
-    oldElement,
-    {key: newKey},
-    oldElement.props !== undefined ? oldElement.props.children : undefined
-  );
-}
-
-var DEFAULT_POOL_SIZE = 10;
-var DEFAULT_POOLER = oneArgumentPooler;
-
-var oneArgumentPooler = function(copyFieldsFrom) {
-  var Klass = this;
-  if (Klass.instancePool.length) {
-    var instance = Klass.instancePool.pop();
-    Klass.call(instance, copyFieldsFrom);
-    return instance;
-  } else {
-    return new Klass(copyFieldsFrom);
-  }
-};
-
-var addPoolingTo = function addPoolingTo(CopyConstructor, pooler) {
-  // Casting as any so that flow ignores the actual implementation and trusts
-  // it to match the type we declared
-  var NewKlass = CopyConstructor;
-  NewKlass.instancePool = [];
-  NewKlass.getPooled = pooler || DEFAULT_POOLER;
-  if (!NewKlass.poolSize) {
-    NewKlass.poolSize = DEFAULT_POOL_SIZE;
-  }
-  NewKlass.release = standardReleaser;
-  return NewKlass;
-};
-
-var standardReleaser = function standardReleaser(instance) {
-  var Klass = this;
-  invariant(
-    instance instanceof Klass,
-    'Trying to release an instance into a pool of a different type.'
-  );
-  instance.destructor();
-  if (Klass.instancePool.length < Klass.poolSize) {
-    Klass.instancePool.push(instance);
-  }
-};
-
-var fourArgumentPooler = function fourArgumentPooler(a1, a2, a3, a4) {
-  var Klass = this;
-  if (Klass.instancePool.length) {
-    var instance = Klass.instancePool.pop();
-    Klass.call(instance, a1, a2, a3, a4);
-    return instance;
-  } else {
-    return new Klass(a1, a2, a3, a4);
-  }
-};
-
-function MapBookKeeping(mapResult, keyPrefix, mapFunction, mapContext) {
-  this.result = mapResult;
-  this.keyPrefix = keyPrefix;
-  this.func = mapFunction;
-  this.context = mapContext;
-  this.count = 0;
-}
-MapBookKeeping.prototype.destructor = function() {
-  this.result = null;
-  this.keyPrefix = null;
-  this.func = null;
-  this.context = null;
-  this.count = 0;
-};
-addPoolingTo(MapBookKeeping, fourArgumentPooler);
-
-function mapSingleChildIntoContext(bookKeeping, child, childKey) {
-  var result = bookKeeping.result;
-  var keyPrefix = bookKeeping.keyPrefix;
-  var func = bookKeeping.func;
-  var context = bookKeeping.context;
-
-  var mappedChild = func.call(context, child, bookKeeping.count++);
-  if (Array.isArray(mappedChild)) {
-    mapIntoWithKeyPrefixInternal(
-      mappedChild,
-      result,
-      childKey,
-      emptyFunction.thatReturnsArgument
-    );
-  } else if (mappedChild != null) {
-    if (React.isValidElement(mappedChild)) {
-      mappedChild = cloneAndReplaceKey(
-        mappedChild,
-        // Keep both the (mapped) and old keys if they differ, just as
-        // traverseAllChildren used to do for objects as children
-        keyPrefix +
-          (mappedChild.key && (!child || child.key !== mappedChild.key)
-            ? escapeUserProvidedKey(mappedChild.key) + '/'
-            : '') +
-          childKey
-      );
-    }
-    result.push(mappedChild);
-  }
-}
-
-function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
-  var escapedPrefix = '';
-  if (prefix != null) {
-    escapedPrefix = escapeUserProvidedKey(prefix) + '/';
-  }
-  var traverseContext = MapBookKeeping.getPooled(
-    array,
-    escapedPrefix,
-    func,
-    context
-  );
-  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
-  MapBookKeeping.release(traverseContext);
-}
-
-var numericPropertyRegex = /^\d+$/;
-
-var warnedAboutNumeric = false;
-
-function createReactFragment(object) {
-  if (typeof object !== 'object' || !object || Array.isArray(object)) {
-    warning(
-      false,
-      'React.addons.createFragment only accepts a single object. Got: %s',
-      object
-    );
-    return object;
-  }
-  if (React.isValidElement(object)) {
-    warning(
-      false,
-      'React.addons.createFragment does not accept a ReactElement ' +
-        'without a wrapper object.'
-    );
-    return object;
-  }
-
-  invariant(
-    object.nodeType !== 1,
-    'React.addons.createFragment(...): Encountered an invalid child; DOM ' +
-      'elements are not valid children of React components.'
-  );
-
-  var result = [];
-
-  for (var key in object) {
-    if (process.env.NODE_ENV !== 'production') {
-      if (!warnedAboutNumeric && numericPropertyRegex.test(key)) {
-        warning(
-          false,
-          'React.addons.createFragment(...): Child objects should have ' +
-            'non-numeric keys so ordering is preserved.'
-        );
-        warnedAboutNumeric = true;
-      }
-    }
-    mapIntoWithKeyPrefixInternal(
-      object[key],
-      result,
-      key,
-      emptyFunction.thatReturnsArgument
-    );
-  }
-
-  return result;
-}
-
-module.exports = createReactFragment;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PageView = function PageView(props) {
-  var cssClassName = props.pageClassName;
-  var linkClassName = props.pageLinkClassName;
-  var onClick = props.onClick;
-  var href = props.href;
-  var ariaLabel = 'Page ' + props.page + (props.extraAriaContext ? ' ' + props.extraAriaContext : '');
-  var ariaCurrent = null;
-
-  if (props.selected) {
-    ariaCurrent = 'page';
-    ariaLabel = 'Page ' + props.page + ' is your current page';
-    if (typeof cssClassName !== 'undefined') {
-      cssClassName = cssClassName + ' ' + props.activeClassName;
-    } else {
-      cssClassName = props.activeClassName;
-    }
-  }
-
-  return _react2.default.createElement(
-    'li',
-    { className: cssClassName },
-    _react2.default.createElement(
-      'a',
-      { onClick: onClick,
-        className: linkClassName,
-        href: href,
-        tabIndex: '0',
-        'aria-label': ariaLabel,
-        'aria-current': ariaCurrent,
-        onKeyPress: onClick },
-      props.page
-    )
-  );
-};
-
-exports.default = PageView;
-//# sourceMappingURL=PageView.js.map
-
-/***/ }),
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var BreakView = function BreakView(props) {
-  var label = props.breakLabel;
-  var className = props.breakClassName || 'break';
-
-  return _react2.default.createElement(
-    'li',
-    { className: className },
-    label
-  );
-};
-
-exports.default = BreakView;
-//# sourceMappingURL=BreakView.js.map
-
-/***/ }),
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
 /* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -29094,7 +28407,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(7);
 
-var _common = __webpack_require__(29);
+var _common = __webpack_require__(18);
 
 var _loading = __webpack_require__(65);
 
@@ -29104,6 +28417,10 @@ var _hot_daily = __webpack_require__(159);
 
 var _hot_daily2 = _interopRequireDefault(_hot_daily);
 
+var _comment = __webpack_require__(160);
+
+var _comment2 = _interopRequireDefault(_comment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29112,7 +28429,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var axios = __webpack_require__(18);
+var axios = __webpack_require__(19);
 var domain = __webpack_require__(31);
 
 var Detail = function (_Component) {
@@ -29156,8 +28473,19 @@ var Detail = function (_Component) {
                 });
             });
 
-            Promise.all([promise, promise1]).then(function (data) {
-                _this2.setState({ detail: data[0], hot_daily: data[1] });
+            var comment = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/comment/getCommentByArticle', { user_id: "0", "article_id": id_article }).then(function (res) {
+                    res = res.data;
+                    res = res.data.results;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+
+            Promise.all([promise, promise1, comment]).then(function (data) {
+                console.log(data);
+                _this2.setState({ detail: data[0], hot_daily: data[1], comment: data[2] });
             });
         }
     }, {
@@ -29187,8 +28515,18 @@ var Detail = function (_Component) {
                 });
             });
 
-            Promise.all([promise, promise1]).then(function (data) {
-                _this3.setState({ detail: data[0], hot_daily: data[1] });
+            var comment = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/comment/getCommentByArticle', { user_id: "0", "article_id": id_article }).then(function (res) {
+                    res = res.data;
+                    res = res.data.results;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject('');
+                });
+            });
+
+            Promise.all([promise, promise1, comment]).then(function (data) {
+                _this3.setState({ detail: data[0], hot_daily: data[1], comment: data[2] });
             });
         }
     }, {
@@ -29196,8 +28534,9 @@ var Detail = function (_Component) {
         value: function render() {
             var detail = this.state.detail;
             var hot_daily = this.state.hot_daily;
+            var comment_list = this.state.comment;
 
-            return detail && hot_daily ? _react2.default.createElement(
+            return detail && hot_daily && comment_list ? _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
@@ -29424,316 +28763,7 @@ var Detail = function (_Component) {
                             _react2.default.createElement(
                                 'div',
                                 { className: 'box-list-comment' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'item-comment' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'box-avatar-cmt float-left' },
-                                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'box-content-cmt float-left' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'name' },
-                                            _react2.default.createElement(
-                                                'cite',
-                                                null,
-                                                'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'time' },
-                                            _react2.default.createElement(
-                                                'time',
-                                                null,
-                                                '20:40 Ng\xE0y 08/07/2017'
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'content-comment' },
-                                            _react2.default.createElement(
-                                                'p',
-                                                null,
-                                                'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'count-like-share' },
-                                            _react2.default.createElement(
-                                                'ul',
-                                                { className: 'list-inline' },
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'div',
-                                                        { className: 'comment-reply-link' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'Tr\u1EA3 l\u1EDDi'
-                                                        )
-                                                    )
-                                                ),
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'span',
-                                                        { className: 'comment' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'Xem th\xEAm'
-                                                        )
-                                                    ),
-                                                    '100 tr\u1EA3 l\u1EDDi'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'span',
-                                                        { className: 'like' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'th\xEDch'
-                                                        )
-                                                    ),
-                                                    'B\u1EA1n v\xE0 100 ng\u01B0\u1EDDi th\xEDch b\xECnh lu\u1EADn n\xE0y'
-                                                )
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'list-reply-comment' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'box-avatar-cmt float-left' },
-                                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'box-content-cmt float-left' },
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'name' },
-                                                    _react2.default.createElement(
-                                                        'cite',
-                                                        null,
-                                                        'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
-                                                    )
-                                                ),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'time' },
-                                                    _react2.default.createElement(
-                                                        'time',
-                                                        null,
-                                                        '20:40 Ng\xE0y 08/07/2017'
-                                                    )
-                                                ),
-                                                _react2.default.createElement('div', { className: 'clearfix' }),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'content-comment' },
-                                                    _react2.default.createElement(
-                                                        'p',
-                                                        null,
-                                                        'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
-                                                    )
-                                                )
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'box-reply-comment' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'float-left avatar' },
-                                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'float-left get-content' },
-                                                _react2.default.createElement('div', { contentEditable: 'true', id: 'reply',
-                                                    placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xECnh lu\u1EADn n\xE0y' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'button',
-                                                { className: 'box-send-comment float-right' },
-                                                'G\u1EEDi b\xECnh lu\u1EADn'
-                                            ),
-                                            _react2.default.createElement('div', { className: 'clearfix' })
-                                        )
-                                    ),
-                                    _react2.default.createElement('div', { className: 'clearfix' })
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'item-comment' },
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'box-avatar-cmt float-left' },
-                                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'box-content-cmt float-left' },
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'name' },
-                                            _react2.default.createElement(
-                                                'cite',
-                                                null,
-                                                'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'time' },
-                                            _react2.default.createElement(
-                                                'time',
-                                                null,
-                                                '20:40 Ng\xE0y 08/07/2017'
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'content-comment' },
-                                            _react2.default.createElement(
-                                                'p',
-                                                null,
-                                                'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
-                                            )
-                                        ),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'count-like-share' },
-                                            _react2.default.createElement(
-                                                'ul',
-                                                { className: 'list-inline' },
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'div',
-                                                        { className: 'comment-reply-link' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'Tr\u1EA3 l\u1EDDi'
-                                                        )
-                                                    )
-                                                ),
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'span',
-                                                        { className: 'comment' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'Xem th\xEAm'
-                                                        )
-                                                    ),
-                                                    '100 tr\u1EA3 l\u1EDDi'
-                                                ),
-                                                _react2.default.createElement(
-                                                    'li',
-                                                    { className: 'list-inline-item' },
-                                                    _react2.default.createElement(
-                                                        'span',
-                                                        { className: 'like' },
-                                                        _react2.default.createElement(
-                                                            'a',
-                                                            { href: '#' },
-                                                            'th\xEDch'
-                                                        )
-                                                    ),
-                                                    'B\u1EA1n v\xE0 100 ng\u01B0\u1EDDi th\xEDch b\xECnh lu\u1EADn n\xE0y'
-                                                )
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'list-reply-comment' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'box-avatar-cmt float-left' },
-                                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'box-content-cmt float-left' },
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'name' },
-                                                    _react2.default.createElement(
-                                                        'cite',
-                                                        null,
-                                                        'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
-                                                    )
-                                                ),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'time' },
-                                                    _react2.default.createElement(
-                                                        'time',
-                                                        null,
-                                                        '20:40 Ng\xE0y 08/07/2017'
-                                                    )
-                                                ),
-                                                _react2.default.createElement('div', { className: 'clearfix' }),
-                                                _react2.default.createElement(
-                                                    'div',
-                                                    { className: 'content-comment' },
-                                                    _react2.default.createElement(
-                                                        'p',
-                                                        null,
-                                                        'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
-                                                    )
-                                                )
-                                            )
-                                        ),
-                                        _react2.default.createElement('div', { className: 'clearfix' }),
-                                        _react2.default.createElement(
-                                            'div',
-                                            { className: 'box-reply-comment' },
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'float-left avatar' },
-                                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'div',
-                                                { className: 'float-left get-content' },
-                                                _react2.default.createElement('div', { contentEditable: 'true', id: 'reply',
-                                                    placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xECnh lu\u1EADn n\xE0y' })
-                                            ),
-                                            _react2.default.createElement(
-                                                'button',
-                                                { className: 'box-send-comment float-right' },
-                                                'G\u1EEDi b\xECnh lu\u1EADn'
-                                            ),
-                                            _react2.default.createElement('div', { className: 'clearfix' })
-                                        )
-                                    ),
-                                    _react2.default.createElement('div', { className: 'clearfix' })
-                                ),
+                                _react2.default.createElement(_comment2.default, { comment_list: comment_list }),
                                 _react2.default.createElement(
                                     'div',
                                     { id: 'more-comment-wrap' },
@@ -29785,7 +28815,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(7);
 
-var _common = __webpack_require__(29);
+var _common = __webpack_require__(18);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29885,6 +28915,216 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(7);
+
+var _common = __webpack_require__(18);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Comment = function (_React$Component) {
+    _inherits(Comment, _React$Component);
+
+    function Comment() {
+        _classCallCheck(this, Comment);
+
+        return _possibleConstructorReturn(this, (Comment.__proto__ || Object.getPrototypeOf(Comment)).apply(this, arguments));
+    }
+
+    _createClass(Comment, [{
+        key: 'render',
+        value: function render() {
+            var data = this.props.comment_list;
+
+            var list_comment = data.map(function (object, index) {
+                return _react2.default.createElement(
+                    'div',
+                    { key: Math.random(), className: 'item-comment' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'box-avatar-cmt float-left' },
+                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'box-content-cmt float-left' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'name' },
+                            _react2.default.createElement(
+                                'cite',
+                                null,
+                                'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'time' },
+                            _react2.default.createElement(
+                                'time',
+                                null,
+                                '20:40 Ng\xE0y 08/07/2017'
+                            )
+                        ),
+                        _react2.default.createElement('div', { className: 'clearfix' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'content-comment' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'count-like-share' },
+                            _react2.default.createElement(
+                                'ul',
+                                { className: 'list-inline' },
+                                _react2.default.createElement(
+                                    'li',
+                                    { className: 'list-inline-item' },
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'comment-reply-link' },
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '#' },
+                                            'Tr\u1EA3 l\u1EDDi'
+                                        )
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    { className: 'list-inline-item' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'comment' },
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '#' },
+                                            'Xem th\xEAm'
+                                        )
+                                    ),
+                                    '100 tr\u1EA3 l\u1EDDi'
+                                ),
+                                _react2.default.createElement(
+                                    'li',
+                                    { className: 'list-inline-item' },
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'like' },
+                                        _react2.default.createElement(
+                                            'a',
+                                            { href: '#' },
+                                            'th\xEDch'
+                                        )
+                                    ),
+                                    'B\u1EA1n v\xE0 100 ng\u01B0\u1EDDi th\xEDch b\xECnh lu\u1EADn n\xE0y'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement('div', { className: 'clearfix' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'list-reply-comment' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'box-avatar-cmt float-left' },
+                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'box-content-cmt float-left' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'name' },
+                                    _react2.default.createElement(
+                                        'cite',
+                                        null,
+                                        'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'time' },
+                                    _react2.default.createElement(
+                                        'time',
+                                        null,
+                                        '20:40 Ng\xE0y 08/07/2017'
+                                    )
+                                ),
+                                _react2.default.createElement('div', { className: 'clearfix' }),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'content-comment' },
+                                    _react2.default.createElement(
+                                        'p',
+                                        null,
+                                        'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement('div', { className: 'clearfix' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'box-reply-comment' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'float-left avatar' },
+                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'float-left get-content' },
+                                _react2.default.createElement('div', { contentEditable: 'true', id: 'reply',
+                                    placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xECnh lu\u1EADn n\xE0y' })
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'box-send-comment float-right' },
+                                'G\u1EEDi b\xECnh lu\u1EADn'
+                            ),
+                            _react2.default.createElement('div', { className: 'clearfix' })
+                        )
+                    ),
+                    _react2.default.createElement('div', { className: 'clearfix' })
+                );
+            });
+
+            return list_comment;
+        }
+    }]);
+
+    return Comment;
+}(_react2.default.Component);
+
+exports.default = Comment;
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29927,7 +29167,7 @@ var Login = function (_Component) {
 exports.default = Login;
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29939,20 +29179,23 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(14);
 
-var _setpage = __webpack_require__(162);
+var _setpage = __webpack_require__(163);
 
-var _getArticle = __webpack_require__(163);
+var _getArticle = __webpack_require__(164);
+
+var _getHot = __webpack_require__(165);
 
 var rootReducer = (0, _redux.combineReducers)({
     page: _setpage.setpage,
     article: _getArticle.getArticle,
+    hot: _getHot.getHot,
     isloading: true
 });
 
 exports.default = rootReducer;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29981,7 +29224,7 @@ function setpage() {
 }
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30011,6 +29254,154 @@ function getArticle() {
     }
     return state;
 }
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.getHot = getHot;
+function getHot() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { hot: [], isloading: true };
+    var action = arguments[1];
+
+    switch (action.type) {
+        case 'GET_HOT':
+            return _extends({}, state, { hot: state.hot.concat(action.payload), isloading: false });
+            break;
+        case 'GET_HOT_REJECT':
+            return _extends({}, state);
+            break;
+        default:
+            return state;
+            break;
+    }
+    return state;
+}
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _list_article = __webpack_require__(127);
+
+var _list_article2 = _interopRequireDefault(_list_article);
+
+var _loading = __webpack_require__(65);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var axios = __webpack_require__(19);
+var domain = __webpack_require__(31);
+
+var Member = function (_Component) {
+    _inherits(Member, _Component);
+
+    function Member(props) {
+        _classCallCheck(this, Member);
+
+        var _this = _possibleConstructorReturn(this, (Member.__proto__ || Object.getPrototypeOf(Member)).call(this, props));
+
+        _this.NextPage = function (page) {
+            _this.setState({ page: page });
+        };
+
+        _this.state = {
+            article: '',
+            page: 1
+        };
+        return _this;
+    }
+
+    _createClass(Member, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var slug_user = this.props.match.params.slug;
+
+            var promise = new Promise(function (resolve, reject) {
+                axios.post(domain.domain + '/articles/getArticleNew', { user_id: "0", slug_user: slug_user, size: 10, page: _this2.state.page }).then(function (res) {
+                    res = res.data;
+                    res = res.data.results;
+                    resolve(res);
+                }).catch(function (err) {
+                    reject([]);
+                });
+            });
+
+            Promise.all([promise]).then(function (data) {
+                _this2.setState({ article: data[0] });
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            var list_article = this.state.article;
+
+            return list_article ? _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-8' },
+                            _react2.default.createElement(_list_article2.default, { data: list_article }),
+                            _react2.default.createElement(
+                                'div',
+                                { id: 'more-comment-wrap' },
+                                _react2.default.createElement(
+                                    'a',
+                                    { onClick: this.NextPage.bind(this, this.state.page + 1), className: 'more-comment' },
+                                    'XEM TH\xCAM...'
+                                )
+                            )
+                        )
+                    )
+                )
+            ) : _react2.default.createElement(_loading2.default, null);
+        }
+    }]);
+
+    return Member;
+}(_react.Component);
+
+exports.default = Member;
 
 /***/ })
 /******/ ]);

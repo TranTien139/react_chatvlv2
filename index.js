@@ -55,4 +55,10 @@ app.get("/thao-luan", function (req, res) {
     })
 });
 
+app.get("/thanh-vien/:slug", function (req, res) {
+    res.render("index.ejs",{
+        title:"Thanh vien"
+    })
+});
+
 app.listen(port,()=>{console.log('listen port:'+port)});

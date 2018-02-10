@@ -7,6 +7,7 @@ import Layout from './layout.jsx';
 import Hot from  '../containers/hot.jsx';
 import Detail from  '../containers/detail.jsx';
 import NotFound from '../containers/notfound.jsx';
+import Member from '../containers/member.jsx';
 
 function isLoggedIn() { return false; }
 
@@ -16,6 +17,7 @@ export default ()=>(
             <Route exact path="/" component={Home} />
             <Route path="/chi-tiet/:id" component={Detail} />
             <Route path="/bai-noi-bat" component={Hot} />
+            <Route path="/thanh-vien/:slug" component={Member} />
         </Layout>
     </Switch>
 )

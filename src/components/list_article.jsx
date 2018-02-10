@@ -18,7 +18,7 @@ class ListArticle extends React.Component {
                         <div className="right-content-item">
                             <h2><Link to={"/chi-tiet/"+ object.id}  className="jump_focus">{object.title}</Link></h2>
                             <div className="uinfo">
-                                bởi <Link to="#">{object.getUser.name}</Link>
+                                bởi <Link to={'/thanh-vien/'+object.getUser.userSlug }>{object.getUser.name}</Link>
                                 <span>&nbsp;{ NiceTime(object.published_at) }</span>
                             </div>
                             <div className="count-like-share">

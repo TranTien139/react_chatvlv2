@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {NiceTime} from '../../functions/common.js';
 import Loading from '../components/loading.jsx';
 import HotDaily from '../components/hot_daily.jsx';
+import Comment from  '../components/comment.jsx';
 
 class Detail extends Component {
     constructor(props){
@@ -38,8 +39,19 @@ class Detail extends Component {
             });
         });
 
-        Promise.all([promise,promise1]).then((data)=>{
-            this.setState({detail: data[0], hot_daily:data[1]});
+        let comment = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article}).then(res=>{
+                res = res.data;
+                res = res.data.results;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+
+        Promise.all([promise,promise1,comment]).then((data)=>{
+            console.log(data);
+            this.setState({detail: data[0], hot_daily:data[1],comment: data[2]});
         });
     }
 
@@ -66,8 +78,18 @@ class Detail extends Component {
             });
         });
 
-        Promise.all([promise,promise1]).then((data)=>{
-            this.setState({detail: data[0], hot_daily:data[1]});
+        let comment = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article}).then(res=>{
+                res = res.data;
+                res = res.data.results;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+
+        Promise.all([promise,promise1,comment]).then((data)=>{
+            this.setState({detail: data[0], hot_daily:data[1], comment: data[2]});
         });
     }
 
@@ -75,8 +97,9 @@ class Detail extends Component {
     render() {
         let detail = this.state.detail;
         let hot_daily = this.state.hot_daily;
+        let comment_list = this.state.comment;
 
-        return detail && hot_daily ?  (
+        return detail && hot_daily && comment_list ?  (
             <div>
                 <div className="container">
                     <div className="row">
@@ -154,134 +177,9 @@ class Detail extends Component {
                                 </div>
                             </div>
                             <div className="box-list-comment">
-                                {/* list 1*/}
-                                <div className="item-comment">
-                                    <div className="box-avatar-cmt float-left">
-                                        <img src="images/avatar.jpg" className="img-fluid"/>
-                                    </div>
-                                    <div className="box-content-cmt float-left">
-                                        <div className="name"><cite>Nguyễn Trần Thành</cite></div>
-                                        <div className="time">
-                                            <time>20:40 Ngày 08/07/2017</time>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="content-comment">
-                                            <p>Cô mà công khai nói xấu cháu mình như vậy là đúng sao? Không hiểu mọi
-                                                người nghĩ gì
-                                                nhỉ? :)</p>
-                                        </div>
-                                        <div className="count-like-share">
-                                            <ul className="list-inline">
-                                                <li className="list-inline-item">
-                                                    <div className="comment-reply-link"><a href="#">Trả lời</a></div>
-                                                </li>
-                                                <li className="list-inline-item"><span className="comment"><a href="#">Xem thêm</a></span>100
-                                                    trả lời
-                                                </li>
-                                                <li className="list-inline-item"><span className="like"><a href="#">thích</a></span>Bạn
-                                                    và 100 người thích bình luận này
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="list-reply-comment">
-                                            <div className="box-avatar-cmt float-left">
-                                                <img src="images/avatar.jpg" className="img-fluid"/>
-                                            </div>
-                                            <div className="box-content-cmt float-left">
-                                                <div className="name"><cite>Nguyễn Trần Thành</cite></div>
-                                                <div className="time">
-                                                    <time>20:40 Ngày 08/07/2017</time>
-                                                </div>
-                                                <div className="clearfix"/>
-                                                <div className="content-comment">
-                                                    <p>Cô mà công khai nói xấu cháu mình như vậy là đúng sao? Không hiểu
-                                                        mọi người nghĩ gì
-                                                        nhỉ? :)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="box-reply-comment">
-                                            <div className="float-left avatar">
-                                                <img src="images/avatar.jpg" className="img-fluid"/>
-                                            </div>
-                                            <div className="float-left get-content">
-                                                <div contentEditable="true" id="reply"
-                                                     placeholder="Bạn nghĩ gì về bình luận này"/>
-                                            </div>
-                                            <button className="box-send-comment float-right">
-                                                Gửi bình luận
-                                            </button>
-                                            <div className="clearfix"/>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
-                                {/* list 2*/}
-                                <div className="item-comment">
-                                    <div className="box-avatar-cmt float-left">
-                                        <img src="images/avatar.jpg" className="img-fluid"/>
-                                    </div>
-                                    <div className="box-content-cmt float-left">
-                                        <div className="name"><cite>Nguyễn Trần Thành</cite></div>
-                                        <div className="time">
-                                            <time>20:40 Ngày 08/07/2017</time>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="content-comment">
-                                            <p>Cô mà công khai nói xấu cháu mình như vậy là đúng sao? Không hiểu mọi
-                                                người nghĩ gì
-                                                nhỉ? :)</p>
-                                        </div>
-                                        <div className="count-like-share">
-                                            <ul className="list-inline">
-                                                <li className="list-inline-item">
-                                                    <div className="comment-reply-link"><a href="#">Trả lời</a></div>
-                                                </li>
-                                                <li className="list-inline-item"><span className="comment"><a href="#">Xem thêm</a></span>100
-                                                    trả lời
-                                                </li>
-                                                <li className="list-inline-item"><span className="like"><a href="#">thích</a></span>Bạn
-                                                    và 100 người thích bình luận này
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="list-reply-comment">
-                                            <div className="box-avatar-cmt float-left">
-                                                <img src="images/avatar.jpg" className="img-fluid"/>
-                                            </div>
-                                            <div className="box-content-cmt float-left">
-                                                <div className="name"><cite>Nguyễn Trần Thành</cite></div>
-                                                <div className="time">
-                                                    <time>20:40 Ngày 08/07/2017</time>
-                                                </div>
-                                                <div className="clearfix"/>
-                                                <div className="content-comment">
-                                                    <p>Cô mà công khai nói xấu cháu mình như vậy là đúng sao? Không hiểu
-                                                        mọi người nghĩ gì
-                                                        nhỉ? :)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="clearfix"/>
-                                        <div className="box-reply-comment">
-                                            <div className="float-left avatar">
-                                                <img src="images/avatar.jpg" className="img-fluid"/>
-                                            </div>
-                                            <div className="float-left get-content">
-                                                <div contentEditable="true" id="reply"
-                                                     placeholder="Bạn nghĩ gì về bình luận này"/>
-                                            </div>
-                                            <button className="box-send-comment float-right">
-                                                Gửi bình luận
-                                            </button>
-                                            <div className="clearfix"/>
-                                        </div>
-                                    </div>
-                                    <div className="clearfix"/>
-                                </div>
+
+                                <Comment comment_list ={comment_list} />
+
                                 <div id="more-comment-wrap">
                                     <a href="javascript:void(0);" className="more-comment">XEM THÊM...</a>
                                 </div>
