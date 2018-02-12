@@ -50,7 +50,6 @@ class Detail extends Component {
         });
 
         Promise.all([promise,promise1,comment]).then((data)=>{
-            console.log(data);
             this.setState({detail: data[0], hot_daily:data[1],comment: data[2]});
         });
     }

@@ -57,8 +57,26 @@ app.get("/thao-luan", function (req, res) {
 
 app.get("/thanh-vien/:slug", function (req, res) {
     res.render("index.ejs",{
-        title:"Thanh vien"
+        title:"Thành viên"
     })
+});
+
+app.get("/dang-nhap", function (req, res) {
+    res.render("index.ejs",{
+        title:"Đăng nhập"
+    })
+});
+
+app.get("/dang-ki", function (req, res) {
+    res.render("index.ejs",{
+        title:"Đăng kí"
+    });
+});
+
+app.get("/dang-xuat", function (req, res) {
+    res.render("index.ejs",{
+        title:"Đăng xuất"
+    });
 });
 
 app.listen(port,()=>{console.log('listen port:'+port)});

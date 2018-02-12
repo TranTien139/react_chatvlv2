@@ -28,6 +28,7 @@ class Home extends Component{
         if(!this.props.page.homepage) {
             this.props.getArticleNew(1);
         }
+
        this.props.page.homepage = 2;
 
         let promise = new Promise((resolve, reject)=>{
@@ -39,6 +40,7 @@ class Home extends Component{
                 reject([]);
             });
         });
+
         promise.then(data=>{
             this.setState({TopUser:data});
         }).catch(err=>{

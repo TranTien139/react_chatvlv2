@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
+const axios = require('axios');
+const domain = require('../../config_domain.js');
 
 class Navigation extends Component {
 
     constructor(props){
         super(props);
         this.state = {
-            path: ''
+            path: '',
+            check_login: false
         }
     }
 
@@ -18,9 +21,43 @@ class Navigation extends Component {
             path = path[1];
             this.setState({path: path});
         }
+
+        let check_login = localStorage.getItem('dangnhap');
+
+        if(check_login) {
+            this.setState({check_login: true});
+        }
+
+    }
+
+    logout = ()=>{
+        axios.post(domain.domain+'/users/logout?access_token='+localStorage.getItem('dangnhap')).then(data=>{
+            localStorage.removeItem('dangnhap');
+            this.setState({check_login: false});
+        }).catch(err=>{
+
+        });
     }
 
     render() {
+
+        const head = this.state.check_login === false ?
+            <ul className="list-inline">
+                <li className="list-inline-item"><Link to="/dang-nhap">Đăng nhập</Link></li>
+            </ul> : <ul className="list-inline">
+                <li className="list-inline-item"><Link to={"/thanh-vien/"}><img src="images/avatar.jpg" /></Link></li>
+                <li className="list-inline-item fullname">
+                    <Link to={"/thanh-vien/"}>Trần Tiến</Link>
+                    <div className="box-logout">
+                        <ul className="list-group">
+                            <li className="list-group-item"><a onClick={this.logout.bind(this)}>Đăng Xuất</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li className="list-inline-item"><Link to="/dang-bai">Đăng bài</Link></li>
+            </ul>
+
+
         return(
         <div>
             <header id="header">
@@ -49,18 +86,7 @@ class Navigation extends Component {
                                 </li>
                             </ul>
                             <div className="profile-top">
-                                <ul className="list-inline">
-                                    <li className="list-inline-item"><Link to="#"><img src="images/avatar.jpg" /></Link></li>
-                                    <li className="list-inline-item fullname">
-                                        <Link to="#">Trần Tiến</Link>
-                                        <div className="box-logout">
-                                            <ul className="list-group">
-                                                <li className="list-group-item"><a>Đăng Xuất</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li className="list-inline-item"><Link to="#">Đăng bài</Link></li>
-                                </ul>
+                                {head}
                             </div>
                         </div>
                     </nav>

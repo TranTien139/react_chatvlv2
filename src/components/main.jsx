@@ -18,6 +18,7 @@ export default ()=>(
             <Route path="/chi-tiet/:id" component={Detail} />
             <Route path="/bai-noi-bat" component={Hot} />
             <Route path="/thanh-vien/:slug" component={Member} />
+            <Route path="/dang-nhap" component={Login} />
         </Layout>
     </Switch>
 )

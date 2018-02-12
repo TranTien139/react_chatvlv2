@@ -9,7 +9,8 @@ class Member extends Component{
         super(props)
         this.state ={
             article: '',
-            page: 1
+            page: 1,
+            isloading: false
         }
     }
 
@@ -34,11 +35,35 @@ class Member extends Component{
 
 
     NextPage = (page)=>{
-        this.setState({page: page});
+        this.setState({isloading:true, page: page});
+
+        let slug_user = this.props.match.params.slug;
+
+        let promise = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/articles/getArticleNew',{user_id: "0", slug_user:slug_user, size:10,page: this.state.page}).then(res=>{
+                res = res.data;
+                res = res.data.results;
+                resolve(res);
+            }).catch(err=>{
+                reject([]);
+            });
+        });
+
+        promise.then((data)=>{
+            let more_article = this.state.article;
+            more_article = more_article.concat(data);
+            this.setState({article: more_article, isloading: false});
+        });
     }
 
-    render(){
+    componentWillUpdate(nextprops, nextState){
+    }
 
+    componentDidUpdate(prevProps, prevState){
+    }
+
+
+    render(){
         let list_article = this.state.article;
 
         return list_article ? (
@@ -48,7 +73,7 @@ class Member extends Component{
                         <div className="col-sm-8">
 
                             <ListArticle data={list_article} />
-                            <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div>
+                            { this.state.isloading === false ? <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div>: <Loading /> }
 
                         </div>
 

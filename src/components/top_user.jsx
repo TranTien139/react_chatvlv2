@@ -16,9 +16,9 @@ class TopUser extends React.Component {
         let list_user_left = data_left.map((object,index)=>{
             return (
                 <div key={Math.random()} className="row">
-                    <div className="col-4"><Link to="#"><img src={object.image} className="img-responsive img-user" /></Link></div>
+                    <div className="col-4"><Link to={'/thanh-vien/'+ object.userSlug}><img src={object.image} className="img-responsive img-user" /></Link></div>
                     <div className="col-8">
-                        <p className="name"><Link to="#">{object.name}</Link></p>
+                        <p className="name"><Link to={'/thanh-vien/'+ object.userSlug}>{object.name}</Link></p>
                         <p><img src="/icon/view_icon.png" /><span>&nbsp;{object.total_score}</span></p>
                     </div>
                 </div>
