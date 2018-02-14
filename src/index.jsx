@@ -13,8 +13,8 @@ const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
 let store = createStoreWithMiddleware(reducers);
 
-// store.dispatch({type:'SET_PAGE',payload: 1});
-// console.log(store.getState(),'hello');
+// store.dispatch({type:'UNAUTH',payload: ''});
+// console.log(store.getState());
 
 render(
     <Provider store={store}>

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import { connect } from 'react-redux';
 const axios = require('axios');
 const domain = require('../../config_domain.js');
+import {getToken,removeStorage,checkLogin} from '../actions/authAction.js';
+
 
 class Navigation extends Component {
 
@@ -10,7 +11,8 @@ class Navigation extends Component {
         super(props);
         this.state = {
             path: '',
-            check_login: false
+            check_login: false,
+            userInfo: ''
         }
     }
 
@@ -22,20 +24,19 @@ class Navigation extends Component {
             this.setState({path: path});
         }
 
-        let check_login = localStorage.getItem('dangnhap');
-
+        let check_login = checkLogin();
         if(check_login) {
-            this.setState({check_login: true});
+            this.setState({check_login: true,userInfo: check_login});
         }
 
     }
 
     logout = ()=>{
-        axios.post(domain.domain+'/users/logout?access_token='+localStorage.getItem('dangnhap')).then(data=>{
-            localStorage.removeItem('dangnhap');
+        let gettoken = getToken();
+        axios.post(domain.domain+'/users/logout?access_token='+ gettoken).then(data=>{
+            removeStorage();
             this.setState({check_login: false});
         }).catch(err=>{
-
         });
     }
 
@@ -45,9 +46,9 @@ class Navigation extends Component {
             <ul className="list-inline">
                 <li className="list-inline-item"><Link to="/dang-nhap">Đăng nhập</Link></li>
             </ul> : <ul className="list-inline">
-                <li className="list-inline-item"><Link to={"/thanh-vien/"}><img src="images/avatar.jpg" /></Link></li>
+                <li className="list-inline-item"><Link to={"/thanh-vien/" + this.state.userInfo.userSlug}><img src={this.state.userInfo.image} /></Link></li>
                 <li className="list-inline-item fullname">
-                    <Link to={"/thanh-vien/"}>Trần Tiến</Link>
+                    <Link to={"/thanh-vien/" + this.state.userInfo.userSlug}>{this.state.userInfo.name}</Link>
                     <div className="box-logout">
                         <ul className="list-group">
                             <li className="list-group-item"><a onClick={this.logout.bind(this)}>Đăng Xuất</a></li>

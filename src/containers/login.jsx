@@ -1,35 +1,36 @@
 import React,{Component} from 'react';
 const axios = require('axios');
 const domain = require('../../config_domain.js');
+import {setStorage} from '../actions/authAction.js';
 
 class Login extends Component{
     constructor(props){
         super(props);
         this.state ={
-
         }
     }
 
     login = (event)=>{
         let input_login = {"email":this.email.value,"password":this.password.value};
-        let promise = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/users/login',input_login).then(res=>{
-                res = res.data;
-                resolve(res);
-            }).catch(err=>{
-                reject(err);
-            });
-        });
-
-        promise.then(data=>{
-            let token = data.id;
-            if(token){
-                localStorage.setItem('dangnhap',token);
+        axios.post(domain.domain+'/users/login',input_login).then(res=>{
+            res = res.data;
+            let token = res.id;
+            if(token && res.userId){
+                let getUserInfo = new Promise((resolve,reject)=>{
+                    axios.post(domain.domain+'/user_generals/getUserInfo',{"id": res.userId}).then(respon=>{
+                        respon = respon.data;
+                        respon = respon.data;
+                        resolve(respon)
+                    }).catch(err=>{
+                        reject(err);
+                    });
+                });
+                getUserInfo.then(data=>{
+                    setStorage(token, data);
+                });
             }
         }).catch(err=>{
-
         });
-
         event.preventDefault();
     }
 
