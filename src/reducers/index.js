@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux'
-import {setpage} from './setpage.js'
+import {setpage,setpageHot,setpageImage,setpageVideo} from './setPage.js'
 import {getArticle} from './getArticle.js'
-import {getHot} from './getHot.js'
-import auth from './auth.js';
+import {getHot,getVideo,getImage} from './getHot.js'
+
 
 const rootReducer = combineReducers({
     page: setpage,
     article: getArticle,
     hot:getHot,
-    isloading: true,
-    auth: auth
+    image:getImage,
+    video:getVideo,
+    isloading: true
 });
 
 export default rootReducer

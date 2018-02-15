@@ -25,11 +25,11 @@ class Home extends Component{
 
     componentDidMount(){
 
-        if(!this.props.page.homepage) {
+         if(!this.props.page.pageHome) {
             this.props.getArticleNew(1);
         }
 
-       this.props.page.homepage = 2;
+        this.props.page.pageHome = 2;
 
         let promise = new Promise((resolve, reject)=>{
             axios.post(domain.domain+'/users/getTopUser',{user_id: "0",type: 1 }).then(res=>{
@@ -52,7 +52,7 @@ class Home extends Component{
 
     NextPage = (page)=>{
         this.props.article.isloading = true;
-        this.props.page.homepage = page + 1;
+        this.props.page.pageHome = page + 1;
         this.setState({page:1});
         this.props.getArticleNew(page);
     }
@@ -66,7 +66,7 @@ class Home extends Component{
                         <div className="col-sm-8">
 
                             <ListArticle data={list_article} />
-                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.homepage)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 

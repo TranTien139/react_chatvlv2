@@ -56,13 +56,6 @@ class Member extends Component{
         });
     }
 
-    componentWillUpdate(nextprops, nextState){
-    }
-
-    componentDidUpdate(prevProps, prevState){
-    }
-
-
     render(){
         let list_article = this.state.article;
 

@@ -27,6 +27,7 @@ class Login extends Component{
                 });
                 getUserInfo.then(data=>{
                     setStorage(token, data);
+                    window.location.href = '/';
                 });
             }
         }).catch(err=>{
@@ -48,11 +49,6 @@ class Login extends Component{
                                <div className="form-group">
                                    <label htmlFor="pwd">Mật khẩu: </label>
                                    <input type="password" className="form-control" ref={(password)=>this.password = password} required />
-                               </div>
-                               <div className="form-group form-check">
-                                   <label className="form-check-label">
-                                       <input className="form-check-input" type="checkbox" /> Nhớ mật khẩu
-                                   </label>
                                </div>
                                <button type="submit" className="btn btn-primary">Đăng nhập</button>
                            </div>
