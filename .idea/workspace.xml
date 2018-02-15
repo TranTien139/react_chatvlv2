@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65fc380e-5869-4284-87ad-f26d99e0f27a" name="Default" comment="update">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/actions/setPage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/reducers/setPage.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/actions/setpage.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/reducers/setpage.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -66,8 +62,8 @@
       <file leaf-file-name="setPage.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/reducers/setPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+            <state relative-caret-position="323">
+              <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
               <folding>
                 <element signature="n#!!doc;n#setpage#0" expanded="false" />
               </folding>
@@ -470,7 +466,7 @@
       <workItem from="1518311433771" duration="4291000" />
       <workItem from="1518355381917" duration="4464000" />
       <workItem from="1518441659115" duration="6381000" />
-      <workItem from="1518576033760" duration="26360000" />
+      <workItem from="1518576033760" duration="26579000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1517134848065</created>
@@ -560,7 +556,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112967000" />
+    <option name="totallyTimeSpent" value="113186000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1370" height="744" extended-state="0" />
@@ -998,8 +994,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/reducers/setPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        <state relative-caret-position="323">
+          <caret line="21" column="16" lean-forward="true" selection-start-line="21" selection-start-column="16" selection-end-line="21" selection-end-column="16" />
           <folding>
             <element signature="n#!!doc;n#setpage#0" expanded="false" />
           </folding>
