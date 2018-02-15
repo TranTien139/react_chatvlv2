@@ -6,12 +6,15 @@ import {NiceTime} from '../../functions/common.js';
 import Loading from '../components/loading.jsx';
 import HotDaily from '../components/hot_daily.jsx';
 import Comment from  '../components/comment.jsx';
+import {checkLogin} from '../actions/authAction.js';
 
 class Detail extends Component {
     constructor(props){
         super(props)
         this.state ={
-            isloading: true
+            isloading: true,
+            islike: false,
+            icon: ''
         }
     }
 
@@ -92,11 +95,80 @@ class Detail extends Component {
         });
     }
 
+    Emotion = (action,article_id)=>{
+        let check = checkLogin();
+        if(check) {
+            let promise = new Promise((resolve, reject) => {
+                axios.post(domain.domain + '/articles/likeArticle', {
+                    user_id: check.id,
+                    article_id: article_id,
+                    type: action
+                }).then(res => {
+                    res = res.data;
+                    resolve(res);
+                }).catch(err => {
+                    reject([]);
+                });
+            });
+
+            promise.then(data => {
+                if(data.code === 200) {
+                    this.setState({islike:true,icon:action});
+                }
+            }).catch(err => {
+            });
+        }else {
+            alert('ban phai dang nhap')
+        }
+    }
+
+    sendComment = (event)=>{
+        event.preventDefault();
+        var text = this.refs.comment.innerHTML.trim();
+        let check = checkLogin();
+        if(check){
+             axios.post(domain.domain + '/comment/addComment', {
+                    user_id: check.id,
+                    content: text,
+                    article_id: this.props.match.params.id
+             }).then(res => {
+                    res = res.data;
+                    res = res.data;
+                    let old_comment = this.state.comment;
+                    if(!old_comment){
+                        old_comment = [];
+                    }
+                    old_comment.unshift(res);
+                    this.setState({comment:old_comment});
+             }).catch(err => {
+             });
+
+
+        }else {
+            alert('Ban can phai dang nhap')
+        }
+    };
+
 
     render() {
         let detail = this.state.detail;
         let hot_daily = this.state.hot_daily;
         let comment_list = this.state.comment;
+
+        let check_like = false;
+        let icon = '';
+        if(detail) {
+            let check = checkLogin();
+            if (check && detail.likes) {
+                let check_likes = detail.likes.filter(obj => {
+                    return obj.user_id.toString() === check.id.toString();
+                });
+                if (check_likes.length > 0) {
+                    check_like = true;
+                    icon = check_likes[0].type;
+                }
+            }
+        }
 
         return detail && hot_daily && comment_list ?  (
             <div>
@@ -106,25 +178,17 @@ class Detail extends Component {
                             <h1 className="main-title">{detail.title}</h1>
                             <div className="row">
                                 <div className="col-sm-3">
-                                    <div className="list-emotion-detail">
-                                        Bạn: <span><img src="icon/icon_like.gif"/></span>
-                                    </div>
+                                    { this.state.icon !== '' || check_like === true ? <div className="list-emotion-detai">Bạn: <span><img src={"icon/icon_"+(this.state.icon || icon)+".gif"} /></span></div> : '' }
                                 </div>
                                 <div className="col-sm-9">
                                     <div className="list-emotion-detail">
                                         <ul className="list-inline">
-                                            <li className="list-inline-item"><a href="#" title="like"><img src="icon/icon_like.gif"/></a>
-                                            </li>
-                                            <li className="list-inline-item"><a href="#" title="love"><img src="icon/icon_love.gif"/></a>
-                                            </li>
-                                            <li className="list-inline-item"><a href="#" title="haha"><img src="icon/icon_haha.gif"/></a>
-                                            </li>
-                                            <li className="list-inline-item"><a href="#" title="wow"><img src="icon/icon_wow.gif"/></a>
-                                            </li>
-                                            <li className="list-inline-item"><a href="#" title="sad"><img src="icon/icon_sad.gif"/></a>
-                                            </li>
-                                            <li className="list-inline-item"><a href="#" title="angry"><img
-                                                src="icon/icon_angry.gif"/></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'like',detail.id)} title="like"><img src="icon/icon_like.gif" /></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'love',detail.id)} title="love"><img src="icon/icon_love.gif" /></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'haha',detail.id)} title="haha"><img src="icon/icon_haha.gif" /></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'wow',detail.id)} title="wow"><img src="icon/icon_wow.gif" /></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'sad',detail.id)} title="sad"><img src="icon/icon_sad.gif" /></a></li>
+                                            <li className="list-inline-item"><a onClick={this.Emotion.bind(this,'angry',detail.id)} title="angry"><img src="icon/icon_angry.gif" /></a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -161,19 +225,20 @@ class Detail extends Component {
                                 </div>
                             </div>
                             <div className="box-cmment">
+                                <form onSubmit={this.sendComment.bind(this)}>
                                 <div className="main-box-comment">
                                     <div className="float-left avatar">
                                         <img src="images/avatar.jpg" className="img-fluid"/>
                                     </div>
                                     <div className="float-left get-content">
-                                        <div contentEditable="true" id="comment"
-                                             placeholder="Bạn nghĩ gì về bài viết này?"/>
+                                        <div contentEditable="true" id="comment" ref="comment" placeholder="Bạn nghĩ gì về bài viết này?"/>
                                     </div>
-                                    <button className="box-send-comment float-right">
+                                    <button className="box-send-comment float-right" type="submit">
                                         Gửi bình luận
                                     </button>
                                     <div className="clearfix"/>
                                 </div>
+                                </form>
                             </div>
                             <div className="box-list-comment">
 

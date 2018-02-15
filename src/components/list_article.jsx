@@ -4,7 +4,6 @@ import {NiceTime} from '../../functions/common.js';
 const axios =  require('axios');
 const domain = require('../../config_domain.js');
 
-
 class ListArticle extends React.Component {
     constructor(props){
         super(props);
@@ -37,7 +36,7 @@ class ListArticle extends React.Component {
             }).catch(err => {
             });
         }else {
-            alert('ban phai dang nhap')
+            alert('ban phai dang nhap');
         }
     }
 

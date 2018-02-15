@@ -58,7 +58,6 @@ class Navigation extends Component {
                 <li className="list-inline-item"><Link to="/dang-bai">Đăng bài</Link></li>
             </ul>
 
-
         return(
         <div>
             <header id="header">
@@ -81,9 +80,6 @@ class Navigation extends Component {
                                 </li>
                                 <li className="nav-item">
                                     <Link className={this.state.path === "tim-kiem" ? "nav-link active" : "nav-link"} to="/tim-kiem">tìm kiếm</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className={this.state.path === "thao-luan" ? "nav-link active" : "nav-link"} to="/thao-luan">thảo luận</Link>
                                 </li>
                             </ul>
                             <div className="profile-top">

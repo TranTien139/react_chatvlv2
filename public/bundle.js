@@ -26703,13 +26703,17 @@ var _detail = __webpack_require__(155);
 
 var _detail2 = _interopRequireDefault(_detail);
 
-var _notfound = __webpack_require__(158);
-
-var _notfound2 = _interopRequireDefault(_notfound);
-
 var _member = __webpack_require__(159);
 
 var _member2 = _interopRequireDefault(_member);
+
+var _search = __webpack_require__(164);
+
+var _search2 = _interopRequireDefault(_search);
+
+var _notfound = __webpack_require__(158);
+
+var _notfound2 = _interopRequireDefault(_notfound);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26730,7 +26734,8 @@ exports.default = function () {
             _react2.default.createElement(_reactRouterDom.Route, { path: '/thanh-vien/:slug', component: _member2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/hinh-anh', component: _image2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/video', component: _video2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/dang-nhap', component: _login2.default })
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/dang-nhap', component: _login2.default }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/tim-kiem', component: _search2.default })
         )
     );
 };
@@ -28429,15 +28434,6 @@ var Navigation = function (_Component) {
                                             { className: this.state.path === "tim-kiem" ? "nav-link active" : "nav-link", to: '/tim-kiem' },
                                             't\xECm ki\u1EBFm'
                                         )
-                                    ),
-                                    _react2.default.createElement(
-                                        'li',
-                                        { className: 'nav-item' },
-                                        _react2.default.createElement(
-                                            _reactRouterDom.Link,
-                                            { className: this.state.path === "thao-luan" ? "nav-link active" : "nav-link", to: '/thao-luan' },
-                                            'th\u1EA3o lu\u1EADn'
-                                        )
                                     )
                                 ),
                                 _react2.default.createElement(
@@ -28499,16 +28495,12 @@ var Modal = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "div",
-                null,
+                { key: Math.random(), className: "box-required-login" },
+                _react2.default.createElement("i", { className: "fa fa-times", "aria-hidden": "true" }),
                 _react2.default.createElement(
-                    "div",
-                    { className: "box-required-login" },
-                    _react2.default.createElement("i", { className: "fa fa-times", "aria-hidden": "true" }),
-                    _react2.default.createElement(
-                        "p",
-                        null,
-                        "B\u1EA1n ph\u1EA3i \u0111\u0103ng nh\u1EADp m\u1EDBi \u0111\u01B0\u1EE3c th\u1EF1c hi\u1EC7n h\xE0nh \u0111\u1ED9ng n\xE0y"
-                    )
+                    "p",
+                    null,
+                    "B\u1EA1n ph\u1EA3i \u0111\u0103ng nh\u1EADp m\u1EDBi \u0111\u01B0\u1EE3c th\u1EF1c hi\u1EC7n h\xE0nh \u0111\u1ED9ng n\xE0y"
                 )
             );
         }
@@ -28953,6 +28945,8 @@ var _comment = __webpack_require__(157);
 
 var _comment2 = _interopRequireDefault(_comment);
 
+var _authAction = __webpack_require__(68);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28972,8 +28966,60 @@ var Detail = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Detail.__proto__ || Object.getPrototypeOf(Detail)).call(this, props));
 
+        _this.Emotion = function (action, article_id) {
+            var check = (0, _authAction.checkLogin)();
+            if (check) {
+                var promise = new Promise(function (resolve, reject) {
+                    axios.post(domain.domain + '/articles/likeArticle', {
+                        user_id: check.id,
+                        article_id: article_id,
+                        type: action
+                    }).then(function (res) {
+                        res = res.data;
+                        resolve(res);
+                    }).catch(function (err) {
+                        reject([]);
+                    });
+                });
+
+                promise.then(function (data) {
+                    if (data.code === 200) {
+                        _this.setState({ islike: true, icon: action });
+                    }
+                }).catch(function (err) {});
+            } else {
+                alert('ban phai dang nhap');
+            }
+        };
+
+        _this.sendComment = function (event) {
+            event.preventDefault();
+            var text = _this.refs.comment.innerHTML.trim();
+            var check = (0, _authAction.checkLogin)();
+            if (check) {
+                axios.post(domain.domain + '/comment/addComment', {
+                    user_id: check.id,
+                    content: text,
+                    article_id: _this.props.match.params.id
+                }).then(function (res) {
+                    res = res.data;
+                    res = res.data;
+                    var old_comment = _this.state.comment;
+                    if (!old_comment) {
+                        old_comment = [];
+                    }
+                    old_comment.unshift(res);
+                    _this.setState({ comment: old_comment });
+                }).catch(function (err) {});
+            } else {
+                alert('Ban can phai dang nhap');
+            }
+        };
+
         _this.state = {
-            isloading: true
+            isloading: true,
+            islike: false,
+            icon: ''
         };
         return _this;
     }
@@ -29067,6 +29113,21 @@ var Detail = function (_Component) {
             var hot_daily = this.state.hot_daily;
             var comment_list = this.state.comment;
 
+            var check_like = false;
+            var icon = '';
+            if (detail) {
+                var check = (0, _authAction.checkLogin)();
+                if (check && detail.likes) {
+                    var check_likes = detail.likes.filter(function (obj) {
+                        return obj.user_id.toString() === check.id.toString();
+                    });
+                    if (check_likes.length > 0) {
+                        check_like = true;
+                        icon = check_likes[0].type;
+                    }
+                }
+            }
+
             return detail && hot_daily && comment_list ? _react2.default.createElement(
                 'div',
                 null,
@@ -29090,16 +29151,16 @@ var Detail = function (_Component) {
                                 _react2.default.createElement(
                                     'div',
                                     { className: 'col-sm-3' },
-                                    _react2.default.createElement(
+                                    this.state.icon !== '' || check_like === true ? _react2.default.createElement(
                                         'div',
-                                        { className: 'list-emotion-detail' },
+                                        { className: 'list-emotion-detai' },
                                         'B\u1EA1n: ',
                                         _react2.default.createElement(
                                             'span',
                                             null,
-                                            _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
+                                            _react2.default.createElement('img', { src: "icon/icon_" + (this.state.icon || icon) + ".gif" })
                                         )
-                                    )
+                                    ) : ''
                                 ),
                                 _react2.default.createElement(
                                     'div',
@@ -29115,7 +29176,7 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'like' },
+                                                    { onClick: this.Emotion.bind(this, 'like', detail.id), title: 'like' },
                                                     _react2.default.createElement('img', { src: 'icon/icon_like.gif' })
                                                 )
                                             ),
@@ -29124,7 +29185,7 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'love' },
+                                                    { onClick: this.Emotion.bind(this, 'love', detail.id), title: 'love' },
                                                     _react2.default.createElement('img', { src: 'icon/icon_love.gif' })
                                                 )
                                             ),
@@ -29133,7 +29194,7 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'haha' },
+                                                    { onClick: this.Emotion.bind(this, 'haha', detail.id), title: 'haha' },
                                                     _react2.default.createElement('img', { src: 'icon/icon_haha.gif' })
                                                 )
                                             ),
@@ -29142,7 +29203,7 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'wow' },
+                                                    { onClick: this.Emotion.bind(this, 'wow', detail.id), title: 'wow' },
                                                     _react2.default.createElement('img', { src: 'icon/icon_wow.gif' })
                                                 )
                                             ),
@@ -29151,7 +29212,7 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'sad' },
+                                                    { onClick: this.Emotion.bind(this, 'sad', detail.id), title: 'sad' },
                                                     _react2.default.createElement('img', { src: 'icon/icon_sad.gif' })
                                                 )
                                             ),
@@ -29160,9 +29221,8 @@ var Detail = function (_Component) {
                                                 { className: 'list-inline-item' },
                                                 _react2.default.createElement(
                                                     'a',
-                                                    { href: '#', title: 'angry' },
-                                                    _react2.default.createElement('img', {
-                                                        src: 'icon/icon_angry.gif' })
+                                                    { onClick: this.Emotion.bind(this, 'angry', detail.id), title: 'angry' },
+                                                    _react2.default.createElement('img', { src: 'icon/icon_angry.gif' })
                                                 )
                                             )
                                         )
@@ -29270,25 +29330,28 @@ var Detail = function (_Component) {
                                 'div',
                                 { className: 'box-cmment' },
                                 _react2.default.createElement(
-                                    'div',
-                                    { className: 'main-box-comment' },
+                                    'form',
+                                    { onSubmit: this.sendComment.bind(this) },
                                     _react2.default.createElement(
                                         'div',
-                                        { className: 'float-left avatar' },
-                                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'div',
-                                        { className: 'float-left get-content' },
-                                        _react2.default.createElement('div', { contentEditable: 'true', id: 'comment',
-                                            placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xE0i vi\u1EBFt n\xE0y?' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'button',
-                                        { className: 'box-send-comment float-right' },
-                                        'G\u1EEDi b\xECnh lu\u1EADn'
-                                    ),
-                                    _react2.default.createElement('div', { className: 'clearfix' })
+                                        { className: 'main-box-comment' },
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'float-left avatar' },
+                                            _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'float-left get-content' },
+                                            _react2.default.createElement('div', { contentEditable: 'true', id: 'comment', ref: 'comment', placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xE0i vi\u1EBFt n\xE0y?' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { className: 'box-send-comment float-right', type: 'submit' },
+                                            'G\u1EEDi b\xECnh lu\u1EADn'
+                                        ),
+                                        _react2.default.createElement('div', { className: 'clearfix' })
+                                    )
                                 )
                             ),
                             _react2.default.createElement(
@@ -29450,6 +29513,10 @@ var _reactRouterDom = __webpack_require__(6);
 
 var _common = __webpack_require__(23);
 
+var _reply_comment = __webpack_require__(165);
+
+var _reply_comment2 = _interopRequireDefault(_reply_comment);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29471,7 +29538,6 @@ var Comment = function (_React$Component) {
         key: 'render',
         value: function render() {
             var data = this.props.comment_list;
-
             var list_comment = data.map(function (object, index) {
                 return _react2.default.createElement(
                     'div',
@@ -29479,7 +29545,7 @@ var Comment = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'box-avatar-cmt float-left' },
-                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                        _react2.default.createElement('img', { src: object.getUser.image, className: 'img-fluid', width: '70' })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -29490,7 +29556,7 @@ var Comment = function (_React$Component) {
                             _react2.default.createElement(
                                 'cite',
                                 null,
-                                'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
+                                object.getUser.name
                             )
                         ),
                         _react2.default.createElement(
@@ -29499,7 +29565,7 @@ var Comment = function (_React$Component) {
                             _react2.default.createElement(
                                 'time',
                                 null,
-                                '20:40 Ng\xE0y 08/07/2017'
+                                (0, _common.NiceTime)(object.created_at / 1000)
                             )
                         ),
                         _react2.default.createElement('div', { className: 'clearfix' }),
@@ -29509,7 +29575,7 @@ var Comment = function (_React$Component) {
                             _react2.default.createElement(
                                 'p',
                                 null,
-                                'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
+                                object.content
                             )
                         ),
                         _react2.default.createElement(
@@ -29526,7 +29592,7 @@ var Comment = function (_React$Component) {
                                         { className: 'comment-reply-link' },
                                         _react2.default.createElement(
                                             'a',
-                                            { href: '#' },
+                                            null,
                                             'Tr\u1EA3 l\u1EDDi'
                                         )
                                     )
@@ -29539,11 +29605,12 @@ var Comment = function (_React$Component) {
                                         { className: 'comment' },
                                         _react2.default.createElement(
                                             'a',
-                                            { href: '#' },
+                                            null,
                                             'Xem th\xEAm'
                                         )
                                     ),
-                                    '100 tr\u1EA3 l\u1EDDi'
+                                    object.count_reply,
+                                    ' tr\u1EA3 l\u1EDDi'
                                 ),
                                 _react2.default.createElement(
                                     'li',
@@ -29553,78 +29620,17 @@ var Comment = function (_React$Component) {
                                         { className: 'like' },
                                         _react2.default.createElement(
                                             'a',
-                                            { href: '#' },
+                                            null,
                                             'th\xEDch'
                                         )
                                     ),
-                                    'B\u1EA1n v\xE0 100 ng\u01B0\u1EDDi th\xEDch b\xECnh lu\u1EADn n\xE0y'
+                                    object.like,
+                                    ' ng\u01B0\u1EDDi th\xEDch b\xECnh lu\u1EADn n\xE0y'
                                 )
                             )
                         ),
                         _react2.default.createElement('div', { className: 'clearfix' }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'list-reply-comment' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'box-avatar-cmt float-left' },
-                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'box-content-cmt float-left' },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'name' },
-                                    _react2.default.createElement(
-                                        'cite',
-                                        null,
-                                        'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'time' },
-                                    _react2.default.createElement(
-                                        'time',
-                                        null,
-                                        '20:40 Ng\xE0y 08/07/2017'
-                                    )
-                                ),
-                                _react2.default.createElement('div', { className: 'clearfix' }),
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'content-comment' },
-                                    _react2.default.createElement(
-                                        'p',
-                                        null,
-                                        'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
-                                    )
-                                )
-                            )
-                        ),
-                        _react2.default.createElement('div', { className: 'clearfix' }),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'box-reply-comment' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'float-left avatar' },
-                                _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
-                            ),
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'float-left get-content' },
-                                _react2.default.createElement('div', { contentEditable: 'true', id: 'reply',
-                                    placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xECnh lu\u1EADn n\xE0y' })
-                            ),
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'box-send-comment float-right' },
-                                'G\u1EEDi b\xECnh lu\u1EADn'
-                            ),
-                            _react2.default.createElement('div', { className: 'clearfix' })
-                        )
+                        object.count_reply > 0 ? _react2.default.createElement(_reply_comment2.default, null) : ''
                     ),
                     _react2.default.createElement('div', { className: 'clearfix' })
                 );
@@ -29664,16 +29670,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Login = function (_Component) {
-    _inherits(Login, _Component);
+var NotFound = function (_Component) {
+    _inherits(NotFound, _Component);
 
-    function Login() {
-        _classCallCheck(this, Login);
+    function NotFound() {
+        _classCallCheck(this, NotFound);
 
-        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).apply(this, arguments));
     }
 
-    _createClass(Login, [{
+    _createClass(NotFound, [{
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -29692,10 +29698,10 @@ var Login = function (_Component) {
         }
     }]);
 
-    return Login;
+    return NotFound;
 }(_react.Component);
 
-exports.default = Login;
+exports.default = NotFound;
 
 /***/ }),
 /* 159 */
@@ -30048,6 +30054,199 @@ function getVideo() {
     }
     return state;
 }
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Search = function (_Component) {
+    _inherits(Search, _Component);
+
+    function Search(props) {
+        _classCallCheck(this, Search);
+
+        var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
+
+        _this.state = {
+            text_search: ''
+        };
+        return _this;
+    }
+
+    _createClass(Search, [{
+        key: 'handleInput',
+        value: function handleInput(e) {
+            var name = e.target.name;
+            var value = e.target.value;
+            console.log(value);
+            this.setState({ text_search: value });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-6 offset-3' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'form-group' },
+                                _react2.default.createElement('input', { className: 'form-control', value: this.state.text_search, onChange: this.handleInput.bind(this), type: 'text', required: true, placeholder: 'Nh\u1EADp t\u1EEB kh\xF3a t\xECm ki\u1EBFm b\xE0i vi\u1EBFt' })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Search;
+}(_react.Component);
+
+exports.default = Search;
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _common = __webpack_require__(23);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReplyComment = function (_Component) {
+    _inherits(ReplyComment, _Component);
+
+    function ReplyComment() {
+        _classCallCheck(this, ReplyComment);
+
+        return _possibleConstructorReturn(this, (ReplyComment.__proto__ || Object.getPrototypeOf(ReplyComment)).apply(this, arguments));
+    }
+
+    _createClass(ReplyComment, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'list-reply-comment' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'box-avatar-cmt float-left' },
+                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'box-content-cmt float-left' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'name' },
+                            _react2.default.createElement(
+                                'cite',
+                                null,
+                                'Nguy\u1EC5n Tr\u1EA7n Th\xE0nh'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'time' },
+                            _react2.default.createElement(
+                                'time',
+                                null,
+                                '20:40 Ng\xE0y 08/07/2017'
+                            )
+                        ),
+                        _react2.default.createElement('div', { className: 'clearfix' }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'content-comment' },
+                            _react2.default.createElement(
+                                'p',
+                                null,
+                                'C\xF4 m\xE0 c\xF4ng khai n\xF3i x\u1EA5u ch\xE1u m\xECnh nh\u01B0 v\u1EADy l\xE0 \u0111\xFAng sao? Kh\xF4ng hi\u1EC3u m\u1ECDi ng\u01B0\u1EDDi ngh\u0129 g\xEC nh\u1EC9? :)'
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement('div', { className: 'clearfix' }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'box-reply-comment' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'float-left avatar' },
+                        _react2.default.createElement('img', { src: 'images/avatar.jpg', className: 'img-fluid' })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'float-left get-content' },
+                        _react2.default.createElement('div', { contentEditable: 'true', id: 'reply',
+                            placeholder: 'B\u1EA1n ngh\u0129 g\xEC v\u1EC1 b\xECnh lu\u1EADn n\xE0y' })
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'box-send-comment float-right' },
+                        'G\u1EEDi b\xECnh lu\u1EADn'
+                    ),
+                    _react2.default.createElement('div', { className: 'clearfix' })
+                )
+            );
+        }
+    }]);
+
+    return ReplyComment;
+}(_react.Component);
+
+exports.default = ReplyComment;
 
 /***/ })
 /******/ ]);

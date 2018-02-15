@@ -7,14 +7,12 @@ import React from 'react';
 class Modal extends React.Component {
     render() {
         return (
-            <div>
-                <div className="box-required-login">
+                <div key={Math.random()} className="box-required-login">
                     <i className="fa fa-times" aria-hidden="true"/>
                     <p>
                         Bạn phải đăng nhập mới được thực hiện hành động này
                     </p>
                 </div>
-            </div>
         )
     }
 }
