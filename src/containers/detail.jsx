@@ -113,17 +113,17 @@ class Detail extends Component {
                                 <div className="col-sm-9">
                                     <div className="list-emotion-detail">
                                         <ul className="list-inline">
-                                            <li className="list-inline-item"><a href="#"><img src="icon/icon_like.gif"/></a>
+                                            <li className="list-inline-item"><a href="#" title="like"><img src="icon/icon_like.gif"/></a>
                                             </li>
-                                            <li className="list-inline-item"><a href="#"><img src="icon/icon_love.gif"/></a>
+                                            <li className="list-inline-item"><a href="#" title="love"><img src="icon/icon_love.gif"/></a>
                                             </li>
-                                            <li className="list-inline-item"><a href="#"><img src="icon/icon_haha.gif"/></a>
+                                            <li className="list-inline-item"><a href="#" title="haha"><img src="icon/icon_haha.gif"/></a>
                                             </li>
-                                            <li className="list-inline-item"><a href="#"><img src="icon/icon_wow.gif"/></a>
+                                            <li className="list-inline-item"><a href="#" title="wow"><img src="icon/icon_wow.gif"/></a>
                                             </li>
-                                            <li className="list-inline-item"><a href="#"><img src="icon/icon_sad.gif"/></a>
+                                            <li className="list-inline-item"><a href="#" title="sad"><img src="icon/icon_sad.gif"/></a>
                                             </li>
-                                            <li className="list-inline-item"><a href="#"><img
+                                            <li className="list-inline-item"><a href="#" title="angry"><img
                                                 src="icon/icon_angry.gif"/></a></li>
                                         </ul>
                                     </div>

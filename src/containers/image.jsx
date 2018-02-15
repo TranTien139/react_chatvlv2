@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getArticleImage} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
-
+import {checkLogin} from '../actions/authAction.js';
 class Image extends Component{
     constructor(props){
         super(props)
@@ -36,6 +36,7 @@ class Image extends Component{
     render(){
 
         let list_article = this.props.image.image;
+        let check = checkLogin();
 
         return(
             <div>
@@ -43,7 +44,10 @@ class Image extends Component{
                     <div className="row">
                         <div className="col-sm-8">
 
-                            <ListArticle data={list_article} />
+                            { list_article.map((object,index)=>{
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                            })
+                            }
                             { this.props.image.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.image)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>

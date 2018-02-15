@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getArticleHot,getArticleImage,getArticleVideo} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
+import {checkLogin} from '../actions/authAction.js';
 
 class Hot extends Component{
     constructor(props){
@@ -47,14 +48,17 @@ class Hot extends Component{
     render(){
 
         let list_article = this.props.hot.hot;
-
+        let check = checkLogin();
         return(
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8">
 
-                            <ListArticle data={list_article} />
+                            { list_article.map((object,index)=>{
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                            })
+                            }
                             { this.props.hot.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.hot)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>

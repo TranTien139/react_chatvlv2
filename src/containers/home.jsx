@@ -9,6 +9,7 @@ const axios =  require('axios');
 const domain = require('../../config_domain.js');
 
 import TopUser from '../components/top_user.jsx';
+import {checkLogin} from '../actions/authAction.js';
 
 class Home extends Component{
     constructor(props){
@@ -59,13 +60,18 @@ class Home extends Component{
 
     render(){
         let list_article = this.props.article.article;
+
+        let check = checkLogin();
         return(
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8">
+                            { list_article.map((object,index)=>{
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                            })
+                            }
 
-                            <ListArticle data={list_article} />
                             { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getArticleVideo} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
-
+import {checkLogin} from '../actions/authAction.js';
 class Video extends Component{
     constructor(props){
         super(props)
@@ -34,13 +34,17 @@ class Video extends Component{
     render(){
         let list_article = this.props.video.video;
 
+        let check = checkLogin();
+
         return(
             <div>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8">
-
-                            <ListArticle data={list_article} />
+                            { list_article.map((object,index)=>{
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                            })
+                            }
                             { this.props.video.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.video)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>

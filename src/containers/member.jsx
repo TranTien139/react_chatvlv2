@@ -3,6 +3,7 @@ import ListArticle from '../components/list_article.jsx';
 import Loading from '../components/loading.jsx';
 const axios =  require('axios');
 const domain = require('../../config_domain.js');
+import {checkLogin} from '../actions/authAction.js';
 
 class Member extends Component{
     constructor(props){
@@ -58,6 +59,7 @@ class Member extends Component{
 
     render(){
         let list_article = this.state.article;
+        let check = checkLogin();
 
         return list_article ? (
             <div>
@@ -65,7 +67,10 @@ class Member extends Component{
                     <div className="row">
                         <div className="col-sm-8">
 
-                            <ListArticle data={list_article} />
+                            { list_article.map((object,index)=>{
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                            })
+                            }
                             { this.state.isloading === false ? <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div>: <Loading /> }
 
                         </div>
