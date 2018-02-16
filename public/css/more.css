@@ -2,3 +2,12 @@
     content: attr(placeholder);
     display: block;
 }
+
+.main-box-reply{
+    padding: 6px 0px;
+    border-bottom: 1px solid #ddd;
+}
+
+#reply, #comment{
+    padding:10px;
+}

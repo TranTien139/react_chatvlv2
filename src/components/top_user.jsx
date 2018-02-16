@@ -38,16 +38,7 @@ class TopUser extends React.Component {
         });
 
         return(
-            <div key={Math.random()} className="col-sm-4">
-                <div className="row top-user-home">
-                    <ul className="list-inline">
-                        <li className="list-inline-item"><h3>Top danh hài</h3></li>
-                        <li className="list-inline-item"><a className="active"> Tuần </a></li>
-                        <li className="list-inline-item"><a> Tháng </a></li>
-                        <li className="list-inline-item"><a className="all"> Tất cả </a></li>
-                    </ul>
-                </div>
-                <div className="row top-user-list">
+                <div key={Math.random()} className="row top-user-list">
                     <div className="col-sm-6 pading-left0">
                         {list_user_left}
                     </div>
@@ -55,7 +46,6 @@ class TopUser extends React.Component {
                         {list_user_right}
                     </div>
                 </div>
-            </div>
         );
     }
 }

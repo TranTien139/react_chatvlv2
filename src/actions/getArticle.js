@@ -49,7 +49,20 @@ function getArticleVideo(page) {
     }
 }
 
+function getTopUser(type) {
+    return function (dispatch) {
+        axios.post(domain.domain+'/users/getTopUser',{user_id: "0",type: type }).then(res=>{
+            res = res.data;
+            res = res.data.results;
+            dispatch({type:'GET_TOPUSER'+type, payload: res});
+        }).catch(err=>{
+            dispatch({type:'GET_TOPUSER_REJECT', payload: err});
+        });
+    }
+}
+
 module.exports.getArticleNew = getArticleNew;
 module.exports.getArticleHot = getArticleHot;
 module.exports.getArticleImage = getArticleImage;
 module.exports.getArticleVideo = getArticleVideo;
+module.exports.getTopUser = getTopUser;

@@ -42,3 +42,24 @@ export function getVideo(state = {video:[], isloading: true}, action) {
     }
     return state;
 }
+
+export function getTopUser(state = {TopUser1:[],TopUser2:[],TopUser3:[]}, action) {
+    switch(action.type){
+        case 'GET_TOPUSER1':
+            return {...state, TopUser1: action.payload};
+            break;
+        case 'GET_TOPUSER2':
+            return {...state, TopUser2: action.payload};
+            break;
+        case 'GET_TOPUSER3':
+            return {...state, TopUser3: action.payload};
+            break;
+        case 'GET_TOPUSER_REJECT':
+            return {...state}
+            break;
+        default:
+            return state;
+            break;
+    }
+    return state;
+}

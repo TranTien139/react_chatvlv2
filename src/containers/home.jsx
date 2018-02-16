@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import ListArticle from '../components/list_article.jsx';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getArticleNew} from '../actions/getArticle.js';
+import {getArticleNew, getTopUser} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
 const axios =  require('axios');
 const domain = require('../../config_domain.js');
@@ -17,39 +17,22 @@ class Home extends Component{
         this.state ={
             article: [],
             page: 1,
-            TopUser: []
+            TopUser: [],
+            isTopUser:1
         }
-    }
-
-    componentWillMount(){
     }
 
     componentDidMount(){
 
          if(!this.props.page.pageHome) {
             this.props.getArticleNew(1);
+             this.props.getTopUser(1);
         }
 
         this.props.page.pageHome = 2;
 
-        let promise = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/users/getTopUser',{user_id: "0",type: 1 }).then(res=>{
-                res = res.data;
-                res = res.data.results;
-                resolve(res);
-            }).catch(err=>{
-                reject([]);
-            });
-        });
-
-        promise.then(data=>{
-            this.setState({TopUser:data});
-        }).catch(err=>{
-        })
     }
 
-    componentWillReceiveProps(nextProps) {
-    }
 
     NextPage = (page)=>{
         this.props.article.isloading = true;
@@ -58,8 +41,24 @@ class Home extends Component{
         this.props.getArticleNew(page);
     }
 
+    getTopUser = (number)=>{
+        let name = 'TopUser' + number;
+        if(this.props.gettopuser[name].length === 0) {
+            this.props.getTopUser(number);
+        }
+        this.setState({isTopUser:number});
+
+    }
+
     render(){
         let list_article = this.props.article.article;
+
+        let top_user = this.props.gettopuser.TopUser3;
+        if(this.state.isTopUser ===1) {
+            top_user = this.props.gettopuser.TopUser1;
+        } else if(this.state.isTopUser ===2){
+            top_user = this.props.gettopuser.TopUser2;
+        }
 
         let check = checkLogin();
         return(
@@ -76,7 +75,17 @@ class Home extends Component{
 
                         </div>
 
-                        <TopUser top_user = {this.state.TopUser} />
+                        <div key={Math.random()} className="col-sm-4">
+                            <div className="row top-user-home">
+                                <ul className="list-inline">
+                                    <li className="list-inline-item"><h3>Top danh hài</h3></li>
+                                    <li className="list-inline-item"><a className="active" onClick={this.getTopUser.bind(this,1)}> Tuần </a></li>
+                                    <li className="list-inline-item"><a onClick={this.getTopUser.bind(this,2)}> Tháng </a></li>
+                                    <li className="list-inline-item"><a className="all" onClick={this.getTopUser.bind(this,3)}> Tất cả </a></li>
+                                </ul>
+                            </div>
+                            <TopUser top_user={top_user} />
+                        </div>
 
                     </div>
                 </div>
@@ -88,13 +97,15 @@ class Home extends Component{
 function mapStateToProps(state) {
     return {
         article: state.article,
-        page: state.page
+        page: state.page,
+        gettopuser: state.gettopuser
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        getArticleNew: getArticleNew
+        getArticleNew: getArticleNew,
+        getTopUser:getTopUser
     }, dispatch);
 }
 

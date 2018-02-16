@@ -14,7 +14,9 @@ class Detail extends Component {
         this.state ={
             isloading: true,
             islike: false,
-            icon: ''
+            icon: '',
+            page_comment:1,
+            next_comment: false
         }
     }
 
@@ -43,9 +45,9 @@ class Detail extends Component {
         });
 
         let comment = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article}).then(res=>{
+            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article, size:10, page:this.state.page_comment}).then(res=>{
                 res = res.data;
-                res = res.data.results;
+                res = res.data;
                 resolve(res);
             }).catch(err=>{
                 reject('');
@@ -53,7 +55,8 @@ class Detail extends Component {
         });
 
         Promise.all([promise,promise1,comment]).then((data)=>{
-            this.setState({detail: data[0], hot_daily:data[1],comment: data[2]});
+            let next_cmt = data[2].next_page === -1 ? false : true;
+            this.setState({detail: data[0], hot_daily:data[1],comment: data[2].results,next_comment:next_cmt});
         });
     }
 
@@ -81,9 +84,9 @@ class Detail extends Component {
         });
 
         let comment = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article}).then(res=>{
+            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article, size:10, page:this.state.page_comment}).then(res=>{
                 res = res.data;
-                res = res.data.results;
+                res = res.data;
                 resolve(res);
             }).catch(err=>{
                 reject('');
@@ -91,7 +94,28 @@ class Detail extends Component {
         });
 
         Promise.all([promise,promise1,comment]).then((data)=>{
-            this.setState({detail: data[0], hot_daily:data[1], comment: data[2]});
+            let next_cmt = data[2].next_page === -1 ? false : true;
+            this.setState({detail: data[0], hot_daily:data[1],comment: data[2].results,next_comment:next_cmt});
+        });
+    }
+
+    LoadMoreComment = ()=>{
+        let id_article =  this.props.match.params.id;
+        let comment = new Promise((resolve, reject)=>{
+            axios.post(domain.domain+'/comment/getCommentByArticle',{user_id: "0","article_id":id_article, size:10, page: this.state.page_comment+1 }).then(res=>{
+                res = res.data;
+                res = res.data;
+                resolve(res);
+            }).catch(err=>{
+                reject('');
+            });
+        });
+        comment.then(data=>{
+            let next_cmt = data.next_page === -1 ? false : true;
+            let page_comment = this.state.page_comment+1;
+            let data_cmt = this.state.comment.concat(data.results);
+
+            this.setState({comment: data_cmt,next_comment:next_cmt,page_comment:page_comment});
         });
     }
 
@@ -140,6 +164,7 @@ class Detail extends Component {
                     }
                     old_comment.unshift(res);
                     this.setState({comment:old_comment});
+                    this.refs.comment.innerHTML = '';
              }).catch(err => {
              });
 
@@ -157,8 +182,9 @@ class Detail extends Component {
 
         let check_like = false;
         let icon = '';
+        let check = null;
         if(detail) {
-            let check = checkLogin();
+            check = checkLogin();
             if (check && detail.likes) {
                 let check_likes = detail.likes.filter(obj => {
                     return obj.user_id.toString() === check.id.toString();
@@ -228,7 +254,7 @@ class Detail extends Component {
                                 <form onSubmit={this.sendComment.bind(this)}>
                                 <div className="main-box-comment">
                                     <div className="float-left avatar">
-                                        <img src="images/avatar.jpg" className="img-fluid"/>
+                                        { check !== null? <img src={check.image} className="img-fluid"/> :<img src="images/avatar.jpg" className="img-fluid"/> }
                                     </div>
                                     <div className="float-left get-content">
                                         <div contentEditable="true" id="comment" ref="comment" placeholder="Bạn nghĩ gì về bài viết này?"/>
@@ -242,11 +268,16 @@ class Detail extends Component {
                             </div>
                             <div className="box-list-comment">
 
-                                <Comment comment_list ={comment_list} />
+                                { comment_list.map((object, index) => {
+                                    return <Comment key={Math.random()} object_comment={object} />
+                                })
+                                }
+                                {this.state.next_comment === true ?
+                                    <div id="more-comment-wrap">
+                                        <a className="more-comment" onClick={this.LoadMoreComment.bind(this)}>XEM THÊM...</a>
+                                    </div>:''
+                                }
 
-                                <div id="more-comment-wrap">
-                                    <a href="javascript:void(0);" className="more-comment">XEM THÊM...</a>
-                                </div>
                             </div>
                         </div>
                         <div className="col-sm-4">

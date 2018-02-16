@@ -1,43 +1,33 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import {NiceTime} from '../../functions/common.js';
 
-class ReplyComment extends Component{
-    render(){
-        return(
-            <div>
-                <div className="list-reply-comment">
-                    <div className="box-avatar-cmt float-left">
-                        <img src="images/avatar.jpg" className="img-fluid"/>
-                    </div>
-                    <div className="box-content-cmt float-left">
-                        <div className="name"><cite>Nguyễn Trần Thành</cite></div>
-                        <div className="time">
-                            <time>20:40 Ngày 08/07/2017</time>
+class ReplyComment extends Component {
+    render() {
+        let data_reply = this.props.data_reply;
+        let list_reply = data_reply.map((object, index) => {
+            return (
+                <div key={Math.random()} className="main-box-reply">
+                    <div className="list-reply-comment">
+                        <div className="box-avatar-cmt float-left">
+                            <img src={object.getUser.image} className="img-fluid" width="50"/>
                         </div>
-                        <div className="clearfix"/>
-                        <div className="content-comment">
-                            <p>Cô mà công khai nói xấu cháu mình như vậy là đúng sao? Không hiểu
-                                mọi người nghĩ gì
-                                nhỉ? :)</p>
+                        <div className="box-content-cmt float-left">
+                            <div className="name"><cite>{object.getUser.name}</cite></div>
+                            <div className="time">
+                                <time>{ NiceTime(object.created_at / 1000) }</time>
+                            </div>
+                            <div className="clearfix"/>
+                            <div className="content-comment">
+                                <p dangerouslySetInnerHTML={{__html: object.content}}></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="clearfix"/>
-                <div className="box-reply-comment">
-                    <div className="float-left avatar">
-                        <img src="images/avatar.jpg" className="img-fluid"/>
-                    </div>
-                    <div className="float-left get-content">
-                        <div contentEditable="true" id="reply"
-                             placeholder="Bạn nghĩ gì về bình luận này"/>
-                    </div>
-                    <button className="box-send-comment float-right">
-                        Gửi bình luận
-                    </button>
                     <div className="clearfix"/>
                 </div>
-            </div>
-        )
+            )
+        });
+        return list_reply;
+
     }
 }
 
