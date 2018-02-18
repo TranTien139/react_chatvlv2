@@ -36,6 +36,7 @@ class Navigation extends Component {
         axios.post(domain.domain+'/users/logout?access_token='+ gettoken).then(data=>{
             removeStorage();
             this.setState({check_login: false});
+            window.location.href = '';
         }).catch(err=>{
         });
     }

@@ -10,7 +10,8 @@ import Image from  '../containers/image.jsx';
 import Detail from  '../containers/detail.jsx';
 import Member from '../containers/member.jsx';
 import Search from '../containers/search.jsx';
-import NotFound from '../containers/notfound.jsx';
+import Register from '../containers/register.jsx';
+import postArticle from '../containers/post_article.jsx';
 
 function isLoggedIn() { return false; }
 
@@ -25,6 +26,8 @@ export default ()=>(
             <Route path="/video" component={Video} />
             <Route path="/dang-nhap" component={Login} />
             <Route path="/tim-kiem" component={Search} />
+            <Route path="/dang-ki" component={Register} />
+            <Route path="/dang-bai" component={postArticle} />
         </Layout>
     </Switch>
 )

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
+    "bcrypt-nodejs": "0.0.3",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "jsx": "^0.9.89",

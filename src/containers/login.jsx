@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 const axios = require('axios');
 const domain = require('../../config_domain.js');
+import {Link} from 'react-router-dom';
 import {setStorage} from '../actions/authAction.js';
 
 class Login extends Component{
@@ -50,7 +51,8 @@ class Login extends Component{
                                    <label htmlFor="pwd">Mật khẩu: </label>
                                    <input type="password" className="form-control" ref={(password)=>this.password = password} required />
                                </div>
-                               <button type="submit" className="btn btn-primary">Đăng nhập</button>
+                               <button type="submit" className="btn btn-primary">Đăng nhập</button>&nbsp;&nbsp;
+                               <Link to={'/dang-ki'}>Đăng kí</Link>
                            </div>
                        </div>
                     </form>

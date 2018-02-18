@@ -73,6 +73,12 @@ app.get("/dang-ki", function (req, res) {
     });
 });
 
+app.get("/dang-bai", function (req, res) {
+    res.render("index.ejs",{
+        title:"Đăng bài"
+    });
+});
+
 app.get("/dang-xuat", function (req, res) {
     res.render("index.ejs",{
         title:"Đăng xuất"
