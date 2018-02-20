@@ -3,15 +3,18 @@ const axios = require('axios');
 const domain = require('../../config_domain.js');
 import {Link} from 'react-router-dom';
 import {setStorage} from '../actions/authAction.js';
+import {ToastContainer} from "react-toastr";
 
 class Login extends Component{
     constructor(props){
         super(props);
         this.state ={
         }
+        this.login = this.login.bind(this);
     }
 
     login = (event)=>{
+        event.preventDefault();
         let input_login = {"email":this.email.value,"password":this.password.value};
         axios.post(domain.domain+'/users/login',input_login).then(res=>{
             res = res.data;
@@ -27,13 +30,25 @@ class Login extends Component{
                     });
                 });
                 getUserInfo.then(data=>{
+                    this.message.success('Bạn đã đăng nhập thành công', 'Thành công', {
+                        closeButton: true,
+                    });
                     setStorage(token, data);
-                    window.location.href = '/';
+                    setTimeout(function () {
+                        window.location.href = '/';
+                    }, 1000);
+
+                }).catch(err=>{
+                    this.message.error('Có lỗi xảy ra khi đăng nhập', 'Cảnh báo', {
+                        closeButton: true,
+                    });
                 });
             }
         }).catch(err=>{
+            this.message.error('Bạn đã nhập sai email hoặc mật khẩu ', 'Cảnh báo', {
+                closeButton: true,
+            });
         });
-        event.preventDefault();
     }
 
     render(){
@@ -57,6 +72,12 @@ class Login extends Component{
                        </div>
                     </form>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div> )
     }
 }

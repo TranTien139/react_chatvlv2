@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {checkLogin} from '../actions/authAction.js';
 const axios = require('axios');
 const domain = require('../../config_domain.js');
+import {ToastContainer} from "react-toastr";
 
 class BoxReplyComment extends Component {
     constructor(props){
@@ -38,7 +39,9 @@ class BoxReplyComment extends Component {
                 });
             });
         }else {
-            alert('Ban can phai dang nhap')
+            this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
     }
 
@@ -65,6 +68,12 @@ class BoxReplyComment extends Component {
                 </button>
                 </form>
                 <div className="clearfix"/>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         );
     }

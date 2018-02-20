@@ -12,12 +12,7 @@ class postArticle extends Component{
         this.state ={
             type: 'image'
         }
-    }
-
-    handleData(data) {
-        this.message.error(data, 'Cảnh báo', {
-            closeButton: true,
-        });
+        this.PostArticle = this.PostArticle.bind(this);
     }
 
     PostArticle = (event)=>{
@@ -26,16 +21,24 @@ class postArticle extends Component{
         if(check) {
             let image = this.state.type === "image" ? this.image.value : "http://i.ytimg.com/vi/"+ this.video.value +"/0.jpg"
             let data_post = {"user_id": check.id ,"title": this.title.value, "description": this.description.value,"linkVideo": this.video.value || '', "image": image};
-            console.log(data_post);
             axios.post(domain.domain + '/articles/addPostArticle?access_token='+ getToken() , data_post ).then(res => {
                     res = res.data;
-                    console.log(res);
-                    window.location.href = "/";
+                this.message.success('Bạn đã đăng bài viết thành công', 'Thành công', {
+                    closeButton: true,
+                });
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 1000);
+
                 }).catch(err => {
-                    alert('có lỗ xảy ra');
+                this.message.error('Có lỗi xảy ra khi đăng bài viết', 'Cảnh báo', {
+                    closeButton: true,
+                });
                 });
         }else {
-            alert('Bạn phải đăng nhập');
+            this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
 
     }
@@ -83,6 +86,12 @@ class postArticle extends Component{
                         </div>
                     </form>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div> )
     }
 }

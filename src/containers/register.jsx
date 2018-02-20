@@ -10,12 +10,7 @@ class Register extends Component{
         super(props);
         this.state ={
         }
-    }
-
-    handleData(data) {
-        this.message.error(data, 'Cảnh báo', {
-            closeButton: true,
-        });
+        this.register = this.register.bind(this);
     }
 
     register = (event)=>{
@@ -31,13 +26,21 @@ class Register extends Component{
         if(checkemail && this.password.value === this.repassword.value) {
             axios.post(domain.domain+'/users',input_register).then(res=>{
                 res = res.data;
-                console.log('Đăng kí thành công');
-                window.location.href = '/';
+                this.message.success('Bạn đã đăng kí user thành công', 'Thành công', {
+                    closeButton: true,
+                });
+                setTimeout(function () {
+                    window.location.href = '/';
+                }, 1000);
             }).catch(err=>{
-                console.log('Đăng kí thất bại');
+                this.message.error('Có lỗi xảy ra khi đăng nhập', 'Cảnh báo', {
+                    closeButton: true,
+                });
             });
         }else {
-            alert('Bạn nhập sai thông tin');
+            this.message.error('Bạn đã nhập sai các thông tin cần nhập ', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
 
     }
@@ -96,6 +99,12 @@ class Register extends Component{
                         </div>
                     </form>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div> )
     }
 }

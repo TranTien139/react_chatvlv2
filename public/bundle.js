@@ -41113,6 +41113,8 @@ var _reactRouterDom = __webpack_require__(8);
 
 var _authAction = __webpack_require__(14);
 
+var _reactToastr = __webpack_require__(466);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41133,6 +41135,7 @@ var Login = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
 
         _this.login = function (event) {
+            event.preventDefault();
             var input_login = { "email": _this.email.value, "password": _this.password.value };
             axios.post(domain.domain + '/users/login', input_login).then(function (res) {
                 res = res.data;
@@ -41148,15 +41151,28 @@ var Login = function (_Component) {
                         });
                     });
                     getUserInfo.then(function (data) {
+                        _this.message.success('Bạn đã đăng nhập thành công', 'Thành công', {
+                            closeButton: true
+                        });
                         (0, _authAction.setStorage)(token, data);
-                        window.location.href = '/';
+                        setTimeout(function () {
+                            window.location.href = '/';
+                        }, 1000);
+                    }).catch(function (err) {
+                        _this.message.error('Có lỗi xảy ra khi đăng nhập', 'Cảnh báo', {
+                            closeButton: true
+                        });
                     });
                 }
-            }).catch(function (err) {});
-            event.preventDefault();
+            }).catch(function (err) {
+                _this.message.error('Bạn đã nhập sai email hoặc mật khẩu ', 'Cảnh báo', {
+                    closeButton: true
+                });
+            });
         };
 
         _this.state = {};
+        _this.login = _this.login.bind(_this);
         return _this;
     }
 
@@ -41218,7 +41234,13 @@ var Login = function (_Component) {
                             )
                         )
                     )
-                )
+                ),
+                _react2.default.createElement(_reactToastr.ToastContainer, {
+                    ref: function ref(_ref) {
+                        return _this2.message = _ref;
+                    },
+                    className: 'toast-top-right'
+                })
             );
         }
     }]);
@@ -42895,6 +42917,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _authAction = __webpack_require__(14);
 
+var _reactToastr = __webpack_require__(466);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42951,7 +42975,9 @@ var BoxReplyComment = function (_Component) {
                     });
                 });
             } else {
-                alert('Ban can phai dang nhap');
+                this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                    closeButton: true
+                });
             }
         }
     }, {
@@ -42965,6 +42991,8 @@ var BoxReplyComment = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var check = (0, _authAction.checkLogin)();
             return _react2.default.createElement(
                 'div',
@@ -42988,7 +43016,13 @@ var BoxReplyComment = function (_Component) {
                         'G\u1EEDi b\xECnh lu\u1EADn'
                     )
                 ),
-                _react2.default.createElement('div', { className: 'clearfix' })
+                _react2.default.createElement('div', { className: 'clearfix' }),
+                _react2.default.createElement(_reactToastr.ToastContainer, {
+                    ref: function ref(_ref) {
+                        return _this3.message = _ref;
+                    },
+                    className: 'toast-top-right'
+                })
             );
         }
     }]);
@@ -43424,28 +43458,30 @@ var Register = function (_Component) {
             if (checkemail && _this.password.value === _this.repassword.value) {
                 axios.post(domain.domain + '/users', input_register).then(function (res) {
                     res = res.data;
-                    console.log('Đăng kí thành công');
-                    window.location.href = '/';
+                    _this.message.success('Bạn đã đăng kí user thành công', 'Thành công', {
+                        closeButton: true
+                    });
+                    setTimeout(function () {
+                        window.location.href = '/';
+                    }, 1000);
                 }).catch(function (err) {
-                    console.log('Đăng kí thất bại');
+                    _this.message.error('Có lỗi xảy ra khi đăng nhập', 'Cảnh báo', {
+                        closeButton: true
+                    });
                 });
             } else {
-                alert('Bạn nhập sai thông tin');
+                _this.message.error('Bạn đã nhập sai các thông tin cần nhập ', 'Cảnh báo', {
+                    closeButton: true
+                });
             }
         };
 
         _this.state = {};
+        _this.register = _this.register.bind(_this);
         return _this;
     }
 
     _createClass(Register, [{
-        key: 'handleData',
-        value: function handleData(data) {
-            this.message.error(data, 'Cảnh báo', {
-                closeButton: true
-            });
-        }
-    }, {
         key: 'ChangeToSlug',
         value: function ChangeToSlug(title) {
             var slug;
@@ -43551,7 +43587,13 @@ var Register = function (_Component) {
                             )
                         )
                     )
-                )
+                ),
+                _react2.default.createElement(_reactToastr.ToastContainer, {
+                    ref: function ref(_ref) {
+                        return _this2.message = _ref;
+                    },
+                    className: 'toast-top-right'
+                })
             );
         }
     }]);
@@ -53917,33 +53959,34 @@ var postArticle = function (_Component) {
             if (check) {
                 var image = _this.state.type === "image" ? _this.image.value : "http://i.ytimg.com/vi/" + _this.video.value + "/0.jpg";
                 var data_post = { "user_id": check.id, "title": _this.title.value, "description": _this.description.value, "linkVideo": _this.video.value || '', "image": image };
-                console.log(data_post);
                 axios.post(domain.domain + '/articles/addPostArticle?access_token=' + (0, _authAction.getToken)(), data_post).then(function (res) {
                     res = res.data;
-                    console.log(res);
-                    window.location.href = "/";
+                    _this.message.success('Bạn đã đăng bài viết thành công', 'Thành công', {
+                        closeButton: true
+                    });
+                    setTimeout(function () {
+                        window.location.href = '/';
+                    }, 1000);
                 }).catch(function (err) {
-                    alert('có lỗ xảy ra');
+                    _this.message.error('Có lỗi xảy ra khi đăng bài viết', 'Cảnh báo', {
+                        closeButton: true
+                    });
                 });
             } else {
-                alert('Bạn phải đăng nhập');
+                _this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                    closeButton: true
+                });
             }
         };
 
         _this.state = {
             type: 'image'
         };
+        _this.PostArticle = _this.PostArticle.bind(_this);
         return _this;
     }
 
     _createClass(postArticle, [{
-        key: 'handleData',
-        value: function handleData(data) {
-            this.message.error(data, 'Cảnh báo', {
-                closeButton: true
-            });
-        }
-    }, {
         key: 'handleChange',
         value: function handleChange(e) {
             var value = e.target.value;
@@ -54047,7 +54090,13 @@ var postArticle = function (_Component) {
                             )
                         )
                     )
-                )
+                ),
+                _react2.default.createElement(_reactToastr.ToastContainer, {
+                    ref: function ref(_ref) {
+                        return _this2.message = _ref;
+                    },
+                    className: 'toast-top-right'
+                })
             );
         }
     }]);
