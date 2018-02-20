@@ -39927,12 +39927,7 @@ var Home = function (_Component) {
             var height = myDiv.clientHeight - 500;
 
             if (scrollTop - height > 0 && height > 1200 && this.props.article.isloading === false) {
-                this.props.article.isloading = true;
-
-                var old_page = this.props.page.pageHome + 1;
-                this.props.page.pageHome = old_page;
-                this.setState({ scrolling: false });
-                this.props.getArticleNew(old_page - 1);
+                this.NextPage(this.props.page.pageHome);
             }
         }
     }, {
@@ -39972,7 +39967,7 @@ var Home = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this2.handleData, key: Math.random(), data: object });
                             }),
-                            this.props.article.isloading === false ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                            this.props.article.isloading === true ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -40977,10 +40972,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var TopUser = function (_React$Component) {
     _inherits(TopUser, _React$Component);
 
-    function TopUser() {
+    function TopUser(props) {
         _classCallCheck(this, TopUser);
 
-        return _possibleConstructorReturn(this, (TopUser.__proto__ || Object.getPrototypeOf(TopUser)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (TopUser.__proto__ || Object.getPrototypeOf(TopUser)).call(this, props));
+
+        _this.state = {};
+        return _this;
     }
 
     _createClass(TopUser, [{
@@ -40988,6 +40986,7 @@ var TopUser = function (_React$Component) {
         value: function render() {
 
             var data = this.props.top_user;
+
             var data_left = data.filter(function (obj, index) {
                 return index % 2 === 0;
             });
@@ -41610,19 +41609,9 @@ var Hot = function (_Component) {
 
         _this.NextPage = function (page) {
             _this.props.hot.isloading = true;
-            if (_this.props.location.pathname === '/bai-noi-bat') {
-                _this.props.page.hot = page + 1;
-                _this.setState({ page: 1 });
-                _this.props.getArticleHot(page);
-            } else if (_this.props.location.pathname === '/hinh-anh') {
-                _this.props.page.image = page + 1;
-                _this.setState({ page: 1 });
-                _this.props.getArticleImage(page);
-            } else {
-                _this.props.page.video = page + 1;
-                _this.setState({ page: 1 });
-                _this.props.getArticleVideo(page);
-            }
+            _this.props.page.hot = page + 1;
+            _this.setState({ page: 1 });
+            _this.props.getArticleHot(page);
         };
 
         _this.state = {
@@ -41631,6 +41620,7 @@ var Hot = function (_Component) {
             name: ''
         };
         _this.handleData = _this.handleData.bind(_this);
+        _this.handleScroll = _this.handleScroll.bind(_this);
         return _this;
     }
 
@@ -41649,6 +41639,23 @@ var Hot = function (_Component) {
                 this.props.getArticleHot(1);
             }
             this.props.page.hot = 2;
+            window.addEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'handleScroll',
+        value: function handleScroll(event) {
+            var myDiv = document.getElementById('main-container');
+            var scrollTop = document.body.scrollTop;
+            var height = myDiv.clientHeight - 500;
+
+            if (scrollTop - height > 0 && height > 1200 && this.props.hot.isloading === false) {
+                this.NextPage(this.props.page.hot);
+            }
         }
     }, {
         key: 'render',
@@ -41672,7 +41679,7 @@ var Hot = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this2.handleData, key: Math.random(), data: object });
                             }),
-                            this.props.hot.isloading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                            this.props.hot.isloading === true ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -41775,6 +41782,7 @@ var Video = function (_Component) {
             page: 1
         };
         _this.handleData = _this.handleData.bind(_this);
+        _this.handleScroll = _this.handleScroll.bind(_this);
         return _this;
     }
 
@@ -41792,6 +41800,23 @@ var Video = function (_Component) {
                 this.props.getArticleVideo(1);
             }
             this.props.page.video = 2;
+            window.addEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'handleScroll',
+        value: function handleScroll(event) {
+            var myDiv = document.getElementById('main-container');
+            var scrollTop = document.body.scrollTop;
+            var height = myDiv.clientHeight - 500;
+
+            if (scrollTop - height > 0 && height > 1200 && this.props.video.isloading === false) {
+                this.NextPage(this.props.page.video);
+            }
         }
     }, {
         key: 'render',
@@ -41817,7 +41842,7 @@ var Video = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this2.handleData, key: Math.random(), data: object });
                             }),
-                            this.props.video.isloading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                            this.props.video.isloading === true ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -41920,6 +41945,7 @@ var Image = function (_Component) {
             page: 1
         };
         _this.handleData = _this.handleData.bind(_this);
+        _this.handleScroll = _this.handleScroll.bind(_this);
         return _this;
     }
 
@@ -41937,6 +41963,23 @@ var Image = function (_Component) {
                 this.props.getArticleImage(1);
             }
             this.props.page.image = 2;
+            window.addEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'handleScroll',
+        value: function handleScroll(event) {
+            var myDiv = document.getElementById('main-container');
+            var scrollTop = document.body.scrollTop;
+            var height = myDiv.clientHeight - 500;
+
+            if (scrollTop - height > 0 && height > 1200 && this.props.image.isloading === false) {
+                this.NextPage(this.props.page.image);
+            }
         }
     }, {
         key: 'render',
@@ -41961,7 +42004,7 @@ var Image = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this2.handleData, key: Math.random(), data: object });
                             }),
-                            this.props.image.isloading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                            this.props.image.isloading === true ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -42114,6 +42157,11 @@ var Detail = function (_Component) {
             var text = _this.refs.comment.innerHTML.trim();
             var check = (0, _authAction.checkLogin)();
             if (check) {
+                if (text.length <= 3) {
+                    return _this.message.error('Bạn phải nhập nội dung ít nhất 3 kí tự', 'Cảnh báo', {
+                        closeButton: true
+                    });
+                }
                 axios.post(domain.domain + '/comment/addComment', {
                     user_id: check.id,
                     content: text,
@@ -42128,6 +42176,9 @@ var Detail = function (_Component) {
                     old_comment.unshift(res);
                     _this.setState({ comment: old_comment });
                     _this.refs.comment.innerHTML = '';
+                    _this.message.success('Bạn đã bình luận thành công', 'Thành công', {
+                        closeButton: true
+                    });
                 }).catch(function (err) {
                     _this.message.error('Có lỗi xảy ra', 'Cảnh báo', {
                         closeButton: true
@@ -42716,9 +42767,7 @@ var Comment = function (_React$Component) {
         value: function handleData(data) {
             var old_reply = this.state.data_reply;
             old_reply.push(data);
-            this.setState({
-                data_reply: old_reply
-            });
+            this.setState({ data_reply: old_reply });
         }
     }, {
         key: 'render',
@@ -42959,23 +43008,29 @@ var BoxReplyComment = function (_Component) {
             evt.preventDefault();
             var check = (0, _authAction.checkLogin)();
             if (check) {
-                var comment_id = this.props.comment_id;
-                var reply_post = new Promise(function (resolve, reject) {
-                    axios.post(domain.domain + '/comment/addReplyComment', {
-                        user_id: check.id,
-                        content: _this2.state.reply_content,
-                        comment_id: comment_id
-                    }).then(function (res) {
-                        res = res.data;
-                        res = res.data;
-                        resolve(res);
-                    }).catch(function (err) {
-                        reject('');
+                if (this.state.reply_content.length <= 3) {
+                    return this.message.error('Bạn phải nhập nội dung ít nhất 3 kí tự', 'Cảnh báo', {
+                        closeButton: true
                     });
-                });
+                }
+                var comment_id = this.props.comment_id;
+                axios.post(domain.domain + '/comment/addReplyComment', {
+                    user_id: check.id,
+                    content: this.state.reply_content,
+                    comment_id: comment_id
+                }).then(function (res) {
+                    res = res.data;
+                    res = res.data;
 
-                reply_post.then(function (data) {
-                    _this2.props.handlerFromParant(data);
+                    _this2.props.handlerFromParant(res);
+
+                    _this2.setState({
+                        reply_content: ''
+                    });
+                    _this2.message.success('Bạn đã trả lời bình luận thành công', 'Thành công', {
+                        closeButton: true
+                    });
+                }).catch(function (err) {
                     _this2.setState({
                         reply_content: ''
                     });
@@ -43104,16 +43159,21 @@ var Member = function (_Component) {
             promise.then(function (data) {
                 var more_article = _this.state.article;
                 more_article = more_article.concat(data);
-                _this.setState({ article: more_article, isloading: false });
+                var isloading = false;
+                if (data.length === 0) {
+                    isloading = 1;
+                }
+                _this.setState({ article: more_article, isloading: isloading });
             });
         };
 
         _this.state = {
             article: '',
             page: 1,
-            isloading: false
+            isloading: true
         };
         _this.handleData = _this.handleData.bind(_this);
+        _this.handleScroll = _this.handleScroll.bind(_this);
         return _this;
     }
 
@@ -43142,8 +43202,26 @@ var Member = function (_Component) {
             });
 
             Promise.all([promise]).then(function (data) {
-                _this2.setState({ article: data[0] });
+                _this2.setState({ article: data[0], isloading: false });
             });
+
+            window.addEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('scroll', this.handleScroll);
+        }
+    }, {
+        key: 'handleScroll',
+        value: function handleScroll(event) {
+            var myDiv = document.getElementById('main-container');
+            var scrollTop = document.body.scrollTop;
+            var height = myDiv.clientHeight - 500;
+
+            if (scrollTop - height > 0 && height > 1200 && this.state.isloading === false) {
+                this.NextPage(this.state.page + 1);
+            }
         }
     }, {
         key: 'render',
@@ -43168,7 +43246,7 @@ var Member = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this3.handleData, key: Math.random(), data: object });
                             }),
-                            this.state.isloading === false ? _react2.default.createElement(
+                            this.state.isloading === true ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -43176,7 +43254,7 @@ var Member = function (_Component) {
                                     { onClick: this.NextPage.bind(this, this.state.page + 1), className: 'more-comment' },
                                     'XEM TH\xCAM...'
                                 )
-                            ) : _react2.default.createElement(_loading2.default, null)
+                            )
                         )
                     )
                 ),
@@ -43240,7 +43318,7 @@ var Search = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Search.__proto__ || Object.getPrototypeOf(Search)).call(this, props));
 
         _this.state = {
-            text_search: '',
+            isloading: false,
             list_result: []
         };
         return _this;
@@ -43252,6 +43330,7 @@ var Search = function (_Component) {
             var _this2 = this;
 
             var value = this.text.value;
+            this.setState({ isloading: true });
             var promise = new Promise(function (resolve, reject) {
                 axios.post(domain.domain + '/articles/searchArticle', {
                     text: value
@@ -43265,9 +43344,9 @@ var Search = function (_Component) {
             });
 
             promise.then(function (data) {
-                _this2.setState({ list_result: data });
+                _this2.setState({ list_result: data, isloading: false });
             }).catch(function (err) {
-                _this2.setState({ list_result: [] });
+                _this2.setState({ list_result: [], isloading: false });
             });
         }
     }, {
@@ -43396,7 +43475,8 @@ var Search = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-sm-8 offset-2' },
-                            list_result.length > 0 ? list_result : 'Không có kết quả nào được hiển thị'
+                            list_result.length > 0 ? list_result : 'Không có kết quả nào được hiển thị',
+                            this.state.isloading === true ? _react2.default.createElement(_loading2.default, null) : ''
                         )
                     )
                 )
@@ -54244,7 +54324,7 @@ function getArticle() {
 
     var isloading = false;
     if (typeof action.payload !== 'undefined' && action.payload.length === 0) {
-        isloading = 1;
+        isloading = -1;
     }
     switch (action.type) {
         case 'GET_ARTICLE':
@@ -54281,9 +54361,13 @@ function getHot() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { hot: [], isloading: true };
     var action = arguments[1];
 
+    var isloading = false;
+    if (typeof action.payload !== 'undefined' && action.payload.length === 0) {
+        isloading = -1;
+    }
     switch (action.type) {
         case 'GET_HOT':
-            return _extends({}, state, { hot: state.hot.concat(action.payload), isloading: false });
+            return _extends({}, state, { hot: state.hot.concat(action.payload), isloading: isloading });
             break;
         case 'GET_HOT_REJECT':
             return _extends({}, state);
@@ -54299,9 +54383,13 @@ function getImage() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { image: [], isloading: true };
     var action = arguments[1];
 
+    var isloading = false;
+    if (typeof action.payload !== 'undefined' && action.payload.length === 0) {
+        isloading = -1;
+    }
     switch (action.type) {
         case 'GET_IMAGE':
-            return _extends({}, state, { image: state.image.concat(action.payload), isloading: false });
+            return _extends({}, state, { image: state.image.concat(action.payload), isloading: isloading });
             break;
         case 'GET_IMAGE_REJECT':
             return _extends({}, state);
@@ -54317,9 +54405,13 @@ function getVideo() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { video: [], isloading: true };
     var action = arguments[1];
 
+    var isloading = false;
+    if (typeof action.payload !== 'undefined' && action.payload.length === 0) {
+        isloading = -1;
+    }
     switch (action.type) {
         case 'GET_VIDEO':
-            return _extends({}, state, { video: state.video.concat(action.payload), isloading: false });
+            return _extends({}, state, { video: state.video.concat(action.payload), isloading: isloading });
             break;
         case 'GET_VIDEO_REJECT':
             return _extends({}, state);

@@ -35,9 +35,7 @@ class Comment extends React.Component {
     handleData(data) {
         let old_reply = this.state.data_reply;
         old_reply.push(data);
-        this.setState({
-            data_reply: old_reply
-        });
+        this.setState({data_reply: old_reply});
     }
 
     render() {

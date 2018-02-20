@@ -19,7 +19,7 @@ class postArticle extends Component{
         event.preventDefault();
         let check = checkLogin();
         if(check) {
-            let image = this.state.type === "image" ? this.image.value : "http://i.ytimg.com/vi/"+ this.video.value +"/0.jpg"
+            let image = this.state.type === "image" ? this.image.value : "http://i.ytimg.com/vi/"+ this.video.value +"/0.jpg";
             let data_post = {"user_id": check.id ,"title": this.title.value, "description": this.description.value,"linkVideo": this.video.value || '', "image": image};
             axios.post(domain.domain + '/articles/addPostArticle?access_token='+ getToken() , data_post ).then(res => {
                     res = res.data;

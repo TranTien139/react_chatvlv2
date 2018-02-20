@@ -156,6 +156,11 @@ class Detail extends Component {
         var text = this.refs.comment.innerHTML.trim();
         let check = checkLogin();
         if(check){
+            if(text.length <= 3){
+                return this.message.error('Bạn phải nhập nội dung ít nhất 3 kí tự', 'Cảnh báo', {
+                    closeButton: true,
+                });
+            }
              axios.post(domain.domain + '/comment/addComment', {
                     user_id: check.id,
                     content: text,
@@ -170,12 +175,14 @@ class Detail extends Component {
                     old_comment.unshift(res);
                     this.setState({comment:old_comment});
                     this.refs.comment.innerHTML = '';
+                    this.message.success('Bạn đã bình luận thành công', 'Thành công', {
+                        closeButton: true,
+                    });
              }).catch(err => {
                  this.message.error('Có lỗi xảy ra', 'Cảnh báo', {
                      closeButton: true,
                  });
              });
-
 
         }else {
             this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {

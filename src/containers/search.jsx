@@ -9,13 +9,14 @@ class Search extends Component{
     constructor(props){
         super(props);
         this.state = {
-            text_search:'',
+            isloading: false,
             list_result: []
         }
     }
 
     handleInput(e){
         let value = this.text.value;
+        this.setState({isloading: true});
             let promise = new Promise((resolve, reject) => {
                 axios.post(domain.domain + '/articles/searchArticle', {
                     text: value
@@ -29,9 +30,9 @@ class Search extends Component{
             });
 
             promise.then(data => {
-                this.setState({list_result: data});
+                this.setState({list_result: data, isloading: false});
             }).catch(err => {
-                this.setState({list_result: []});
+                this.setState({list_result: [], isloading: false});
             });
         }
 
@@ -88,6 +89,7 @@ class Search extends Component{
                     <div className="row">
                         <div className="col-sm-8 offset-2">
                             {list_result.length > 0 ? list_result: 'Không có kết quả nào được hiển thị'}
+                            {this.state.isloading === true ? <Loading/> : ''}
                         </div>
                     </div>
                 </div>

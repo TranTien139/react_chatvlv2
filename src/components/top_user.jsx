@@ -2,9 +2,16 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 class TopUser extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+
+        }
+    }
     render() {
 
         let data =  this.props.top_user;
+
         let data_left = data.filter((obj, index)=>{
             return index%2 === 0;
         });

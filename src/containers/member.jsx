@@ -12,9 +12,10 @@ class Member extends Component{
         this.state ={
             article: '',
             page: 1,
-            isloading: false
+            isloading: true
         }
         this.handleData = this.handleData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     handleData(data) {
@@ -38,8 +39,24 @@ class Member extends Component{
         });
 
         Promise.all([promise]).then((data)=>{
-            this.setState({article: data[0]});
+            this.setState({article: data[0],isloading: false});
         });
+
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll(event) {
+        let myDiv = document.getElementById('main-container');
+        let scrollTop = document.body.scrollTop;
+        let height = myDiv.clientHeight - 500;
+
+        if(scrollTop - height > 0 && height> 1200 && this.state.isloading === false){
+            this.NextPage(this.state.page +1);
+        }
     }
 
 
@@ -61,7 +78,11 @@ class Member extends Component{
         promise.then((data)=>{
             let more_article = this.state.article;
             more_article = more_article.concat(data);
-            this.setState({article: more_article, isloading: false});
+            let isloading = false;
+            if(data.length === 0){
+                isloading = 1;
+            }
+            this.setState({article: more_article, isloading: isloading});
         });
     }
 
@@ -79,7 +100,7 @@ class Member extends Component{
                                 return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
-                            { this.state.isloading === false ? <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div>: <Loading /> }
+                            { this.state.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 

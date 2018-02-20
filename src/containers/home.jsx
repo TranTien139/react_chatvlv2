@@ -47,13 +47,7 @@ class Home extends Component{
         let height = myDiv.clientHeight - 500;
 
         if(scrollTop - height > 0 && height> 1200 && this.props.article.isloading === false){
-            this.props.article.isloading = true;
-
-            let old_page = this.props.page.pageHome + 1;
-            this.props.page.pageHome = old_page;
-            this.setState({scrolling: false});
-            this.props.getArticleNew(old_page-1);
-
+            this.NextPage(this.props.page.pageHome);
         }
     }
 
@@ -101,7 +95,7 @@ class Home extends Component{
                             })
                             }
 
-                            { this.props.article.isloading === false ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.article.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 

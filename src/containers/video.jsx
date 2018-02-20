@@ -15,6 +15,7 @@ class Video extends Component{
             page: 1
         }
         this.handleData = this.handleData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     handleData(data) {
@@ -28,6 +29,21 @@ class Video extends Component{
          this.props.getArticleVideo(1);
         }
         this.props.page.video = 2;
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll(event) {
+        let myDiv = document.getElementById('main-container');
+        let scrollTop = document.body.scrollTop;
+        let height = myDiv.clientHeight - 500;
+
+        if(scrollTop - height > 0 && height> 1200 && this.props.video.isloading === false){
+            this.NextPage(this.props.page.video);
+        }
     }
 
     NextPage = (page)=>{
@@ -51,7 +67,7 @@ class Video extends Component{
                                 return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
-                            { this.props.video.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.video)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.video.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.video)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 

@@ -17,8 +17,12 @@ class BoxReplyComment extends Component {
         evt.preventDefault();
         let check = checkLogin();
         if(check) {
+            if(this.state.reply_content.length <= 3){
+                return this.message.error('Bạn phải nhập nội dung ít nhất 3 kí tự', 'Cảnh báo', {
+                    closeButton: true,
+                });
+            }
             let comment_id = this.props.comment_id;
-            let reply_post = new Promise((resolve, reject) => {
                 axios.post(domain.domain + '/comment/addReplyComment', {
                     user_id: check.id,
                     content:this.state.reply_content,
@@ -26,18 +30,21 @@ class BoxReplyComment extends Component {
                 }).then(res => {
                     res = res.data;
                     res = res.data;
-                    resolve(res);
-                }).catch(err => {
-                    reject('');
-                });
-            });
 
-            reply_post.then(data => {
-                this.props.handlerFromParant(data);
-                this.setState({
-                    reply_content: ''
+                    this.props.handlerFromParant(res);
+
+                    this.setState({
+                        reply_content: ''
+                    });
+                    this.message.success('Bạn đã trả lời bình luận thành công', 'Thành công', {
+                        closeButton: true,
+                    });
+                }).catch(err => {
+                    this.setState({
+                        reply_content: ''
+                    });
                 });
-            });
+
         }else {
             this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
                 closeButton: true,

@@ -16,6 +16,7 @@ class Hot extends Component{
             name:''
         }
         this.handleData = this.handleData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     handleData(data) {
@@ -30,24 +31,30 @@ class Hot extends Component{
                 this.props.getArticleHot(1);
             }
             this.props.page.hot = 2;
+            window.addEventListener('scroll', this.handleScroll);
 
+    }
+
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll(event) {
+        let myDiv = document.getElementById('main-container');
+        let scrollTop = document.body.scrollTop;
+        let height = myDiv.clientHeight - 500;
+
+        if(scrollTop - height > 0 && height> 1200 && this.props.hot.isloading === false){
+            this.NextPage(this.props.page.hot);
+
+        }
     }
 
     NextPage = (page)=>{
         this.props.hot.isloading = true;
-        if(this.props.location.pathname === '/bai-noi-bat') {
-            this.props.page.hot = page + 1;
-            this.setState({page: 1});
-            this.props.getArticleHot(page);
-        }else if(this.props.location.pathname === '/hinh-anh'){
-            this.props.page.image = page + 1;
-            this.setState({page: 1});
-            this.props.getArticleImage(page);
-        }else {
-            this.props.page.video = page + 1;
-            this.setState({page: 1});
-            this.props.getArticleVideo(page);
-        }
+        this.props.page.hot = page + 1;
+        this.setState({page: 1});
+        this.props.getArticleHot(page);
     }
 
     render(){
@@ -64,7 +71,7 @@ class Hot extends Component{
                                 return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
-                            { this.props.hot.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.hot)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.hot.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.hot)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 
