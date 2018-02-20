@@ -18,7 +18,7 @@ class Comment extends React.Component {
 
     openReply = (id_comment)=>{
         let reply = new Promise((resolve, reject)=>{
-            axios.post(domain.domain+'/comment/getReplyComment',{user_id: "0","comment_id":id_comment}).then(res=>{
+            axios.post(domain.domain+'/comment/getReplyComment',{user_id: "0","comment_id":id_comment, size:100, page:1}).then(res=>{
                 res = res.data;
                 res = res.data.results;
                 resolve(res);

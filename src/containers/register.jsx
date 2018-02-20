@@ -3,12 +3,19 @@ const axios = require('axios');
 const domain = require('../../config_domain.js');
 import {Link} from 'react-router-dom';
 const bcrypt   = require('bcrypt-nodejs');
+import {ToastContainer} from "react-toastr";
 
 class Register extends Component{
     constructor(props){
         super(props);
         this.state ={
         }
+    }
+
+    handleData(data) {
+        this.message.error(data, 'Cảnh báo', {
+            closeButton: true,
+        });
     }
 
     register = (event)=>{

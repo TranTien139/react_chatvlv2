@@ -38,11 +38,13 @@ class Navigation extends Component {
             this.setState({check_login: false});
             window.location.href = '';
         }).catch(err=>{
+            removeStorage();
+            this.setState({check_login: false});
+            window.location.href = '';
         });
     }
 
     render() {
-
         const head = this.state.check_login === false ?
             <ul className="list-inline">
                 <li className="list-inline-item"><Link to="/dang-nhap">Đăng nhập</Link></li>

@@ -63,3 +63,4 @@ export function getTopUser(state = {TopUser1:[],TopUser2:[],TopUser3:[]}, action
     }
     return state;
 }
+

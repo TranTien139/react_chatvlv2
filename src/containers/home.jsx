@@ -10,6 +10,7 @@ const domain = require('../../config_domain.js');
 
 import TopUser from '../components/top_user.jsx';
 import {checkLogin} from '../actions/authAction.js';
+import {ToastContainer} from "react-toastr";
 
 class Home extends Component{
     constructor(props){
@@ -18,19 +19,41 @@ class Home extends Component{
             article: [],
             page: 1,
             TopUser: [],
-            isTopUser:1
+            isTopUser:1,
+            loading: false
         }
+        this.handleData = this.handleData.bind(this);
     }
 
     componentDidMount(){
-
+        var seft = this;
          if(!this.props.page.pageHome) {
             this.props.getArticleNew(1);
              this.props.getTopUser(1);
         }
 
         this.props.page.pageHome = 2;
+        window.addEventListener('scroll', this.handleScroll);
+    }
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll);
+    }
 
+    handleScroll(event) {
+        let myDiv = document.getElementById('main-container');
+        let scrollTop = document.body.scrollTop;
+        let height = myDiv.clientHeight - 500;
+
+        if(scrollTop - height >0 && height> 1000){
+            // console.log('vao day roi');
+            // $( ".more-comment" ).trigger( "click" );
+        }
+    }
+
+    handleData(data) {
+        this.message.error(data, 'Cảnh báo', {
+            closeButton: true,
+        });
     }
 
 
@@ -67,7 +90,7 @@ class Home extends Component{
                     <div className="row">
                         <div className="col-sm-8">
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
 
@@ -89,6 +112,12 @@ class Home extends Component{
 
                     </div>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         )
     }

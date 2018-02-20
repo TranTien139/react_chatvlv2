@@ -5,6 +5,7 @@ const axios =  require('axios');
 const domain = require('../../config_domain.js');
 
 class ListArticle extends React.Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -36,7 +37,7 @@ class ListArticle extends React.Component {
             }).catch(err => {
             });
         }else {
-            alert('ban phai dang nhap');
+            this.props.handlerFromParant('Bạn phải đăng nhập mới được thực hiện hành động này');
         }
     }
 

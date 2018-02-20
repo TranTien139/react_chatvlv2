@@ -4,6 +4,7 @@ import Loading from '../components/loading.jsx';
 const axios =  require('axios');
 const domain = require('../../config_domain.js');
 import {checkLogin} from '../actions/authAction.js';
+import {ToastContainer} from "react-toastr";
 
 class Member extends Component{
     constructor(props){
@@ -13,6 +14,13 @@ class Member extends Component{
             page: 1,
             isloading: false
         }
+        this.handleData = this.handleData.bind(this);
+    }
+
+    handleData(data) {
+        this.message.error(data, 'Cảnh báo', {
+            closeButton: true,
+        });
     }
 
     componentDidMount(){
@@ -68,7 +76,7 @@ class Member extends Component{
                         <div className="col-sm-8">
 
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
                             { this.state.isloading === false ? <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.state.page +1)} className="more-comment">XEM THÊM...</a></div>: <Loading /> }
@@ -77,6 +85,12 @@ class Member extends Component{
 
                     </div>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         ) : <Loading />;
     }

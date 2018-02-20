@@ -6,11 +6,15 @@ import React from 'react';
 
 class Modal extends React.Component {
     render() {
+        let mess = this.props.message;
+        if(!mess){
+            mess = 'Bạn phải đăng nhập mới được thực hiện hành động này';
+        }
         return (
                 <div key={Math.random()} className="box-required-login">
                     <i className="fa fa-times" aria-hidden="true"/>
                     <p>
-                        Bạn phải đăng nhập mới được thực hiện hành động này
+                        {mess}
                     </p>
                 </div>
         )

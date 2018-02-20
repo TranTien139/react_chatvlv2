@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import {getArticleImage} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
 import {checkLogin} from '../actions/authAction.js';
+import {ToastContainer} from "react-toastr";
+
 class Image extends Component{
     constructor(props){
         super(props)
@@ -12,9 +14,13 @@ class Image extends Component{
             image: [],
             page: 1
         }
+        this.handleData = this.handleData.bind(this);
     }
 
-    componentWillMount(){
+    handleData(data) {
+        this.message.error(data, 'Cảnh báo', {
+            closeButton: true,
+        });
     }
 
     componentDidMount(){
@@ -45,7 +51,7 @@ class Image extends Component{
                         <div className="col-sm-8">
 
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
                             })
                             }
                             { this.props.image.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.image)} className="more-comment">XEM THÊM...</a></div> }
@@ -54,6 +60,12 @@ class Image extends Component{
 
                     </div>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         )
     }

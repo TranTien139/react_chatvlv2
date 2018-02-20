@@ -7,6 +7,9 @@ import Loading from '../components/loading.jsx';
 import HotDaily from '../components/hot_daily.jsx';
 import Comment from  '../components/comment.jsx';
 import {checkLogin} from '../actions/authAction.js';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {ToastContainer} from "react-toastr";
 
 class Detail extends Component {
     constructor(props){
@@ -142,7 +145,9 @@ class Detail extends Component {
             }).catch(err => {
             });
         }else {
-            alert('ban phai dang nhap')
+            this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
     }
 
@@ -166,11 +171,16 @@ class Detail extends Component {
                     this.setState({comment:old_comment});
                     this.refs.comment.innerHTML = '';
              }).catch(err => {
+                 this.message.error('Có lỗi xảy ra', 'Cảnh báo', {
+                     closeButton: true,
+                 });
              });
 
 
         }else {
-            alert('Ban can phai dang nhap')
+            this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
     };
 
@@ -226,12 +236,12 @@ class Detail extends Component {
                             <div className="row">
                                 <div className="col-sm-6 top-user-list user-info">
                                     <div className="float-left">
-                                        <Link to={'/user/' + detail.getUser.userSlug}><img src={detail.getUser.image}
+                                        <Link to={'/thanh-vien/' + detail.getUser.userSlug}><img src={detail.getUser.image}
                                                          className="img-fluid img-user"/></Link>
                                     </div>
                                     <div className="float-left">
-                                        <p className="name"><Link to={'/user/' + detail.getUser.userSlug}>{detail.getUser.name}</Link></p>
-                                        <p><img src="icon/view_icon.png"/><span>&nbsp;{ NiceTime(detail.published_at) }</span></p>
+                                        <p className="name"><Link to={'/thanh-vien/' + detail.getUser.userSlug}>{detail.getUser.name}</Link></p>
+                                        <p>Xuất bản: <span>&nbsp;{ NiceTime(detail.published_at) }</span></p>
                                     </div>
                                 </div>
                                 <div className="col-sm-6 ">
@@ -286,9 +296,25 @@ class Detail extends Component {
                         </div>
                     </div>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         ) : <Loading />
     }
 }
 
-export default Detail;
+function mapStateToProps(state) {
+    return {
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);
