@@ -20,9 +20,11 @@ class Home extends Component{
             page: 1,
             TopUser: [],
             isTopUser:1,
-            loading: false
+            loading: false,
+            scrolling: false
         }
         this.handleData = this.handleData.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
     }
 
     componentDidMount(){
@@ -44,9 +46,14 @@ class Home extends Component{
         let scrollTop = document.body.scrollTop;
         let height = myDiv.clientHeight - 500;
 
-        if(scrollTop - height >0 && height> 1000){
-            // console.log('vao day roi');
-            // $( ".more-comment" ).trigger( "click" );
+        if(scrollTop - height > 0 && height> 1200 && this.props.article.isloading === false){
+            this.props.article.isloading = true;
+
+            let old_page = this.props.page.pageHome + 1;
+            this.props.page.pageHome = old_page;
+            this.setState({scrolling: false});
+            this.props.getArticleNew(old_page-1);
+
         }
     }
 
@@ -94,7 +101,7 @@ class Home extends Component{
                             })
                             }
 
-                            { this.props.article.isloading ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
+                            { this.props.article.isloading === false ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.pageHome)} className="more-comment">XEM THÊM...</a></div> }
 
                         </div>
 

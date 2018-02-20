@@ -39894,9 +39894,11 @@ var Home = function (_Component) {
             page: 1,
             TopUser: [],
             isTopUser: 1,
-            loading: false
+            loading: false,
+            scrolling: false
         };
         _this.handleData = _this.handleData.bind(_this);
+        _this.handleScroll = _this.handleScroll.bind(_this);
         return _this;
     }
 
@@ -39924,9 +39926,13 @@ var Home = function (_Component) {
             var scrollTop = document.body.scrollTop;
             var height = myDiv.clientHeight - 500;
 
-            if (scrollTop - height > 0 && height > 1000) {
-                // console.log('vao day roi');
-                // $( ".more-comment" ).trigger( "click" );
+            if (scrollTop - height > 0 && height > 1200 && this.props.article.isloading === false) {
+                this.props.article.isloading = true;
+
+                var old_page = this.props.page.pageHome + 1;
+                this.props.page.pageHome = old_page;
+                this.setState({ scrolling: false });
+                this.props.getArticleNew(old_page - 1);
             }
         }
     }, {
@@ -39966,7 +39972,7 @@ var Home = function (_Component) {
                             list_article.map(function (object, index) {
                                 return _react2.default.createElement(_list_article2.default, { checklogin: check, handlerFromParant: _this2.handleData, key: Math.random(), data: object });
                             }),
-                            this.props.article.isloading ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
+                            this.props.article.isloading === false ? _react2.default.createElement(_loading2.default, null) : _react2.default.createElement(
                                 'div',
                                 { id: 'more-comment-wrap' },
                                 _react2.default.createElement(
@@ -54236,9 +54242,13 @@ function getArticle() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { article: [], isloading: true };
     var action = arguments[1];
 
+    var isloading = false;
+    if (typeof action.payload !== 'undefined' && action.payload.length === 0) {
+        isloading = 1;
+    }
     switch (action.type) {
         case 'GET_ARTICLE':
-            return _extends({}, state, { article: state.article.concat(action.payload), isloading: false });
+            return _extends({}, state, { article: state.article.concat(action.payload), isloading: isloading });
             break;
         case 'GET_ARTICLE_REJECT':
             return _extends({}, state);
