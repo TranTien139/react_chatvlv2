@@ -29,6 +29,9 @@ class Image extends Component{
             this.props.getArticleImage(1);
         }
         this.props.page.image = 2;
+
+        document.title = 'Bài viết hình ảnh';
+
         window.addEventListener('scroll', this.handleScroll);
     }
 

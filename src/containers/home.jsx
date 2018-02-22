@@ -34,6 +34,8 @@ class Home extends Component{
              this.props.getTopUser(1);
         }
 
+        document.title = 'Trang chủ';
+
         this.props.page.pageHome = 2;
         window.addEventListener('scroll', this.handleScroll);
     }
@@ -45,7 +47,6 @@ class Home extends Component{
         let myDiv = document.getElementById('main-container');
         let scrollTop = document.body.scrollTop;
         let height = myDiv.clientHeight - 500;
-
         if(scrollTop - height > 0 && height> 1200 && this.props.article.isloading === false){
             this.NextPage(this.props.page.pageHome);
         }

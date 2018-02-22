@@ -31,6 +31,7 @@ class Hot extends Component{
                 this.props.getArticleHot(1);
             }
             this.props.page.hot = 2;
+            document.title = 'Các bài viết hot';
             window.addEventListener('scroll', this.handleScroll);
 
     }

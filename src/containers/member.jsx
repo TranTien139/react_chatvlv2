@@ -28,6 +28,8 @@ class Member extends Component{
 
         let slug_user = this.props.match.params.slug;
 
+        document.title = 'Thành viên';
+
         let promise = new Promise((resolve, reject)=>{
             axios.post(domain.domain+'/articles/getArticleNew',{user_id: "0", slug_user:slug_user, size:10,page: this.state.page}).then(res=>{
                 res = res.data;

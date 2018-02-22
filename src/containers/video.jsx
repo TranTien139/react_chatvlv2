@@ -29,6 +29,7 @@ class Video extends Component{
          this.props.getArticleVideo(1);
         }
         this.props.page.video = 2;
+        document.title = 'Bài viết video';
         window.addEventListener('scroll', this.handleScroll);
     }
 

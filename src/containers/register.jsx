@@ -13,6 +13,10 @@ class Register extends Component{
         this.register = this.register.bind(this);
     }
 
+    componentWillMount(){
+        document.title = 'Đăng kí thành viên';
+    }
+
     register = (event)=>{
         event.preventDefault();
 

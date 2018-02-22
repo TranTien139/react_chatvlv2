@@ -15,6 +15,10 @@ class postArticle extends Component{
         this.PostArticle = this.PostArticle.bind(this);
     }
 
+    componentWillMount(){
+        document.title = 'Đăng bài viết';
+    }
+
     PostArticle = (event)=>{
         event.preventDefault();
         let check = checkLogin();

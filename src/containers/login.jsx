@@ -13,6 +13,10 @@ class Login extends Component{
         this.login = this.login.bind(this);
     }
 
+    componentWillMount(){
+        document.title = 'Đăng nhập';
+    }
+
     login = (event)=>{
         event.preventDefault();
         let input_login = {"email":this.email.value,"password":this.password.value};

@@ -60,6 +60,7 @@ class Detail extends Component {
         Promise.all([promise,promise1,comment]).then((data)=>{
             let next_cmt = data[2].next_page === -1 ? false : true;
             this.setState({detail: data[0], hot_daily:data[1],comment: data[2].results,next_comment:next_cmt});
+            document.title = data[0].title;
         });
     }
 
@@ -99,6 +100,7 @@ class Detail extends Component {
         Promise.all([promise,promise1,comment]).then((data)=>{
             let next_cmt = data[2].next_page === -1 ? false : true;
             this.setState({detail: data[0], hot_daily:data[1],comment: data[2].results,next_comment:next_cmt});
+            document.title = data[0].title;
         });
     }
 

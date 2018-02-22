@@ -14,6 +14,10 @@ class Search extends Component{
         }
     }
 
+    componentWillMount(){
+        document.title = 'Trang tìm kiếm';
+    }
+
     handleInput(e){
         let value = this.text.value;
         this.setState({isloading: true});
