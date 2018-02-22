@@ -44,10 +44,12 @@ class Home extends Component{
     }
 
     handleScroll(event) {
-        let myDiv = document.getElementById('main-container');
-        let scrollTop = document.body.scrollTop;
-        let height = myDiv.clientHeight - 500;
-        if(scrollTop - height > 0 && height> 1200 && this.props.article.isloading === false){
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
+
+        if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
             this.NextPage(this.props.page.pageHome);
         }
     }

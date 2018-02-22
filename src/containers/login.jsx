@@ -61,7 +61,8 @@ class Login extends Component{
                 <div className="container">
                     <form onSubmit={this.login.bind(this)}>
                        <div className="row">
-                           <div className="col-sm-6 offset-3">
+                           <div className="col-sm-3"></div>
+                           <div className="col-sm-6">
                                <div className="form-group">
                                    <label htmlFor="email">Địa chỉ email: </label>
                                    <input type="email" className="form-control" ref={(email) => this.email = email} required />

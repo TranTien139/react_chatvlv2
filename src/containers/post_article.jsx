@@ -58,7 +58,8 @@ class postArticle extends Component{
                 <div className="container">
                     <form onSubmit={this.PostArticle.bind(this)}>
                         <div className="row">
-                            <div className="col-sm-6 offset-3">
+                            <div className="col-sm-3"></div>
+                            <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Tiêu đề: </label>
                                     <input type="text" placeholder="Nhập tiêu đề bài viết" className="form-control" ref={(title) => this.title = title} required />

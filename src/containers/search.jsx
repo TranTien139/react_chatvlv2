@@ -84,14 +84,16 @@ class Search extends Component{
 
                     </div>
                     <div className="row">
-                        <div className="col-sm-6 offset-3">
+                        <div className="col-sm-3"></div>
+                        <div className="col-sm-6">
                             <div className="form-group">
                                 <input className="form-control" ref={(text)=> this.text = text} onChange={this.handleInput.bind(this)} type="text" required placeholder="Nhập từ khóa tìm kiếm bài viết" />
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-sm-8 offset-2">
+                        <div className="col-sm-2"></div>
+                        <div className="col-sm-8">
                             {list_result.length > 0 ? list_result: 'Không có kết quả nào được hiển thị'}
                             {this.state.isloading === true ? <Loading/> : ''}
                         </div>

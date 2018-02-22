@@ -38,11 +38,12 @@ class Video extends Component{
     }
 
     handleScroll(event) {
-        let myDiv = document.getElementById('main-container');
-        let scrollTop = document.body.scrollTop;
-        let height = myDiv.clientHeight - 500;
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
 
-        if(scrollTop - height > 0 && height> 1200 && this.props.video.isloading === false){
+        if(scrolledToBottom && this.props.video.isloading === false && this.props.page.video<=4){
             this.NextPage(this.props.page.video);
         }
     }
