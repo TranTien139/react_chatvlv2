@@ -238,9 +238,11 @@ class Detail extends Component {
                                     </div>
                                 </div>
                             </div>
-                            { detail.linkVideo !=='' ?  <iframe width="100%" height={500} src={"https://www.youtube.com/embed/"+detail.linkVideo}
-                                                        frameBorder={0} allow="encrypted-media" allowFullScreen>
-                            </iframe>: <div className="text-center"><img className="img-fluid text-center"  src={detail.image} /> </div> }
+                            { detail.linkVideo !=='' ?  <div className="wrapper"><div className="h_iframe">
+                                <img className="ratio" src="http://placehold.it/16x9"/>
+                                <iframe src={"https://www.youtube.com/embed/"+detail.linkVideo}
+                                                        frameBorder={0}  allowFullScreen>
+                            </iframe></div></div>: <div className="text-center"><img className="img-fluid text-center"  src={detail.image} /> </div> }
 
                             <div className="row">
                                 <div className="col-sm-6 top-user-list user-info">
