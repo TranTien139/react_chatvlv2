@@ -6,6 +6,7 @@
 .main-box-reply{
     padding: 6px 0px;
     border-bottom: 1px solid #ddd;
+    min-height: 65px;
 }
 
 #reply, #comment{

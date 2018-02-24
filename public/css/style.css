@@ -126,7 +126,7 @@ a {
     border: 1px solid #b7b7b7;
     margin-right: 12px;
     border-radius: 3px;
-    position: relative;
+    position: absolute;
     margin-left: 15px; }
     #main-container .main-box-comment .avatar:after {
       content: '';
@@ -142,8 +142,10 @@ a {
       border-right-color: transparent;
       border-top-color: transparent; }
   #main-container .main-box-comment .get-content {
-    width: 85%;
-    position: relative; }
+    width: 100%;
+    position: relative;
+    padding-left: 77px;
+    padding-right: 10px; }
     #main-container .main-box-comment .get-content #comment {
       min-height: 70px;
       outline: none;
@@ -151,15 +153,19 @@ a {
   #main-container .main-box-comment .box-send-comment {
     background-color: #c62828;
     border: 0px;
-    margin-right: 32px;
+    margin-right: 10px;
     margin-top: 5px;
     color: #fff;
     padding: 5px 10px; }
 #main-container .detail-article .box-list-comment .box-content-cmt {
-  width: 90%; }
+  width: 100%;
+  padding-left: 70px;
+  padding-right: 10px; }
   #main-container .detail-article .box-list-comment .box-content-cmt .time {
     float: right;
     margin-top: -18px; }
+  #main-container .detail-article .box-list-comment .box-content-cmt .box-content-cmt {
+    padding-left: 50px; }
   #main-container .detail-article .box-list-comment .box-content-cmt cite {
     font-weight: 700;
     font-style: normal;
@@ -176,6 +182,8 @@ a {
     margin-left: 15px; }
     #main-container .detail-article .box-list-comment .box-content-cmt .comment-reply-link:hover {
       color: #ed1c24; }
+#main-container .detail-article .box-avatar-cmt {
+  position: absolute; }
 #main-container .detail-article .box-list-comment .item-comment {
   list-style: none;
   margin-left: 0;
@@ -198,7 +206,8 @@ a {
     margin-right: 12px;
     border-radius: 3px;
     position: relative;
-    margin-left: 15px; }
+    margin-left: 15px;
+    position: absolute; }
     #main-container .box-reply-comment .avatar:after {
       content: '';
       width: 8px;
@@ -213,8 +222,10 @@ a {
       border-right-color: transparent;
       border-top-color: transparent; }
   #main-container .box-reply-comment .get-content {
-    width: 85%;
-    position: relative; }
+    width: 100%;
+    position: relative;
+    padding-left: 76px;
+    padding-right: 10px; }
     #main-container .box-reply-comment .get-content #reply {
       min-height: 60px;
       outline: none;
@@ -222,7 +233,7 @@ a {
   #main-container .box-reply-comment .box-send-comment {
     background-color: #c62828;
     border: 0px;
-    margin-right: 24px;
+    margin-right: 10px;
     margin-top: 5px;
     color: #fff;
     padding: 5px 10px; }

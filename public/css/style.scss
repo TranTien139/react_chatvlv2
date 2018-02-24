@@ -185,7 +185,7 @@ a{
       border: 1px solid #b7b7b7;
       margin-right: 12px;
       border-radius: 3px;
-      position: relative;
+      position: absolute;
       margin-left: 15px;
       &:after{
         content: '';
@@ -203,8 +203,10 @@ a{
       }
     }
     .get-content{
-      width: 85%;
+      width: 100%;
       position: relative;
+      padding-left: 77px;
+      padding-right: 10px;
       #comment {
         min-height: 70px;
         outline: none;
@@ -214,7 +216,7 @@ a{
     .box-send-comment{
       background-color: #c62828;
       border: 0px;
-      margin-right: 32px;
+      margin-right: 10px;
       margin-top: 5px;
       color: #fff;
       padding: 5px 10px;
@@ -222,10 +224,15 @@ a{
   }
   .detail-article {
     .box-list-comment .box-content-cmt{
-      width: 90%;
+      width: 100%;
+      padding-left: 70px;
+      padding-right: 10px;
       .time{
         float: right;
         margin-top: -18px;
+      }
+      .box-content-cmt{
+        padding-left: 50px;
       }
       cite{
         font-weight: 700;
@@ -248,6 +255,9 @@ a{
           color: #ed1c24;
         }
       }
+    }
+    .box-avatar-cmt{
+      position: absolute;
     }
     .box-list-comment{
       .item-comment{
@@ -277,6 +287,7 @@ a{
       border-radius: 3px;
       position: relative;
       margin-left: 15px;
+      position: absolute;
       &:after{
         content: '';
         width: 8px;
@@ -293,8 +304,10 @@ a{
       }
     }
     .get-content{
-      width: 85%;
+      width: 100%;
       position: relative;
+      padding-left: 76px;
+      padding-right: 10px;
       #reply{
         min-height: 60px;
         outline: none;
@@ -304,7 +317,7 @@ a{
     .box-send-comment{
       background-color: #c62828;
       border: 0px;
-      margin-right: 24px;
+      margin-right: 10px;
       margin-top: 5px;
       color: #fff;
       padding: 5px 10px;
