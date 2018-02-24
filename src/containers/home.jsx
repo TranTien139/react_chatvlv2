@@ -49,6 +49,8 @@ class Home extends Component{
         let clientHeight = window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
 
+        console.log(scrollTop,scrollHeight,clientHeight,scrolledToBottom);
+
         if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
             this.NextPage(this.props.page.pageHome);
         }

@@ -240,7 +240,7 @@ class Detail extends Component {
                             </div>
                             { detail.linkVideo !=='' ?  <iframe width="100%" height={500} src={"https://www.youtube.com/embed/"+detail.linkVideo}
                                                         frameBorder={0} allow="encrypted-media" allowFullScreen>
-                            </iframe>: <div className="text-center"><img className="fluid text-center"  src={detail.image} /> </div> }
+                            </iframe>: <div className="text-center"><img className="img-fluid text-center"  src={detail.image} /> </div> }
 
                             <div className="row">
                                 <div className="col-sm-6 top-user-list user-info">
