@@ -16,6 +16,7 @@ class Image extends Component{
         }
         this.handleData = this.handleData.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
+        this.NextPage = this.NextPage.bind(this);
     }
 
     handleData(data) {

@@ -58,7 +58,7 @@ class ListArticle extends React.Component {
         }
 
         return (
-            <div key={Math.random()} className="main-item">
+            <div className="main-item">
                 <div className="row">
                     <div className="col-sm-8 left-content-item text-center">
                         <Link to={"/chi-tiet/"+ object.id} ><img src={object.image} className="img-fluid" />
