@@ -12,6 +12,7 @@ import Member from '../containers/member.jsx';
 import Search from '../containers/search.jsx';
 import Register from '../containers/register.jsx';
 import postArticle from '../containers/post_article.jsx';
+import NotFound from '../containers/notfound.jsx';
 
 function isLoggedIn() { return false; }
 
@@ -29,5 +30,6 @@ export default ()=>(
             <Route path="/dang-ki" component={Register} />
             <Route path="/dang-bai" component={postArticle} />
         </Layout>
+        <Route path="*" component={NotFound}/>
     </Switch>
 )

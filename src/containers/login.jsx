@@ -4,13 +4,21 @@ const domain = require('../../config_domain.js');
 import {Link} from 'react-router-dom';
 import {setStorage} from '../actions/authAction.js';
 import {ToastContainer} from "react-toastr";
+import {Redirect} from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import {ChangeToSlug} from "../../functions/common.js";
 
 class Login extends Component{
     constructor(props){
         super(props);
         this.state ={
+            loginError: false,
+            redirect: false
         }
         this.login = this.login.bind(this);
+        this.signup = this.signup.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     componentWillMount(){
@@ -20,6 +28,10 @@ class Login extends Component{
     login = (event)=>{
         event.preventDefault();
         let input_login = {"email":this.email.value,"password":this.password.value};
+        this.handleLogin(input_login);
+    }
+
+    handleLogin = (input_login)=>{
         axios.post(domain.domain+'/users/login',input_login).then(res=>{
             res = res.data;
             let token = res.id;
@@ -55,7 +67,81 @@ class Login extends Component{
         });
     }
 
+    signup(res, type) {
+        let postData;
+        if (type === 'facebook' && res.accessToken) {
+            let slug = ChangeToSlug(res.name) +'@'+ Math.floor(Math.random() * Math.floor(10000));
+            postData = {
+                id_social: res.id,
+                level: "member",
+                image: res.picture.data.url,
+                userSlug: slug,
+                name: res.name,
+                email: res.email || res.id + "@facebook.com",
+                password: "123456",
+                created_at: Date.now()
+            };
+        }
+
+        // if (type === 'google' && res.w3.U3) {
+        //     let slug = ChangeToSlug(res.w3.ig) +'@'+ Math.floor(Math.random() * Math.floor(10000));
+        //     postData = {
+        //         id_social: res.El,
+        //         level: "member",
+        //         image: res.w3.Paa,
+        //         userSlug: slug,
+        //         name: res.w3.ig,
+        //         email: res.w3.U3 || res.id + "@google.com",
+        //         password: "123456",
+        //         created_at: Date.now()
+        //     };
+        // }
+
+        if (postData) {
+
+            let getUserInfo = new Promise((resolve,reject)=>{
+                axios.post(domain.domain+'/user_generals/getUserInfoEmail',{"email": postData.email}).then(respon=>{
+                    respon = respon.data;
+                    respon = respon.data;
+                    resolve(respon)
+                }).catch(err=>{
+                    reject(err);
+                });
+            });
+
+            getUserInfo.then(data=>{
+                if(data) {
+                    let input_login = {"email":data.email,"password":"123456"};
+                    this.handleLogin(input_login);
+                }else{
+                    axios.post(domain.domain+'/users',postData).then(res=>{
+                        res = res.data;
+                        let input_login = {"email":res.email,"password":"123456"};
+                        this.handleLogin(input_login);
+                    });
+                }
+            }).catch(err=>{
+                this.message.error('Có lỗi xảy ra khi đăng nhập', 'Cảnh báo', {
+                    closeButton: true,
+                });
+            });
+
+        } else {
+            console.log("deo co du lieu");
+        }
+    }
+
     render(){
+        const responseFacebook = (response) => {
+            this.signup(response, 'facebook');
+        }
+
+        // const responseGoogle = (response) => {
+        //     console.log("google console");
+        //     console.log(response);
+        //     this.signup(response, 'google');
+        // }
+
         return(
             <div>
                 <div className="container">
@@ -76,6 +162,29 @@ class Login extends Component{
                            </div>
                        </div>
                     </form>
+
+                    <div className="row">
+                        <div className="col-sm-3"></div>
+                        <div className="col-sm-6">
+                            <hr/>
+                            <FacebookLogin
+                                appId="1809357332636523"
+                                autoLoad={false}
+                                fields="name,email,picture"
+                                callback={responseFacebook}
+                                cssClass="btn btn-success"
+                                icon="fa-facebook"
+                                textButton="  Đăng nhập với facebook"
+                            />
+                        </div>
+                    </div>
+
+                    {/*<GoogleLogin*/}
+                        {/*clientId="401817212429-ep1krpisq390lgfpjp6f26lpt56vp0ca.apps.googleusercontent.com"*/}
+                        {/*buttonText="Login with Google"*/}
+                        {/*onSuccess={responseGoogle}*/}
+                        {/*onFailure={responseGoogle}/>*/}
+
                 </div>
 
                 <ToastContainer

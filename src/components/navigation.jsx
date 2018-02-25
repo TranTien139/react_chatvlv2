@@ -51,7 +51,7 @@ class Navigation extends Component {
             </ul> : <ul className="list-inline">
                 <li className="list-inline-item"><Link to={"/thanh-vien/" + this.state.userInfo.userSlug}><img src={this.state.userInfo.image} /></Link></li>
                 <li className="list-inline-item fullname">
-                    <Link to={"/thanh-vien/" + this.state.userInfo.userSlug}>{this.state.userInfo.name}</Link>
+                    <a>{this.state.userInfo.name}</a>
                     <div className="box-logout">
                         <ul className="list-group">
                             <li className="list-group-item"><a onClick={this.logout.bind(this)}>Đăng Xuất</a></li>
