@@ -14,16 +14,10 @@ class Image extends Component{
             image: [],
             page: 1
         }
-        this.handleData = this.handleData.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.NextPage = this.NextPage.bind(this);
     }
 
-    handleData(data) {
-        this.message.error(data, 'Cảnh báo', {
-            closeButton: true,
-        });
-    }
 
     componentDidMount(){
         if (!this.props.page.image) {
@@ -71,7 +65,7 @@ class Image extends Component{
                         <div className="col-sm-8">
 
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
                             })
                             }
                             { this.props.image.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.image)} className="more-comment">XEM THÊM...</a></div> }
@@ -80,11 +74,6 @@ class Image extends Component{
 
                     </div>
                 </div>
-
-                <ToastContainer
-                    ref={ref => this.message = ref}
-                    className="toast-top-right"
-                />
 
             </div>
         )

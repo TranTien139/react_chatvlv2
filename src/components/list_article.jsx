@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {NiceTime} from '../../functions/common.js';
 const axios =  require('axios');
 const domain = require('../../config_domain.js');
+import {ToastContainer} from "react-toastr";
 
 class ListArticle extends React.Component {
 
@@ -37,7 +38,9 @@ class ListArticle extends React.Component {
             }).catch(err => {
             });
         }else {
-            this.props.handlerFromParant('Bạn phải đăng nhập mới được thực hiện hành động này');
+            this.message.error('Bạn phải đăng nhập mới được thực hiện hành động này ', 'Cảnh báo', {
+                closeButton: true,
+            });
         }
     }
 
@@ -98,6 +101,12 @@ class ListArticle extends React.Component {
                         </div>
                     </div>
                 </div>
+
+                <ToastContainer
+                    ref={ref => this.message = ref}
+                    className="toast-top-right"
+                />
+
             </div>
         );
     }

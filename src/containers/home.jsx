@@ -23,7 +23,6 @@ class Home extends Component{
             loading: false,
             scrolling: false
         }
-        this.handleData = this.handleData.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.NextPage = this.NextPage.bind(this);
     }
@@ -46,22 +45,15 @@ class Home extends Component{
     }
 
     handleScroll(event) {
-        // let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        // let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        // let clientHeight = window.innerHeight;
-        // let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
-        //
-        // if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
-        //     this.NextPage(this.props.page.pageHome);
-        // }
-    }
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
 
-    handleData(data) {
-        this.message.error(data, 'Cảnh báo', {
-            closeButton: true,
-        });
+        if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
+            this.NextPage(this.props.page.pageHome);
+        }
     }
-
 
     NextPage = (page)=>{
         this.props.article.isloading = true;
@@ -96,7 +88,7 @@ class Home extends Component{
                     <div className="row">
                         <div className="col-sm-8">
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
                             })
                             }
 
@@ -118,11 +110,6 @@ class Home extends Component{
 
                     </div>
                 </div>
-
-                <ToastContainer
-                    ref={ref => this.message = ref}
-                    className="toast-top-right"
-                />
 
             </div>
         )

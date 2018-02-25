@@ -14,15 +14,8 @@ class Video extends Component{
             video: [],
             page: 1
         }
-        this.handleData = this.handleData.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.NextPage = this.NextPage.bind(this);
-    }
-
-    handleData(data) {
-        this.message.error(data, 'Cảnh báo', {
-            closeButton: true,
-        });
     }
 
     componentDidMount(){
@@ -67,7 +60,7 @@ class Video extends Component{
                     <div className="row">
                         <div className="col-sm-8">
                             { list_article.map((object,index)=>{
-                                return <ListArticle checklogin={check} handlerFromParant={this.handleData} key={Math.random()} data={object} />
+                                return <ListArticle checklogin={check} key={Math.random()} data={object} />
                             })
                             }
                             { this.props.video.isloading === true ? <Loading /> : <div id="more-comment-wrap"><a onClick={this.NextPage.bind(this, this.props.page.video)} className="more-comment">XEM THÊM...</a></div> }
@@ -76,12 +69,6 @@ class Video extends Component{
 
                     </div>
                 </div>
-
-                <ToastContainer
-                    ref={ref => this.message = ref}
-                    className="toast-top-right"
-                />
-
             </div>
         )
     }
