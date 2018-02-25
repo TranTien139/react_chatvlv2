@@ -24,7 +24,8 @@ class postArticle extends Component{
         let check = checkLogin();
         if(check) {
             let image = this.state.type === "image" ? this.image.value : "http://i.ytimg.com/vi/"+ this.video.value +"/0.jpg";
-            let data_post = {"user_id": check.id ,"title": this.title.value, "description": this.description.value,"linkVideo": this.video.value || '', "image": image};
+            let linkVideo = this.state.type === "image" ? '':this.video.value;
+            let data_post = {"user_id": check.id ,"title": this.title.value, "description": this.description.value,"linkVideo": linkVideo, "image": image};
             axios.post(domain.domain + '/articles/addPostArticle?access_token='+ getToken() , data_post ).then(res => {
                     res = res.data;
                 this.message.success('Bạn đã đăng bài viết thành công', 'Thành công', {
