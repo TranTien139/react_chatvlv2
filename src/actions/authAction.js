@@ -40,7 +40,7 @@ export function logoutUser() {
 }
 
 export function checkLogin() {
-    let check_login = sessionStorage.getItem('dangnhap');
+    let check_login = localStorage.getItem('dangnhap');
     if(check_login) {
         check_login = JSON.parse(check_login);
         return check_login.data;
@@ -52,16 +52,16 @@ export function checkLogin() {
 export function setStorage(token, data) {
     let result = {token:token, data:data };
     result = JSON.stringify(result);
-    sessionStorage.setItem('dangnhap',result);
+    localStorage.setItem('dangnhap',result);
 };
 
 export function removeStorage() {
-    let check_login = sessionStorage.removeItem('dangnhap');
+    let check_login = localStorage.removeItem('dangnhap');
     return check_login;
 };
 
 export function getToken() {
-    let check_login = sessionStorage.getItem('dangnhap');
+    let check_login = localStorage.getItem('dangnhap');
     if(check_login) {
         check_login = JSON.parse(check_login);
         return check_login.token;

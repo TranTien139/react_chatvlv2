@@ -19,7 +19,9 @@ class Detail extends Component {
             islike: false,
             icon: '',
             page_comment:1,
-            next_comment: false
+            next_comment: false,
+            total_comment: 0,
+            total_like:0
         }
     }
 
@@ -142,7 +144,8 @@ class Detail extends Component {
 
             promise.then(data => {
                 if(data.code === 200) {
-                    this.setState({islike:true,icon:action});
+                    let old_like = this.state.total_like;
+                    this.setState({islike:true,icon:action,total_like:old_like+1});
                 }
             }).catch(err => {
             });
@@ -175,7 +178,8 @@ class Detail extends Component {
                         old_comment = [];
                     }
                     old_comment.unshift(res);
-                    this.setState({comment:old_comment});
+                    let old_cmt = this.state.total_comment;
+                    this.setState({comment:old_comment,total_comment:old_cmt+1});
                     this.refs.comment.innerHTML = '';
                     this.message.success('Bạn đã bình luận thành công', 'Thành công', {
                         closeButton: true,
@@ -259,13 +263,13 @@ class Detail extends Component {
                                     <div className="count-like-share like-share-detail float-right">
                                         <ul className="list-inline">
                                             <li className="list-inline-item"><span className="view"><img
-                                                src="icon/view_icon.png"/></span>&nbsp;{ detail.total_view || 0 }
+                                                src="icon/view_icon.png"/></span>&nbsp;{ detail.total_view + 1 || 0}
                                             </li>
                                             <li className="list-inline-item"><span className="comment"><img
-                                                src="icon/comment_icon.png"/></span>&nbsp;{ detail.total_comment || 0 }
+                                                src="icon/comment_icon.png"/></span>&nbsp;{ detail.total_comment + this.state.total_comment || this.state.total_comment }
                                             </li>
                                             <li className="list-inline-item"><span className="like"><img
-                                                src="icon/icon_camxuc2.png"/></span>&nbsp;{ detail.total_like || 0 }
+                                                src="icon/icon_camxuc2.png"/></span>&nbsp;{ detail.total_like + this.state.total_like|| this.state.total_like }
                                             </li>
                                         </ul>
                                     </div>
