@@ -7,8 +7,6 @@ import Loading from '../components/loading.jsx';
 import HotDaily from '../components/hot_daily.jsx';
 import Comment from  '../components/comment.jsx';
 import {checkLogin} from '../actions/authAction.js';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {ToastContainer} from "react-toastr";
 
 class Detail extends Component {
@@ -322,14 +320,4 @@ class Detail extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-    }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Detail);
+export default Detail;

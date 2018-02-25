@@ -1,34 +1,29 @@
 import React,{Component} from 'react'
-import {Link} from 'react-router-dom';
 import ListArticle from '../components/list_article.jsx';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getArticleNew, getTopUser} from '../actions/getArticle.js';
 import Loading from '../components/loading.jsx';
-const axios =  require('axios');
-const domain = require('../../config_domain.js');
 
 import TopUser from '../components/top_user.jsx';
 import {checkLogin} from '../actions/authAction.js';
-import {ToastContainer} from "react-toastr";
 
 class Home extends Component{
     constructor(props){
-        super(props)
-        this.state ={
+        super(props);
+        this.state = {
             article: [],
             page: 1,
             TopUser: [],
             isTopUser:1,
             loading: false,
             scrolling: false
-        }
+        };
         this.handleScroll = this.handleScroll.bind(this);
         this.NextPage = this.NextPage.bind(this);
     }
 
     componentDidMount(){
-        var seft = this;
          if(!this.props.page.pageHome) {
             this.props.getArticleNew(1);
              this.props.getTopUser(1);
@@ -40,11 +35,11 @@ class Home extends Component{
         window.addEventListener('scroll', this.handleScroll);
     }
 
-    // componentWillUnmount(){
-    //     window.removeEventListener('scroll', this.handleScroll);
-    // }
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll);
+    }
 
-    handleScroll(event) {
+    handleScroll() {
         let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
         let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
         let clientHeight = window.innerHeight;
@@ -87,7 +82,7 @@ class Home extends Component{
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-8">
-                            { list_article.map((object,index)=>{
+                            { list_article.map((object)=>{
                                 return <ListArticle checklogin={check} key={Math.random()} data={object} />
                             })
                             }
