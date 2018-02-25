@@ -40,19 +40,20 @@ class Home extends Component{
         this.props.page.pageHome = 2;
         window.addEventListener('scroll', this.handleScroll);
     }
+
     componentWillUnmount(){
         window.removeEventListener('scroll', this.handleScroll);
     }
 
     handleScroll(event) {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
-
-        if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
-            this.NextPage(this.props.page.pageHome);
-        }
+        // let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        // let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        // let clientHeight = window.innerHeight;
+        // let scrolledToBottom = Math.ceil(scrollTop + clientHeight + 100) >= scrollHeight;
+        //
+        // if(scrolledToBottom && this.props.article.isloading === false && this.props.page.pageHome <=4){
+        //     this.NextPage(this.props.page.pageHome);
+        // }
     }
 
     handleData(data) {
