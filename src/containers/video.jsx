@@ -27,9 +27,9 @@ class Video extends Component{
         window.addEventListener('scroll', this.handleScroll);
     }
 
-    componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScroll);
-    }
+    // componentWillUnmount(){
+    //     window.removeEventListener('scroll', this.handleScroll);
+    // }
 
     handleScroll(event) {
         let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
