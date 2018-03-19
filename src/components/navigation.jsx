@@ -12,16 +12,19 @@ class Navigation extends Component {
         this.state = {
             path: '',
             check_login: false,
-            userInfo: ''
+            userInfo: '',
+            redirect: ''
         }
+        this.logout = this.logout.bind(this);
     }
 
     componentWillMount(){
         let path = window.location.pathname;
+        let redirect = window.location.href;
         if(path){
             path = path.split('/');
             path = path[1];
-            this.setState({path: path});
+            this.setState({path: path, redirect:redirect});
         }
 
         let check_login = checkLogin();
@@ -31,23 +34,28 @@ class Navigation extends Component {
 
     }
 
+    componentWillReceiveProps(nextProps){
+        let redirect = window.location.href;
+        this.setState({redirect:redirect});
+    }
+
     logout = ()=>{
         let gettoken = getToken();
         axios.post(domain.domain+'/users/logout?access_token='+ gettoken).then(data=>{
             removeStorage();
             this.setState({check_login: false});
-            window.location.href = '';
+            window.location.href = this.state.redirect;
         }).catch(err=>{
             removeStorage();
             this.setState({check_login: false});
-            window.location.href = '';
+            window.location.href = this.state.redirect;
         });
     }
 
     render() {
         const head = this.state.check_login === false ?
             <ul className="list-inline">
-                <li className="list-inline-item"><Link to="/dang-nhap">Đăng nhập</Link></li>
+                <li className="list-inline-item"><Link to={"/dang-nhap?redirect=" + this.state.redirect }>Đăng nhập</Link></li>
             </ul> : <ul className="list-inline">
                 <li className="list-inline-item"><Link to={"/thanh-vien/" + this.state.userInfo.userSlug}><img src={this.state.userInfo.image} /></Link></li>
                 <li className="list-inline-item fullname">

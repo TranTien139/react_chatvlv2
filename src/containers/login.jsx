@@ -14,7 +14,8 @@ class Login extends Component{
         super(props);
         this.state ={
             loginError: false,
-            redirect: false
+            redirect: false,
+            redirectLink: '/'
         }
         this.login = this.login.bind(this);
         this.signup = this.signup.bind(this);
@@ -22,6 +23,11 @@ class Login extends Component{
     }
 
     componentWillMount(){
+        let redirect = window.location.search;
+        if(redirect){
+            redirect =  redirect.replace('?redirect=','');
+            this.setState({redirectLink: redirect});
+        }
         document.title = 'Đăng nhập';
     }
 
@@ -50,8 +56,9 @@ class Login extends Component{
                         closeButton: true,
                     });
                     setStorage(token, data);
+                    let redirectLink = this.state.redirectLink;
                     setTimeout(function () {
-                        window.location.href = '/';
+                        window.location.href = redirectLink;
                     }, 1000);
 
                 }).catch(err=>{
